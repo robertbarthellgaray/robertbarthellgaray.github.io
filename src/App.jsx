@@ -25,7 +25,7 @@ export default function App() {
         {/* Sun */}
         <directionalLight
           position={[5, 3, 5]}
-          intensity={3}
+          intensity={30}
         />
 
         {/* Earth */}

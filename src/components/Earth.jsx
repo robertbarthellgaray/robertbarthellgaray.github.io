@@ -28,7 +28,7 @@ export default function Earth() {
                     map={textures.map}
                     normalMap={textures.normalMap}
                     roughnessMap={textures.roughnessMap}
-                    roughness={0.8}
+                    roughness={1}
                     metalness={0}
                 />
             </mesh>
