@@ -1,5 +1,5 @@
-import { Suspense, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Earth from "./components/Earth";
 import Moon from "./components/Moon";
@@ -16,8 +16,35 @@ function CubeSat() {
   );
 }
 
+function CameraControls({ homeMode }) {
+  const controlsRef = useRef();
+  const { camera } = useThree();
+
+  useEffect(() => {
+    if (!homeMode || !controlsRef.current) return;
+
+    camera.position.set(0, 0, 42);
+    controlsRef.current.target.set(0, 0, 0);
+    controlsRef.current.update();
+  }, [camera, homeMode]);
+
+  return (
+    <OrbitControls
+      ref={controlsRef}
+      enablePan={false}
+      enableRotate={!homeMode}
+      enableZoom={!homeMode}
+      enableDamping
+      autoRotate={homeMode}
+      autoRotateSpeed={-1}
+      minDistance={6.6}
+      maxDistance={450}
+    />
+  );
+}
+
 export default function App() {
-  const [geoOrbitEnabled, setGeoOrbitEnabled] = useState(true);
+  const [homeMode, setHomeMode] = useState(true);
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
@@ -47,23 +74,15 @@ export default function App() {
         {/* CubeSat */}
         <CubeSat />
 
-        {/* Mouse controls */}
-        <OrbitControls
-          enablePan={false}
-          enableDamping
-          autoRotate={geoOrbitEnabled}
-          autoRotateSpeed={-1}
-          minDistance={6.6}
-          maxDistance={450}
-        />
+        <CameraControls homeMode={homeMode} />
       </Canvas>
       <button
         className="view-mode-button"
         type="button"
-        aria-pressed={!geoOrbitEnabled}
-        onClick={() => setGeoOrbitEnabled((enabled) => !enabled)}
+        aria-pressed={!homeMode}
+        onClick={() => setHomeMode((atHome) => !atHome)}
       >
-        {geoOrbitEnabled ? "Free view" : "Resume GEO orbit"}
+        {homeMode ? "Free view" : "Go Home"}
       </button>
       <LoadingScreen />
     </div>
