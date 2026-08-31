@@ -2,6 +2,11 @@ import { startTransition, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import Atmosphere from "./Atmosphere";
+import {
+    EARTH_RADIUS,
+    EARTH_ROTATION_SPEED,
+    EARTH_TILT,
+} from "../spaceConstants";
 
 const TEXTURE_SETS = {
     portfolio: {
@@ -18,8 +23,6 @@ const TEXTURE_SETS = {
     },
 };
 
-const EARTH_ROTATION_SPEED = (Math.PI * 2) / 60;
-
 export default function Earth({ quality = "auto", highResolutionDistance = 3 }) {
     const earthRef = useRef();
     const cloudsRef = useRef();
@@ -31,12 +34,14 @@ export default function Earth({ quality = "auto", highResolutionDistance = 3 }) 
         TEXTURE_SETS[activeQuality] ?? TEXTURE_SETS.portfolio,
     );
 
-    useFrame(({ camera }, delta) => {
+    useFrame(({ camera, clock }) => {
+        const rotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
+
         if (earthRef.current) {
-            earthRef.current.rotation.y += delta * EARTH_ROTATION_SPEED;
+            earthRef.current.rotation.y = rotation;
         }
         if (cloudsRef.current) {
-            cloudsRef.current.rotation.y += delta * EARTH_ROTATION_SPEED * 1.02;
+            cloudsRef.current.rotation.y = rotation * 1.02;
         }
 
         if (
@@ -51,9 +56,9 @@ export default function Earth({ quality = "auto", highResolutionDistance = 3 }) 
     });
 
     return (
-        <group rotation={[0, 0, -0.41]}>
+        <group rotation={[0, 0, -EARTH_TILT]}>
             <mesh ref={earthRef}>
-                <sphereGeometry args={[6.378, 96, 96]} />
+                <sphereGeometry args={[EARTH_RADIUS, 96, 96]} />
                 <meshStandardMaterial
                     map={textures.map}
                     normalMap={textures.normalMap}

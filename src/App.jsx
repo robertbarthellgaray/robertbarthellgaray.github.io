@@ -1,32 +1,34 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { Vector3 } from "three";
 import Earth from "./components/Earth";
 import Moon from "./components/Moon";
+import CubeSat from "./components/CubeSat";
 import LoadingScreen from "./components/LoadingScreen";
+import { EARTH_ROTATION_SPEED, EARTH_TILT } from "./spaceConstants";
 
-const EARTH_TILT = 0.41;
-
-function CubeSat() {
-  return (
-    <mesh position={[7.2, 0, 0]}>
-      <boxGeometry args={[0.15, 0.15, 0.15]} />
-      <meshStandardMaterial color="white" />
-    </mesh>
-  );
-}
+const Y_AXIS = new Vector3(0, 1, 0);
+const Z_AXIS = new Vector3(0, 0, 1);
 
 function CameraControls({ homeMode }) {
   const controlsRef = useRef();
-  const { camera } = useThree();
+  const homePositionRef = useRef(new Vector3());
+  const { camera, clock } = useThree();
 
   useEffect(() => {
     if (!homeMode || !controlsRef.current) return;
 
-    camera.position.set(0, 0, 42);
+    const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
+    homePositionRef.current
+      .set(0, 0, 42)
+      .applyAxisAngle(Y_AXIS, earthRotation)
+      .applyAxisAngle(Z_AXIS, -EARTH_TILT);
+
+    camera.position.copy(homePositionRef.current);
     controlsRef.current.target.set(0, 0, 0);
     controlsRef.current.update();
-  }, [camera, homeMode]);
+  }, [camera, clock, homeMode]);
 
   return (
     <OrbitControls

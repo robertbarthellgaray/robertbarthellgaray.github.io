@@ -1,4 +1,5 @@
 import { AdditiveBlending, BackSide } from "three";
+import { EARTH_RADIUS } from "../spaceConstants";
 
 const vertexShader = `
     varying vec3 vNormal;
@@ -26,7 +27,7 @@ const fragmentShader = `
 export default function Atmosphere() {
     return (
         <mesh scale={1.02}>
-            <sphereGeometry args={[6.378, 96, 96]} />
+            <sphereGeometry args={[EARTH_RADIUS, 96, 96]} />
             <shaderMaterial
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader}
