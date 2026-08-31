@@ -26,7 +26,7 @@ const fragmentShader = `
 export default function Atmosphere() {
     return (
         <mesh scale={1.02}>
-            <sphereGeometry args={[1, 96, 96]} />
+            <sphereGeometry args={[6.378, 96, 96]} />
             <shaderMaterial
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader}

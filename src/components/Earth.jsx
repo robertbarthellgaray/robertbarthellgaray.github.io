@@ -18,6 +18,8 @@ const TEXTURE_SETS = {
     },
 };
 
+const EARTH_ROTATION_SPEED = (Math.PI * 2) / 60;
+
 export default function Earth({ quality = "auto", highResolutionDistance = 3 }) {
     const earthRef = useRef();
     const cloudsRef = useRef();
@@ -30,8 +32,12 @@ export default function Earth({ quality = "auto", highResolutionDistance = 3 }) 
     );
 
     useFrame(({ camera }, delta) => {
-        if (earthRef.current) earthRef.current.rotation.y += delta * 0.05;
-        if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.06;
+        if (earthRef.current) {
+            earthRef.current.rotation.y += delta * EARTH_ROTATION_SPEED;
+        }
+        if (cloudsRef.current) {
+            cloudsRef.current.rotation.y += delta * EARTH_ROTATION_SPEED * 1.02;
+        }
 
         if (
             quality === "auto" &&
@@ -47,7 +53,7 @@ export default function Earth({ quality = "auto", highResolutionDistance = 3 }) 
     return (
         <group rotation={[0, 0, -0.41]}>
             <mesh ref={earthRef}>
-                <sphereGeometry args={[1, 96, 96]} />
+                <sphereGeometry args={[6.378, 96, 96]} />
                 <meshStandardMaterial
                     map={textures.map}
                     normalMap={textures.normalMap}
@@ -58,7 +64,7 @@ export default function Earth({ quality = "auto", highResolutionDistance = 3 }) 
             </mesh>
 
             <mesh ref={cloudsRef}>
-                <sphereGeometry args={[1.008, 96, 96]} />
+                <sphereGeometry args={[6.4, 96, 96]} />
                 <meshStandardMaterial
                     map={textures.clouds}
                     alphaMap={textures.clouds}
