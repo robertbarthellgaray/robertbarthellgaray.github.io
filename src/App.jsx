@@ -31,7 +31,7 @@ export default function App() {
         />
 
         <Suspense fallback={null}>
-          <Earth quality="portfolio" />
+          <Earth quality="auto" highResolutionDistance={3} />
         </Suspense>
 
         {/* CubeSat */}

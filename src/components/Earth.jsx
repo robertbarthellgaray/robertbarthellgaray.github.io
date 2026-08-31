@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import Atmosphere from "./Atmosphere";
@@ -18,15 +18,27 @@ const TEXTURE_SETS = {
     },
 };
 
-export default function Earth({ quality = "portfolio" }) {
+export default function Earth({ quality = "auto", highResolutionDistance = 3 }) {
     const earthRef = useRef();
     const cloudsRef = useRef();
+    const [autoQuality, setAutoQuality] = useState("portfolio");
+    const activeQuality = quality === "auto" ? autoQuality : quality;
 
-    const textures = useTexture(TEXTURE_SETS[quality] ?? TEXTURE_SETS.portfolio);
+    const textures = useTexture(
+        TEXTURE_SETS[activeQuality] ?? TEXTURE_SETS.portfolio,
+    );
 
-    useFrame((_, delta) => {
+    useFrame(({ camera }, delta) => {
         if (earthRef.current) earthRef.current.rotation.y += delta * 0.05;
         if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.06;
+
+        if (
+            quality === "auto" &&
+            autoQuality === "portfolio" &&
+            camera.position.length() <= highResolutionDistance
+        ) {
+            setAutoQuality("leo");
+        }
     });
 
     return (
