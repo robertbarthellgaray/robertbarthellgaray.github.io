@@ -3,17 +3,26 @@ import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import Atmosphere from "./Atmosphere";
 
-export default function Earth() {
-    const earthRef = useRef();
-    const cloudsRef = useRef();
-
-    // Load textures from public/textures/
-    const textures = useTexture({
+const TEXTURE_SETS = {
+    portfolio: {
+        map: "/textures/earth-2k.jpg",
+        normalMap: "/textures/earth-normal-2k.jpg",
+        roughnessMap: "/textures/earth-roughness-2k.jpg",
+        clouds: "/textures/earth-clouds-2k.jpg",
+    },
+    leo: {
         map: "/textures/earth.jpg",
         normalMap: "/textures/Earth_NormalNRM_6K.jpg",
         roughnessMap: "/textures/Earth_Rough_6K.png",
         clouds: "/textures/8k_earth_clouds.jpg",
-    });
+    },
+};
+
+export default function Earth({ quality = "portfolio" }) {
+    const earthRef = useRef();
+    const cloudsRef = useRef();
+
+    const textures = useTexture(TEXTURE_SETS[quality] ?? TEXTURE_SETS.portfolio);
 
     useFrame((_, delta) => {
         if (earthRef.current) earthRef.current.rotation.y += delta * 0.05;

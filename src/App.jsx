@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Earth from "./components/Earth";
+import LoadingScreen from "./components/LoadingScreen";
 
 function CubeSat() {
   return (
@@ -28,8 +30,9 @@ export default function App() {
           intensity={30}
         />
 
-        {/* Earth */}
-        <Earth />
+        <Suspense fallback={null}>
+          <Earth quality="portfolio" />
+        </Suspense>
 
         {/* CubeSat */}
         <CubeSat />
@@ -37,6 +40,7 @@ export default function App() {
         {/* Mouse controls */}
         <OrbitControls enablePan={false} minDistance={2.4} maxDistance={7} />
       </Canvas>
+      <LoadingScreen />
     </div>
   );
 }
