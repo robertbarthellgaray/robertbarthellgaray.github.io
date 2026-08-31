@@ -1,81 +1,70 @@
-import { Suspense, useEffect, useRef, useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Suspense, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Vector3 } from "three";
 import Earth from "./components/Earth";
 import Moon from "./components/Moon";
 import CubeSat from "./components/CubeSat";
 import LoadingScreen from "./components/LoadingScreen";
-import { EARTH_ROTATION_SPEED, EARTH_TILT } from "./spaceConstants";
+import {
+  CUBESAT_MODEL_URL,
+  EARTH_ROTATION_SPEED,
+  EARTH_TILT,
+} from "./spaceConstants";
 
 const Y_AXIS = new Vector3(0, 1, 0);
 const Z_AXIS = new Vector3(0, 0, 1);
 
-function CameraControls({ homeMode }) {
+function CameraControls({ mode, cubeSatRef }) {
   const controlsRef = useRef();
   const homePositionRef = useRef(new Vector3());
+  const targetRef = useRef(new Vector3());
+  const offsetRef = useRef(new Vector3());
   const { camera, clock } = useThree();
 
-  useEffect(() => {
-    if (!homeMode || !controlsRef.current) return;
+  useFrame(() => {
+    if (!controlsRef.current) return;
 
-    const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
-    homePositionRef.current
-      .set(0, 0, 42)
-      .applyAxisAngle(Y_AXIS, earthRotation)
-      .applyAxisAngle(Z_AXIS, -EARTH_TILT);
+    if (mode === "home") {
+      const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
+      homePositionRef.current
+        .set(0, 0, 42)
+        .applyAxisAngle(Y_AXIS, earthRotation)
+        .applyAxisAngle(Z_AXIS, -EARTH_TILT);
 
-    camera.position.copy(homePositionRef.current);
-    controlsRef.current.target.set(0, 0, 0);
-    controlsRef.current.update();
-  }, [camera, clock, homeMode]);
+      camera.position.copy(homePositionRef.current);
+      controlsRef.current.target.set(0, 0, 0);
+      controlsRef.current.update();
+    }
+
+    if (mode === "cubesat" && cubeSatRef.current) {
+      cubeSatRef.current.getWorldPosition(targetRef.current);
+      offsetRef.current.copy(targetRef.current).normalize().multiplyScalar(0.5);
+      camera.position
+        .copy(targetRef.current)
+        .add(offsetRef.current)
+        .addScaledVector(camera.up, 0.15);
+      controlsRef.current.target.copy(targetRef.current);
+      controlsRef.current.update();
+    }
+  });
 
   return (
     <OrbitControls
       ref={controlsRef}
       enablePan={false}
-      enableRotate={!homeMode}
-      enableZoom={!homeMode}
+      enableRotate={mode === "free"}
+      enableZoom={mode === "free"}
       enableDamping
-      autoRotate={homeMode}
-      autoRotateSpeed={-1}
-      minDistance={6.6}
+      minDistance={mode === "cubesat" ? 0.1 : 6.6}
       maxDistance={450}
     />
   );
 }
 
 export default function App() {
-  const [homeMode, setHomeMode] = useState(true);
-  const [cubeSatModelUrl, setCubeSatModelUrl] = useState(null);
-  const cubeSatModelUrlRef = useRef(null);
-
-  useEffect(() => () => {
-    if (cubeSatModelUrlRef.current) {
-      URL.revokeObjectURL(cubeSatModelUrlRef.current);
-    }
-  }, []);
-
-  const loadCubeSatModel = (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    if (cubeSatModelUrlRef.current) {
-      URL.revokeObjectURL(cubeSatModelUrlRef.current);
-    }
-    const modelUrl = URL.createObjectURL(file);
-    cubeSatModelUrlRef.current = modelUrl;
-    setCubeSatModelUrl(modelUrl);
-    event.target.value = "";
-  };
-
-  const useDefaultCubeSat = () => {
-    if (cubeSatModelUrlRef.current) {
-      URL.revokeObjectURL(cubeSatModelUrlRef.current);
-      cubeSatModelUrlRef.current = null;
-    }
-    setCubeSatModelUrl(null);
-  };
+  const [cameraMode, setCameraMode] = useState("home");
+  const cubeSatRef = useRef();
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
@@ -103,36 +92,26 @@ export default function App() {
         <Moon />
 
         {/* CubeSat */}
-        <CubeSat modelUrl={cubeSatModelUrl} />
+        <CubeSat
+          modelUrl={CUBESAT_MODEL_URL}
+          objectRef={cubeSatRef}
+          onSelect={() => setCameraMode("cubesat")}
+        />
 
-        <CameraControls homeMode={homeMode} />
+        <CameraControls mode={cameraMode} cubeSatRef={cubeSatRef} />
       </Canvas>
-      <button
-        className="view-mode-button"
-        type="button"
-        aria-pressed={!homeMode}
-        onClick={() => setHomeMode((atHome) => !atHome)}
-      >
-        {homeMode ? "Free view" : "Go Home"}
-      </button>
-      <div className="model-controls">
-        <label className="model-control-button">
-          Load CubeSat GLB
-          <input
-            type="file"
-            accept=".glb,model/gltf-binary"
-            onChange={loadCubeSatModel}
-          />
-        </label>
-        {cubeSatModelUrl && (
+      <div className="view-mode-controls" role="group" aria-label="Camera view">
+        {["home", "free", "cubesat"].map((mode) => (
           <button
-            className="model-control-button"
+            className="view-mode-button"
             type="button"
-            onClick={useDefaultCubeSat}
+            key={mode}
+            aria-pressed={cameraMode === mode}
+            onClick={() => setCameraMode(mode)}
           >
-            Use default
+            {mode === "cubesat" ? "CubeSat" : mode[0].toUpperCase() + mode.slice(1)}
           </button>
-        )}
+        ))}
       </div>
       <LoadingScreen />
     </div>

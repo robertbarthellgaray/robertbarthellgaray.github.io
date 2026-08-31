@@ -1,17 +1,19 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
+import { SIMULATION_TIME_SCALE } from "../spaceConstants";
 
 const MOON_ORBIT_RADIUS = 384.4;
 const MOON_RADIUS = 1.737;
-const MOON_ORBIT_SPEED = (Math.PI * 2) / (28 * 60);
+const MOON_ORBIT_SPEED =
+    (Math.PI * 2 * SIMULATION_TIME_SCALE) / (28 * 86400);
 
 export default function Moon() {
     const orbitRef = useRef();
 
-    useFrame((_, delta) => {
+    useFrame(({ clock }) => {
         if (orbitRef.current) {
-            orbitRef.current.rotation.y += delta * MOON_ORBIT_SPEED;
+            orbitRef.current.rotation.y = clock.elapsedTime * MOON_ORBIT_SPEED;
         }
     });
 

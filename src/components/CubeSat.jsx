@@ -3,10 +3,10 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { Box3, MathUtils, Vector3 } from "three";
 import {
-    CUBESAT_TIME_SCALE,
     EARTH_RADIUS,
     EARTH_TILT,
     SCENE_UNIT_KM,
+    SIMULATION_TIME_SCALE,
 } from "../spaceConstants";
 
 const ORBIT_ALTITUDE_KM = 400;
@@ -48,21 +48,35 @@ function CubeSatModel({ url }) {
 
 export default function CubeSat({
     modelUrl = null,
-    timeScale = CUBESAT_TIME_SCALE,
+    timeScale = SIMULATION_TIME_SCALE,
+    objectRef,
+    onSelect,
 }) {
     const orbitRef = useRef();
 
-    useFrame((_, delta) => {
+    useFrame(({ clock }) => {
         if (orbitRef.current) {
-            orbitRef.current.rotation.y += delta * ORBIT_SPEED * timeScale;
+            orbitRef.current.rotation.y =
+                clock.elapsedTime * ORBIT_SPEED * timeScale;
         }
     });
+
+    const selectCubeSat = (event) => {
+        event.stopPropagation();
+        onSelect?.();
+    };
 
     return (
         <group rotation={[0, 0, -EARTH_TILT]}>
             <group rotation={[MathUtils.degToRad(51), 0, 0]}>
                 <group ref={orbitRef}>
-                    <group position={[ORBIT_RADIUS, 0, 0]}>
+                    <group
+                        ref={objectRef}
+                        position={[ORBIT_RADIUS, 0, 0]}
+                        onClick={selectCubeSat}
+                        onPointerOver={() => { document.body.style.cursor = "pointer"; }}
+                        onPointerOut={() => { document.body.style.cursor = "default"; }}
+                    >
                         <Suspense fallback={<DefaultCubeSat />}>
                             {modelUrl ? (
                                 <CubeSatModel url={modelUrl} />

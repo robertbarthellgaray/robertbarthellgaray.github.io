@@ -10,20 +10,36 @@ canvas {
     display: block;
 }
 
-.view-mode-button {
+.view-mode-controls {
     position: fixed;
     top: 20px;
     left: 50%;
     z-index: 20;
+    display: flex;
+    transform: translateX(-50%);
+}
+
+.view-mode-button {
     min-height: 38px;
     padding: 0 14px;
-    transform: translateX(-50%);
     color: #f4f7fb;
     background: rgb(8 12 16 / 82%);
     border: 1px solid #3b4652;
-    border-radius: 4px;
+    border-radius: 0;
     font: 600 13px/1 system-ui, sans-serif;
     cursor: pointer;
+}
+
+.view-mode-button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.view-mode-button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.view-mode-button + .view-mode-button {
+    margin-left: -1px;
 }
 
 .view-mode-button:hover {
@@ -36,57 +52,10 @@ canvas {
     outline-offset: 2px;
 }
 
-.model-controls {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 20;
-    display: flex;
-    gap: 8px;
-}
-
-.model-control-button {
-    display: grid;
-    place-items: center;
-    min-height: 38px;
-    padding: 0 12px;
-    box-sizing: border-box;
-    color: #f4f7fb;
-    background: rgb(8 12 16 / 82%);
-    border: 1px solid #3b4652;
-    border-radius: 4px;
-    font: 600 13px/1 system-ui, sans-serif;
-    cursor: pointer;
-}
-
-.model-control-button:hover {
-    border-color: #6f8194;
-    background: rgb(18 25 32 / 92%);
-}
-
-.model-control-button:focus-within,
-.model-control-button:focus-visible {
-    outline: 2px solid #4da6ff;
-    outline-offset: 2px;
-}
-
-.model-control-button input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-}
-
-@media (max-width: 600px) {
-    .view-mode-button {
-        right: 20px;
-        left: auto;
-        transform: none;
-    }
-
-    .model-controls {
-        top: 68px;
-    }
+.view-mode-button[aria-pressed="true"] {
+    color: #081018;
+    background: #7ebcff;
+    border-color: #7ebcff;
 }
 
 .loading-screen {
