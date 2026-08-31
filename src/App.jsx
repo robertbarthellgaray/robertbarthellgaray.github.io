@@ -14,7 +14,11 @@ function CubeSat() {
 export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
-      <Canvas camera={{ position: [0, 0, 4], fov: 40 }}>
+      <Canvas
+        camera={{ position: [0, 0, 4], fov: 40 }}
+        gl={{ alpha: false }}
+      >
+        <color attach="background" args={["#000000"]} />
         {/* Dim ambient light */}
         <ambientLight intensity={0.3} />
 

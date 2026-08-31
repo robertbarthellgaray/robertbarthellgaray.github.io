@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
-import { AdditiveBlending, BackSide } from "three";
+import Atmosphere from "./Atmosphere";
 
 export default function Earth() {
     const earthRef = useRef();
@@ -44,17 +44,7 @@ export default function Earth() {
                 />
             </mesh>
 
-            <mesh scale={1.06}>
-                <sphereGeometry args={[1, 96, 96]} />
-                <meshBasicMaterial
-                    color="#4da6ff"
-                    transparent
-                    opacity={0.09}
-                    side={BackSide}
-                    blending={AdditiveBlending}
-                    depthWrite={false}
-                />
-            </mesh>
+            <Atmosphere />
         </group>
     );
 }
