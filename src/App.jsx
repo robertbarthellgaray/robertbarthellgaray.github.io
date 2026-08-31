@@ -1,0 +1,38 @@
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import Earth from "./components/Earth";
+
+function CubeSat() {
+  return (
+    <mesh position={[2, 0, 0]}>
+      <boxGeometry args={[0.15, 0.15, 0.15]} />
+      <meshStandardMaterial color="white" />
+    </mesh>
+  );
+}
+
+export default function App() {
+  return (
+    <div style={{ width: "100vw", height: "100vh", background: "black" }}>
+      <Canvas camera={{ position: [0, 0, 4], fov: 40 }}>
+        {/* Dim ambient light */}
+        <ambientLight intensity={0.3} />
+
+        {/* Sun */}
+        <directionalLight
+          position={[5, 3, 5]}
+          intensity={3}
+        />
+
+        {/* Earth */}
+        <Earth />
+
+        {/* CubeSat */}
+        <CubeSat />
+
+        {/* Mouse controls */}
+        <OrbitControls enablePan={false} minDistance={2.4} maxDistance={7} />
+      </Canvas>
+    </div>
+  );
+}
