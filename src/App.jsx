@@ -47,6 +47,35 @@ function CameraControls({ homeMode }) {
 
 export default function App() {
   const [homeMode, setHomeMode] = useState(true);
+  const [cubeSatModelUrl, setCubeSatModelUrl] = useState(null);
+  const cubeSatModelUrlRef = useRef(null);
+
+  useEffect(() => () => {
+    if (cubeSatModelUrlRef.current) {
+      URL.revokeObjectURL(cubeSatModelUrlRef.current);
+    }
+  }, []);
+
+  const loadCubeSatModel = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (cubeSatModelUrlRef.current) {
+      URL.revokeObjectURL(cubeSatModelUrlRef.current);
+    }
+    const modelUrl = URL.createObjectURL(file);
+    cubeSatModelUrlRef.current = modelUrl;
+    setCubeSatModelUrl(modelUrl);
+    event.target.value = "";
+  };
+
+  const useDefaultCubeSat = () => {
+    if (cubeSatModelUrlRef.current) {
+      URL.revokeObjectURL(cubeSatModelUrlRef.current);
+      cubeSatModelUrlRef.current = null;
+    }
+    setCubeSatModelUrl(null);
+  };
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
@@ -68,13 +97,13 @@ export default function App() {
         />
 
         <Suspense fallback={null}>
-          <Earth quality="auto" highResolutionDistance={8} />
+          <Earth quality="auto" />
         </Suspense>
 
         <Moon />
 
         {/* CubeSat */}
-        <CubeSat />
+        <CubeSat modelUrl={cubeSatModelUrl} />
 
         <CameraControls homeMode={homeMode} />
       </Canvas>
@@ -86,6 +115,25 @@ export default function App() {
       >
         {homeMode ? "Free view" : "Go Home"}
       </button>
+      <div className="model-controls">
+        <label className="model-control-button">
+          Load CubeSat GLB
+          <input
+            type="file"
+            accept=".glb,model/gltf-binary"
+            onChange={loadCubeSatModel}
+          />
+        </label>
+        {cubeSatModelUrl && (
+          <button
+            className="model-control-button"
+            type="button"
+            onClick={useDefaultCubeSat}
+          >
+            Use default
+          </button>
+        )}
+      </div>
       <LoadingScreen />
     </div>
   );

@@ -6,6 +6,7 @@ import {
     EARTH_RADIUS,
     EARTH_ROTATION_SPEED,
     EARTH_TILT,
+    HIGH_RES_TEXTURE_DISTANCE,
 } from "../spaceConstants";
 
 const TEXTURE_SETS = {
@@ -23,7 +24,10 @@ const TEXTURE_SETS = {
     },
 };
 
-export default function Earth({ quality = "auto", highResolutionDistance = 3 }) {
+export default function Earth({
+    quality = "auto",
+    highResolutionDistance = HIGH_RES_TEXTURE_DISTANCE,
+}) {
     const earthRef = useRef();
     const cloudsRef = useRef();
     const upgradeStartedRef = useRef(false);
