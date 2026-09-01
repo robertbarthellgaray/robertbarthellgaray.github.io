@@ -98,6 +98,17 @@ canvas {
     margin: 0;
 }
 
+.moon-playlist {
+    display: block;
+    width: 210px;
+    aspect-ratio: 16 / 9;
+    background: #050505;
+    border: 1px solid #778492;
+    border-radius: 3px;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 55%);
+    pointer-events: auto;
+}
+
 .object-label strong {
     font-size: 13px;
 }
