@@ -139,8 +139,8 @@ export default function HomeContent({
                 <NormalizedModel
                     url={resumeUrl}
                     size={compact ? 3.2 : 4}
-                    position={compact ? [3, 0, 50] : [4, 0, 29]}
-                    rotation={[0, Math.PI / 9, 0]}
+                    position={compact ? [12, 0, 50] : [9.5, 0, 34]}
+                    rotation={[0, (Math.PI * 5) / 18, 0]}
                     faceCamera={false}
                     objectRef={resumeRef}
                     onClick={openResume}
@@ -150,7 +150,7 @@ export default function HomeContent({
                     <Billboard
                         position={
                             resumeActive
-                                ? (compact ? [3, -2.4, 50] : [4, -2.5, 29])
+                                ? (compact ? [12, -2.4, 50] : [9.5, -2.5, 34])
                                 : (compact ? [2.5, -1.2, 52] : [3.4, 0, 35])
                         }
                         follow
