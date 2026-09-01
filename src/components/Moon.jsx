@@ -21,6 +21,14 @@ function getMediaUrl({ provider, id }) {
     return `https://www.youtube-nocookie.com/embed/videoseries?list=${id}`;
 }
 
+function getMediaLink({ provider, id }) {
+    if (provider === "bilibili") {
+        return `https://www.bilibili.com/video/${id}/`;
+    }
+
+    return `https://www.youtube.com/playlist?list=${id}`;
+}
+
 function MoonMaterial({ textureUrl }) {
     const texture = useTexture(textureUrl);
     const colorTexture = useMemo(() => {
@@ -94,7 +102,13 @@ export default function Moon({
                             >
                                 <div className="moon-playlist-row">
                                     <div className="moon-playlist-title">
-                                        <strong>{entry.title}</strong>
+                                        <a
+                                            href={getMediaLink(entry)}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {entry.title}
+                                        </a>
                                         <p>{entry.description}</p>
                                     </div>
                                     <iframe

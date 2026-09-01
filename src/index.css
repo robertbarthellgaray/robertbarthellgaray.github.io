@@ -94,8 +94,10 @@ canvas {
     font: 18px/1.55 system-ui, sans-serif;
 }
 
-.moon-blurb p {
+.moon-blurb p,
+.moon-playlist-title p {
     margin: 0;
+    white-space: pre-line;
 }
 
 .moon-playlist-row {
@@ -118,8 +120,16 @@ canvas {
     text-align: center;
 }
 
-.moon-playlist-title strong {
+.moon-playlist-title a {
+    color: #f4f7fb;
     font-size: 17px;
+    font-weight: 600;
+    text-decoration-color: #7ebcff;
+    text-underline-offset: 3px;
+}
+
+.moon-playlist-title a:hover {
+    color: #a8d3ff;
 }
 
 .moon-playlist-title p {
