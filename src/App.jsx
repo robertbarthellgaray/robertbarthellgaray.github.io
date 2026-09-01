@@ -20,6 +20,8 @@ function CameraControls({ mode, cubeSatRef }) {
   const homePositionRef = useRef(new Vector3());
   const targetRef = useRef(new Vector3());
   const offsetRef = useRef(new Vector3());
+  const previousTargetRef = useRef(new Vector3());
+  const lastModeRef = useRef(mode);
   const { camera, clock } = useThree();
 
   useFrame(() => {
@@ -39,25 +41,37 @@ function CameraControls({ mode, cubeSatRef }) {
 
     if (mode === "cubesat" && cubeSatRef.current) {
       cubeSatRef.current.getWorldPosition(targetRef.current);
-      offsetRef.current.copy(targetRef.current).normalize().multiplyScalar(0.5);
-      camera.position
-        .copy(targetRef.current)
-        .add(offsetRef.current)
-        .addScaledVector(camera.up, 0.15);
+
+      if (lastModeRef.current !== "cubesat") {
+        offsetRef.current.copy(targetRef.current).normalize().multiplyScalar(0.5);
+        camera.position
+          .copy(targetRef.current)
+          .add(offsetRef.current)
+          .addScaledVector(camera.up, 0.15);
+      } else {
+        offsetRef.current
+          .copy(targetRef.current)
+          .sub(previousTargetRef.current);
+        camera.position.add(offsetRef.current);
+      }
+
       controlsRef.current.target.copy(targetRef.current);
+      previousTargetRef.current.copy(targetRef.current);
       controlsRef.current.update();
     }
+
+    lastModeRef.current = mode;
   });
 
   return (
     <OrbitControls
       ref={controlsRef}
       enablePan={false}
-      enableRotate={mode === "free"}
-      enableZoom={mode === "free"}
+      enableRotate={mode === "free" || mode === "cubesat"}
+      enableZoom={mode === "free" || mode === "cubesat"}
       enableDamping
       minDistance={mode === "cubesat" ? 0.1 : 6.6}
-      maxDistance={450}
+      maxDistance={mode === "cubesat" ? 3 : 450}
     />
   );
 }
@@ -96,6 +110,7 @@ export default function App() {
           modelUrl={CUBESAT_MODEL_URL}
           objectRef={cubeSatRef}
           onSelect={() => setCameraMode("cubesat")}
+          showLabel={cameraMode === "cubesat"}
         />
 
         <CameraControls mode={cameraMode} cubeSatRef={cubeSatRef} />

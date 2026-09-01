@@ -1,6 +1,6 @@
 import { Suspense, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
+import { Html, useGLTF } from "@react-three/drei";
 import { Box3, MathUtils, Vector3 } from "three";
 import {
     EARTH_RADIUS,
@@ -51,6 +51,7 @@ export default function CubeSat({
     timeScale = SIMULATION_TIME_SCALE,
     objectRef,
     onSelect,
+    showLabel = false,
 }) {
     const orbitRef = useRef();
 
@@ -84,6 +85,14 @@ export default function CubeSat({
                                 <DefaultCubeSat />
                             )}
                         </Suspense>
+                        {showLabel && (
+                            <Html position={[0.12, 0.1, 0]} center>
+                                <div className="object-label">
+                                    <strong>CubeSat</strong>
+                                    <span>Technology demonstration</span>
+                                </div>
+                            </Html>
+                        )}
                     </group>
                 </group>
             </group>
