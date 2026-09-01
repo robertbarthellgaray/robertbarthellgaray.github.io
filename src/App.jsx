@@ -198,7 +198,7 @@ export default function App() {
           position={[5, 3, 5]}
           intensity={30}
         />
-        <Sun visible={cameraMode !== "moon"} />
+        <Sun />
 
         <Suspense fallback={null}>
           <Earth
@@ -212,13 +212,13 @@ export default function App() {
           objectRef={moonRef}
           panelRef={moonPanelRef}
           onSelect={() => setCameraMode("moon")}
-          showContent={cameraMode === "moon"}
+          showContent
           language={language}
         />
 
         <Suspense fallback={null}>
           <HomeContent
-            visible={cameraMode !== "cubesat" && cameraMode !== "trajectory"}
+            visible
             faceCamera={cameraMode === "home"}
             resumeRef={resumeRef}
             onSelectResume={() => setCameraMode("resume")}
@@ -230,22 +230,16 @@ export default function App() {
           />
         </Suspense>
 
-        {(cameraMode === "home" || cameraMode === "trajectory") && (
-          <Suspense fallback={null}>
-            <TrajectoryWork
-              objectRef={trajectoryRef}
-              showContent={cameraMode === "trajectory"}
-              onSelect={() => setCameraMode("trajectory")}
-            />
-          </Suspense>
-        )}
+        <Suspense fallback={null}>
+          <TrajectoryWork objectRef={trajectoryRef} />
+        </Suspense>
 
         {/* CubeSat */}
         <CubeSat
           modelUrl={CUBESAT_MODEL_URL}
           objectRef={cubeSatRef}
           onSelect={() => setCameraMode("cubesat")}
-          showLabel={cameraMode === "cubesat"}
+          showLabel
           showTarget={cubeSatTargetVisible && cameraMode !== "cubesat"}
           onCatch={catchCubeSat}
         />

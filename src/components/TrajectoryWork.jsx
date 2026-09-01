@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { Html, useGLTF } from "@react-three/drei";
 import { Box3, Vector3 } from "three";
 import claudiusUrl from "../assets/ClaudiusOrbitv2.glb?url";
@@ -7,9 +7,13 @@ import remusUrl from "../assets/RemusOrbitv2.glb?url";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 import { TRAJECTORY_CONTENT } from "../trajectoryContent";
 
-const HOME_PREVIEW_POSITION = [-4.6, 0, 35];
+const TRAJECTORY_TRANSFORM = {
+    position: [-5, 0, 40],
+    rotation: [0, Math.PI / 2, 0],
+    scale: 1,
+};
 
-function NormalizedTrajectory({ url, position, onClick }) {
+function NormalizedTrajectory({ url, position }) {
     const { scene } = useGLTF(url);
     const model = useMemo(() => {
         const object = scene.clone(true);
@@ -30,21 +34,7 @@ function NormalizedTrajectory({ url, position, onClick }) {
     }, [scene]);
 
     return (
-        <group
-            position={position}
-            rotation={[Math.PI / 2, 0, 0]}
-            onClick={onClick}
-            onPointerOver={
-                onClick
-                    ? () => { document.body.style.cursor = "pointer"; }
-                    : undefined
-            }
-            onPointerOut={
-                onClick
-                    ? () => { document.body.style.cursor = "default"; }
-                    : undefined
-            }
-        >
+        <group position={position} rotation={[Math.PI / 2, 0, 0]}>
             <group scale={model.scale}>
                 <primitive object={model.object} position={model.center} />
             </group>
@@ -80,10 +70,8 @@ function MissionPanel({ mission }) {
     );
 }
 
-export default function TrajectoryWork({ objectRef, showContent, onSelect }) {
+export default function TrajectoryWork({ objectRef }) {
     const orbitRef = useRef();
-    const { size } = useThree();
-    const compact = size.width < 700;
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {
@@ -95,37 +83,21 @@ export default function TrajectoryWork({ objectRef, showContent, onSelect }) {
     return (
         <group rotation={[0, 0, -EARTH_TILT]}>
             <group ref={orbitRef}>
-                {!showContent && (
-                    <NormalizedTrajectory
-                        url={remusUrl}
-                        position={compact ? [-3.2, 0, 52] : HOME_PREVIEW_POSITION}
-                        onClick={(event) => {
-                            event.stopPropagation();
-                            onSelect();
-                        }}
-                    />
-                )}
-                {showContent && (
-                    <group
-                        ref={objectRef}
-                        position={compact ? [-15, 0, 65] : [-5, 0, 40]}
-                        rotation={[0, Math.PI / 2, 0]}
-                    >
-                        <Html position={[0, 3.5, 0]} center transform distanceFactor={2}>
-                            <h1 className="trajectory-title">
-                                {TRAJECTORY_CONTENT.title}
-                            </h1>
-                        </Html>
-                        <NormalizedTrajectory url={claudiusUrl} position={[-3, 0.8, 0]} />
-                        <NormalizedTrajectory url={remusUrl} position={[3, 0.8, 0]} />
-                        <Html position={[-3, -2.5, 0]} center transform distanceFactor={1.8}>
-                            <MissionPanel mission={TRAJECTORY_CONTENT.claudius} />
-                        </Html>
-                        <Html position={[3, -2.5, 0]} center transform distanceFactor={1.8}>
-                            <MissionPanel mission={TRAJECTORY_CONTENT.remus} />
-                        </Html>
-                    </group>
-                )}
+                <group ref={objectRef} {...TRAJECTORY_TRANSFORM}>
+                    <Html position={[0, 3.5, 0]} center transform distanceFactor={2}>
+                        <h1 className="trajectory-title">
+                            {TRAJECTORY_CONTENT.title}
+                        </h1>
+                    </Html>
+                    <NormalizedTrajectory url={claudiusUrl} position={[-3, 0.8, 0]} />
+                    <NormalizedTrajectory url={remusUrl} position={[3, 0.8, 0]} />
+                    <Html position={[-3, -2.5, 0]} center transform distanceFactor={1.8}>
+                        <MissionPanel mission={TRAJECTORY_CONTENT.claudius} />
+                    </Html>
+                    <Html position={[3, -2.5, 0]} center transform distanceFactor={1.8}>
+                        <MissionPanel mission={TRAJECTORY_CONTENT.remus} />
+                    </Html>
+                </group>
             </group>
         </group>
     );
