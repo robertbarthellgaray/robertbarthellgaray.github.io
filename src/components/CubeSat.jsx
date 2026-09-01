@@ -17,6 +17,10 @@ const ORBIT_SPEED = Math.sqrt(
     EARTH_GRAVITATIONAL_PARAMETER / ORBIT_RADIUS_KM ** 3,
 );
 const DISPLAY_SIZE = 0.08;
+const CUBESAT_PARAGRAPHS = [
+    "I work at the Laboratory for Advanced Space Systems at Illinois. Our flagship project, MonARCH, is testing a novel dual propulsion system.",
+    "For this project I have...",
+];
 
 function ThrusterFlame({ position, color, radius, length, phase }) {
     const flameRef = useRef();
@@ -169,14 +173,14 @@ export default function CubeSat({
                             </Html>
                         )}
                         {showLabel && (
-                            <Html position={[0.12, 0.1, 0]} center>
+                            <Html position={[0.0, 0.1, 0.0]} center>
                                 <section className="cubesat-blurb">
-                                    <strong>CubeSat</strong>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit. Integer vitae justo sed
-                                        sapien luctus cursus.
-                                    </p>
+                                    <strong>CubeSat work at LASSI</strong>
+                                    {CUBESAT_PARAGRAPHS.map((paragraph, index) => (
+                                        <p key={`cubesat-paragraph-${index}`}>
+                                            {paragraph}
+                                        </p>
+                                    ))}
                                 </section>
                             </Html>
                         )}

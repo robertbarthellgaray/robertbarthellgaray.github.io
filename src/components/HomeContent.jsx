@@ -90,6 +90,7 @@ export default function HomeContent({
     onGoHome,
     language,
     onLanguageChange,
+    onSelectTrajectories,
 }) {
     const orbitRef = useRef();
     const { size } = useThree();
@@ -172,6 +173,25 @@ export default function HomeContent({
                                 <span aria-hidden="true">
                                     {resumeActive ? "←" : "→"}
                                 </span>
+                            </button>
+                        </Html>
+                    </Billboard>
+                )}
+                {visible && faceCamera && (
+                    <Billboard
+                        position={compact ? [-2.6, -1.2, 52] : [-4, 0, 35]}
+                        follow
+                    >
+                        <Html center transform distanceFactor={compact ? 1 : 2}>
+                            <button
+                                className="resume-pointer"
+                                type="button"
+                                title="View trajectory work"
+                                aria-label="Turn toward trajectory work"
+                                onPointerDown={(event) => event.stopPropagation()}
+                                onClick={onSelectTrajectories}
+                            >
+                                <span aria-hidden="true">←</span>
                             </button>
                         </Html>
                     </Billboard>

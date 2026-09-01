@@ -53,6 +53,67 @@ canvas {
     white-space: nowrap;
 }
 
+.trajectory-title {
+    width: max-content;
+    margin: 0;
+    color: #f4f7fb;
+    font: 800 34px/1 system-ui, sans-serif;
+    letter-spacing: 0;
+    text-shadow: 0 2px 12px #000;
+}
+
+.trajectory-panel {
+    width: 330px;
+    padding: 14px;
+    box-sizing: border-box;
+    color: #f4f7fb;
+    background: rgb(8 12 16 / 88%);
+    border: 1px solid #536171;
+    border-top: 3px solid #7ebcff;
+    border-radius: 4px;
+    font: 13px/1.45 system-ui, sans-serif;
+}
+
+.trajectory-panel h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    letter-spacing: 0;
+}
+
+.trajectory-copy p {
+    margin: 0 0 8px;
+}
+
+.trajectory-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.trajectory-gallery a {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #050505;
+    border: 1px solid #3b4652;
+    border-radius: 3px;
+}
+
+.trajectory-gallery a:hover {
+    border-color: #7ebcff;
+}
+
+.trajectory-gallery a:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.trajectory-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 @keyframes target-pulse {
     from { transform: scale(0.9); }
     to { transform: scale(1.08); }

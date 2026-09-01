@@ -8,6 +8,7 @@ import CubeSat from "./components/CubeSat";
 import HomeContent from "./components/HomeContent";
 import LoadingScreen from "./components/LoadingScreen";
 import Sun from "./components/Sun";
+import TrajectoryWork from "./components/TrajectoryWork";
 import {
   CUBESAT_MODEL_URL,
   EARTH_ROTATION_SPEED,
@@ -23,6 +24,7 @@ function CameraControls({
   resumeRef,
   moonRef,
   moonPanelRef,
+  trajectoryRef,
 }) {
   const controlsRef = useRef();
   const homePositionRef = useRef(new Vector3());
@@ -41,9 +43,10 @@ function CameraControls({
     if (!controlsRef.current) return;
 
     const modeChanged = lastModeRef.current !== mode;
+    let targetReady = false;
     if (modeChanged) transitionTimeRef.current = 0;
 
-    if (mode === "home" || mode === "resume") {
+    if (mode === "home" || mode === "resume" || mode === "trajectory") {
       const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
       homePositionRef.current
         .set(0, 0, size.width < 700 ? 60 : 42)
@@ -53,8 +56,13 @@ function CameraControls({
       desiredCameraRef.current.copy(homePositionRef.current);
       if (mode === "resume" && resumeRef.current) {
         resumeRef.current.getWorldPosition(desiredTargetRef.current);
+        targetReady = true;
+      } else if (mode === "trajectory" && trajectoryRef.current) {
+        trajectoryRef.current.getWorldPosition(desiredTargetRef.current);
+        targetReady = true;
       } else {
         desiredTargetRef.current.set(0, 0, 0);
+        targetReady = mode === "home";
       }
     }
 
@@ -82,6 +90,7 @@ function CameraControls({
       }
 
       previousTargetRef.current.copy(targetRef.current);
+      targetReady = true;
     }
 
     if (mode === "moon" && moonRef.current && moonPanelRef.current) {
@@ -94,14 +103,18 @@ function CameraControls({
       desiredCameraRef.current
         .copy(targetRef.current)
         .addScaledVector(moonRadialRef.current, -8);
+      targetReady = true;
     }
 
-    if (mode !== "free" && transitionTimeRef.current < 1.5) {
+    if (mode !== "free" && targetReady && transitionTimeRef.current < 1.5) {
       const blend = 1 - Math.exp(-4 * delta);
       camera.position.lerp(desiredCameraRef.current, blend);
       controlsRef.current.target.lerp(desiredTargetRef.current, blend);
       transitionTimeRef.current += delta;
-    } else if (mode === "home" || mode === "resume" || mode === "moon") {
+    } else if (
+      targetReady &&
+      (mode === "home" || mode === "resume" || mode === "moon" || mode === "trajectory")
+    ) {
       camera.position.copy(desiredCameraRef.current);
       controlsRef.current.target.copy(desiredTargetRef.current);
     }
@@ -132,6 +145,7 @@ export default function App() {
   const resumeRef = useRef();
   const moonRef = useRef();
   const moonPanelRef = useRef();
+  const trajectoryRef = useRef();
   const targetTimerRef = useRef();
   const messageTimerRef = useRef();
 
@@ -204,7 +218,7 @@ export default function App() {
 
         <Suspense fallback={null}>
           <HomeContent
-            visible={cameraMode !== "cubesat"}
+            visible={cameraMode !== "cubesat" && cameraMode !== "trajectory"}
             faceCamera={cameraMode === "home"}
             resumeRef={resumeRef}
             onSelectResume={() => setCameraMode("resume")}
@@ -212,8 +226,15 @@ export default function App() {
             onGoHome={() => setCameraMode("home")}
             language={language}
             onLanguageChange={setLanguage}
+            onSelectTrajectories={() => setCameraMode("trajectory")}
           />
         </Suspense>
+
+        {cameraMode === "trajectory" && (
+          <Suspense fallback={null}>
+            <TrajectoryWork objectRef={trajectoryRef} />
+          </Suspense>
+        )}
 
         {/* CubeSat */}
         <CubeSat
@@ -231,10 +252,11 @@ export default function App() {
           resumeRef={resumeRef}
           moonRef={moonRef}
           moonPanelRef={moonPanelRef}
+          trajectoryRef={trajectoryRef}
         />
       </Canvas>
       <div className="view-mode-controls" role="group" aria-label="Camera view">
-        {["home", "free", "cubesat", "moon", "resume"].map((mode) => (
+        {["home", "free", "cubesat", "moon", "trajectory", "resume"].map((mode) => (
           <button
             className="view-mode-button"
             type="button"
@@ -242,7 +264,11 @@ export default function App() {
             aria-pressed={cameraMode === mode}
             onClick={() => setCameraMode(mode)}
           >
-            {mode === "cubesat" ? "CubeSat" : mode[0].toUpperCase() + mode.slice(1)}
+            {mode === "cubesat"
+              ? "CubeSat"
+              : mode === "trajectory"
+                ? "Trajectories"
+                : mode[0].toUpperCase() + mode.slice(1)}
           </button>
         ))}
       </div>
