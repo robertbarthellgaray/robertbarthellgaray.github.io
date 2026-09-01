@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 import Earth from "./components/Earth";
 import Moon from "./components/Moon";
 import CubeSat from "./components/CubeSat";
+import CubeSail from "./components/CubeSail";
 import HomeContent from "./components/HomeContent";
 import LoadingScreen from "./components/LoadingScreen";
 import Sun from "./components/Sun";
@@ -22,6 +23,7 @@ const Z_AXIS = new Vector3(0, 0, 1);
 function CameraControls({
   mode,
   cubeSatRef,
+  cubeSailRef,
   resumeRef,
   moonRef,
   moonPanelRef,
@@ -67,8 +69,9 @@ function CameraControls({
       }
     }
 
-    if (mode === "cubesat" && cubeSatRef.current) {
-      cubeSatRef.current.getWorldPosition(targetRef.current);
+    const spacecraftRef = mode === "cubesail" ? cubeSailRef : cubeSatRef;
+    if ((mode === "cubesat" || mode === "cubesail") && spacecraftRef.current) {
+      spacecraftRef.current.getWorldPosition(targetRef.current);
 
       if (modeChanged) {
         offsetRef.current.copy(targetRef.current).normalize().multiplyScalar(0.5);
@@ -128,11 +131,11 @@ function CameraControls({
     <OrbitControls
       ref={controlsRef}
       enablePan={false}
-      enableRotate={mode === "free" || mode === "cubesat"}
-      enableZoom={mode === "free" || mode === "cubesat"}
+      enableRotate={mode === "free" || mode === "cubesat" || mode === "cubesail"}
+      enableZoom={mode === "free" || mode === "cubesat" || mode === "cubesail"}
       enableDamping
-      minDistance={mode === "cubesat" ? 0.1 : 6.6}
-      maxDistance={mode === "cubesat" ? 3 : 450}
+      minDistance={mode === "cubesat" || mode === "cubesail" ? 0.1 : 6.6}
+      maxDistance={mode === "cubesat" || mode === "cubesail" ? 3 : 450}
     />
   );
 }
@@ -143,6 +146,7 @@ export default function App() {
   const [cubeSatTargetVisible, setCubeSatTargetVisible] = useState(false);
   const [showCatchMessage, setShowCatchMessage] = useState(false);
   const cubeSatRef = useRef();
+  const cubeSailRef = useRef();
   const resumeRef = useRef();
   const moonRef = useRef();
   const moonPanelRef = useRef();
@@ -243,9 +247,16 @@ export default function App() {
           onCatch={catchCubeSat}
         />
 
+        <CubeSail
+          objectRef={cubeSailRef}
+          onSelect={() => setCameraMode("cubesail")}
+          language={language}
+        />
+
         <CameraControls
           mode={cameraMode}
           cubeSatRef={cubeSatRef}
+          cubeSailRef={cubeSailRef}
           resumeRef={resumeRef}
           moonRef={moonRef}
           moonPanelRef={moonPanelRef}
@@ -271,6 +282,7 @@ export default function App() {
           [
             ["free", "Free view"],
             ["cubesat", "CubeSat"],
+            ["cubesail", "CubeSail"],
             ["moon", "Moon"],
             ["trajectory", "Trajectories"],
             ["resume", "Résumé"],

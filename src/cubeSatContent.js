@@ -7,3 +7,13 @@ export const CUBESAT_CONTENT = {
     hi: { title: "LASSI में क्यूबसैट कार्य", paragraphs: ["पहला अनुच्छेद यहाँ लिखें।", "दूसरा अनुच्छेद यहाँ लिखें।"] },
     zh: { title: "LASSI立方星项目", paragraphs: ["在此编辑第一段。", "在此编辑第二段。"] },
 };
+
+export const CUBESAIL_CONTENT = {
+    en: { title: "CubeSail at LASSI", paragraphs: ["CubeSail is a separate mission in a 750 km sun-synchronous orbit at 97.7 degrees inclination.", "Edit this text with details about your work on CubeSail."] },
+    es: { title: "CubeSail en LASSI", paragraphs: ["CubeSail es una misión independiente en una órbita heliosíncrona de 750 km y 97,7 grados de inclinación.", "Edite este texto con detalles sobre su trabajo en CubeSail."] },
+    fr: { title: "CubeSail à LASSI", paragraphs: ["CubeSail est une mission distincte sur une orbite héliosynchrone de 750 km inclinée à 97,7 degrés.", "Modifiez ce texte avec des détails sur votre travail sur CubeSail."] },
+    de: { title: "CubeSail bei LASSI", paragraphs: ["CubeSail ist eine eigenständige Mission in einer 750 km hohen sonnensynchronen Umlaufbahn mit 97,7 Grad Bahnneigung.", "Bearbeiten Sie diesen Text mit Einzelheiten zu Ihrer Arbeit an CubeSail."] },
+    ru: { title: "CubeSail в LASSI", paragraphs: ["CubeSail - отдельная миссия на солнечно-синхронной орбите высотой 750 км с наклонением 97,7 градуса.", "Добавьте сюда сведения о своей работе над CubeSail."] },
+    hi: { title: "LASSI में CubeSail", paragraphs: ["CubeSail 750 किमी ऊँचाई और 97.7 अंश झुकाव वाली सूर्य-समकालिक कक्षा में एक अलग मिशन है।", "CubeSail पर अपने कार्य का विवरण यहाँ लिखें।"] },
+    zh: { title: "LASSI CubeSail项目", paragraphs: ["CubeSail是一个独立任务，运行在高度750公里、倾角97.7度的太阳同步轨道上。", "请在此填写您参与CubeSail项目的工作内容。"] },
+};

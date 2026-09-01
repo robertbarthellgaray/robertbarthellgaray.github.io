@@ -1,6 +1,5 @@
 import { AdditiveBlending } from "three";
-
-const SUN_POSITION = [495, 0, 495];
+import { SUN_POSITION } from "../sceneConstants";
 
 export default function Sun({ visible = true }) {
     return (
