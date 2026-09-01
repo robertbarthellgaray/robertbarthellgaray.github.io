@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Billboard, Html, useGLTF } from "@react-three/drei";
 import { Box3, MeshBasicMaterial, Vector3 } from "three";
@@ -88,9 +88,10 @@ export default function HomeContent({
     onSelectResume,
     resumeActive,
     onGoHome,
+    language,
+    onLanguageChange,
 }) {
     const orbitRef = useRef();
-    const [language, setLanguage] = useState("en");
     const { size } = useThree();
     const compact = size.width < 700;
     const content = HOME_CONTENT[language];
@@ -197,7 +198,7 @@ export default function HomeContent({
                                         type="button"
                                         key={code}
                                         aria-pressed={language === code}
-                                        onClick={() => setLanguage(code)}
+                                        onClick={() => onLanguageChange(code)}
                                     >
                                         {entry.label}
                                     </button>

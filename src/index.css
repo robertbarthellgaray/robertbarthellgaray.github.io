@@ -118,6 +118,17 @@ canvas {
     text-align: center;
 }
 
+.moon-playlist-title strong {
+    font-size: 17px;
+}
+
+.moon-playlist-title p {
+    margin: 8px 0 0;
+    color: #aeb8c3;
+    font-size: 13px;
+    font-weight: 400;
+}
+
 .moon-playlist {
     display: block;
     width: 420px;

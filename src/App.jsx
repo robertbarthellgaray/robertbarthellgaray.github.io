@@ -125,6 +125,7 @@ function CameraControls({
 
 export default function App() {
   const [cameraMode, setCameraMode] = useState("home");
+  const [language, setLanguage] = useState("en");
   const cubeSatRef = useRef();
   const resumeRef = useRef();
   const moonRef = useRef();
@@ -159,6 +160,7 @@ export default function App() {
           panelRef={moonPanelRef}
           onSelect={() => setCameraMode("moon")}
           showContent={cameraMode === "moon"}
+          language={language}
         />
 
         <Suspense fallback={null}>
@@ -169,6 +171,8 @@ export default function App() {
             onSelectResume={() => setCameraMode("resume")}
             resumeActive={cameraMode === "resume"}
             onGoHome={() => setCameraMode("home")}
+            language={language}
+            onLanguageChange={setLanguage}
           />
         </Suspense>
 

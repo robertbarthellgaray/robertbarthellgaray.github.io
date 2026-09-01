@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Billboard, Html, useTexture } from "@react-three/drei";
 import { MathUtils, SRGBColorSpace } from "three";
 import { SIMULATION_TIME_SCALE } from "../spaceConstants";
+import { MOON_CONTENT } from "../moonContent";
 
 // Add the image to public/textures, then set this to "/textures/moon.jpg".
 const MOON_TEXTURE_URL = "/textures/moon.jpg";
@@ -11,20 +12,14 @@ const MOON_ORBIT_RADIUS = 384.4;
 const MOON_RADIUS = 1.737;
 const MOON_ORBIT_SPEED =
     (Math.PI * 2 * SIMULATION_TIME_SCALE) / (28 * 86400);
-const MOON_PLAYLISTS = [
-    {
-        title: "Playlist One",
-        playlistId: "PLBt9xFJ_FiRE",
-    },
-    {
-        title: "Playlist Two",
-        playlistId: "PLLR29pi1Q4gBnNYs49NG_gnr3ArA-ELxs",
-    },
-    {
-        title: "Playlist Three",
-        playlistId: "PLLR29pi1Q4gAxXkMaBPdWQdicUqoDFsbL",
-    },
-];
+
+function getMediaUrl({ provider, id }) {
+    if (provider === "bilibili") {
+        return `https://player.bilibili.com/player.html?bvid=${id}&poster=1&autoplay=0`;
+    }
+
+    return `https://www.youtube-nocookie.com/embed/videoseries?list=${id}`;
+}
 
 function MoonMaterial({ textureUrl }) {
     const texture = useTexture(textureUrl);
@@ -38,8 +33,15 @@ function MoonMaterial({ textureUrl }) {
     return <meshStandardMaterial map={colorTexture} roughness={1} />;
 }
 
-export default function Moon({ objectRef, panelRef, onSelect, showContent }) {
+export default function Moon({
+    objectRef,
+    panelRef,
+    onSelect,
+    showContent,
+    language,
+}) {
     const orbitRef = useRef();
+    const content = MOON_CONTENT[language] ?? MOON_CONTENT.en;
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {
@@ -72,33 +74,33 @@ export default function Moon({ objectRef, panelRef, onSelect, showContent }) {
                             <Html center transform distanceFactor={2.2}>
                                 <section className="moon-blurb">
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit. Integer vitae justo sed
-                                        sapien luctus cursus. Donec vel sem at
-                                        ligula volutpat facilisis.
+                                        {content.blurb}
                                     </p>
                                 </section>
                             </Html>
                         )}
                     </Billboard>
-                    {showContent && MOON_PLAYLISTS.map(({ title, playlistId }, index) => (
+                    {showContent && content.media.map((entry, index) => (
                         <Billboard
-                            key={playlistId}
-                            position={[-1.8, (1 - index) * 1.35, 0]}
+                            key={`${entry.provider}-${entry.id}`}
+                            position={[-1.8, (1 - index) * 1.05, 0]}
                             follow
                         >
                             <Html
                                 center
                                 transform
-                                distanceFactor={1.2}
+                                distanceFactor={1.5}
                                 onPointerDown={(event) => event.stopPropagation()}
                             >
                                 <div className="moon-playlist-row">
-                                    <div className="moon-playlist-title">{title}</div>
+                                    <div className="moon-playlist-title">
+                                        <strong>{entry.title}</strong>
+                                        <p>{entry.description}</p>
+                                    </div>
                                     <iframe
                                         className="moon-playlist"
-                                        src={`https://www.youtube-nocookie.com/embed/videoseries?list=${playlistId}`}
-                                        title={title || `Moon playlist ${index + 1}`}
+                                        src={getMediaUrl(entry)}
+                                        title={entry.title || `Moon media ${index + 1}`}
                                         loading="lazy"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                         referrerPolicy="strict-origin-when-cross-origin"
