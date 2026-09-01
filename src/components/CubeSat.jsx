@@ -87,10 +87,14 @@ export default function CubeSat({
                         </Suspense>
                         {showLabel && (
                             <Html position={[0.12, 0.1, 0]} center>
-                                <div className="object-label">
+                                <section className="cubesat-blurb">
                                     <strong>CubeSat</strong>
-                                    <span>Technology demonstration</span>
-                                </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit. Integer vitae justo sed
+                                        sapien luctus cursus.
+                                    </p>
+                                </section>
                             </Html>
                         )}
                     </group>

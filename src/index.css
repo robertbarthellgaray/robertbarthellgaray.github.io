@@ -58,7 +58,8 @@ canvas {
     border-color: #7ebcff;
 }
 
-.object-label {
+.object-label,
+.cubesat-blurb {
     display: grid;
     gap: 3px;
     width: max-content;
@@ -69,6 +70,32 @@ canvas {
     border-left: 2px solid #7ebcff;
     font: 12px/1.3 system-ui, sans-serif;
     white-space: nowrap;
+}
+
+.cubesat-blurb {
+    width: 230px;
+    white-space: normal;
+}
+
+.cubesat-blurb p {
+    margin: 4px 0 0;
+    color: #aeb8c3;
+}
+
+.moon-blurb {
+    width: min(420px, 44vw);
+    padding: 24px;
+    box-sizing: border-box;
+    color: #f4f7fb;
+    background: rgb(8 12 16 / 84%);
+    border: 1px solid #536171;
+    border-left: 3px solid #7ebcff;
+    border-radius: 4px;
+    font: 18px/1.55 system-ui, sans-serif;
+}
+
+.moon-blurb p {
+    margin: 0;
 }
 
 .object-label strong {

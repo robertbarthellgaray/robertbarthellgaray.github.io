@@ -16,7 +16,13 @@ import {
 const Y_AXIS = new Vector3(0, 1, 0);
 const Z_AXIS = new Vector3(0, 0, 1);
 
-function CameraControls({ mode, cubeSatRef, resumeRef }) {
+function CameraControls({
+  mode,
+  cubeSatRef,
+  resumeRef,
+  moonRef,
+  moonPanelRef,
+}) {
   const controlsRef = useRef();
   const homePositionRef = useRef(new Vector3());
   const targetRef = useRef(new Vector3());
@@ -24,6 +30,8 @@ function CameraControls({ mode, cubeSatRef, resumeRef }) {
   const previousTargetRef = useRef(new Vector3());
   const desiredCameraRef = useRef(new Vector3());
   const desiredTargetRef = useRef(new Vector3());
+  const moonPanelPositionRef = useRef(new Vector3());
+  const moonRadialRef = useRef(new Vector3());
   const transitionTimeRef = useRef(0);
   const lastModeRef = useRef(mode);
   const { camera, clock, size } = useThree();
@@ -75,12 +83,24 @@ function CameraControls({ mode, cubeSatRef, resumeRef }) {
       previousTargetRef.current.copy(targetRef.current);
     }
 
+    if (mode === "moon" && moonRef.current && moonPanelRef.current) {
+      moonRef.current.getWorldPosition(targetRef.current);
+      moonPanelRef.current.getWorldPosition(moonPanelPositionRef.current);
+      desiredTargetRef.current
+        .copy(targetRef.current)
+        .lerp(moonPanelPositionRef.current, 0.5);
+      moonRadialRef.current.copy(targetRef.current).normalize();
+      desiredCameraRef.current
+        .copy(targetRef.current)
+        .addScaledVector(moonRadialRef.current, 8);
+    }
+
     if (mode !== "free" && transitionTimeRef.current < 1.5) {
       const blend = 1 - Math.exp(-4 * delta);
       camera.position.lerp(desiredCameraRef.current, blend);
       controlsRef.current.target.lerp(desiredTargetRef.current, blend);
       transitionTimeRef.current += delta;
-    } else if (mode === "home" || mode === "resume") {
+    } else if (mode === "home" || mode === "resume" || mode === "moon") {
       camera.position.copy(desiredCameraRef.current);
       controlsRef.current.target.copy(desiredTargetRef.current);
     }
@@ -106,6 +126,8 @@ export default function App() {
   const [cameraMode, setCameraMode] = useState("home");
   const cubeSatRef = useRef();
   const resumeRef = useRef();
+  const moonRef = useRef();
+  const moonPanelRef = useRef();
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
@@ -130,7 +152,12 @@ export default function App() {
           <Earth quality="auto" />
         </Suspense>
 
-        <Moon />
+        <Moon
+          objectRef={moonRef}
+          panelRef={moonPanelRef}
+          onSelect={() => setCameraMode("moon")}
+          showContent={cameraMode === "moon"}
+        />
 
         <Suspense fallback={null}>
           <HomeContent
@@ -155,10 +182,12 @@ export default function App() {
           mode={cameraMode}
           cubeSatRef={cubeSatRef}
           resumeRef={resumeRef}
+          moonRef={moonRef}
+          moonPanelRef={moonPanelRef}
         />
       </Canvas>
       <div className="view-mode-controls" role="group" aria-label="Camera view">
-        {["home", "free", "cubesat", "resume"].map((mode) => (
+        {["home", "free", "cubesat", "moon", "resume"].map((mode) => (
           <button
             className="view-mode-button"
             type="button"
