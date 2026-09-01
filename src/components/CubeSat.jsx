@@ -176,6 +176,7 @@ export default function CubeSat({
                                 position={[0, 0.1, 0]}
                                 center
                                 transform
+                                sprite
                                 distanceFactor={0.35}
                             >
                                 <section className="cubesat-blurb">
