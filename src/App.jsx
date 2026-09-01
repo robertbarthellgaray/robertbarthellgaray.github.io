@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 import Earth from "./components/Earth";
 import Moon from "./components/Moon";
 import CubeSat from "./components/CubeSat";
+import HomeContent from "./components/HomeContent";
 import LoadingScreen from "./components/LoadingScreen";
 import {
   CUBESAT_MODEL_URL,
@@ -22,7 +23,7 @@ function CameraControls({ mode, cubeSatRef }) {
   const offsetRef = useRef(new Vector3());
   const previousTargetRef = useRef(new Vector3());
   const lastModeRef = useRef(mode);
-  const { camera, clock } = useThree();
+  const { camera, clock, size } = useThree();
 
   useFrame(() => {
     if (!controlsRef.current) return;
@@ -30,7 +31,7 @@ function CameraControls({ mode, cubeSatRef }) {
     if (mode === "home") {
       const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
       homePositionRef.current
-        .set(0, 0, 42)
+        .set(0, 0, size.width < 700 ? 60 : 42)
         .applyAxisAngle(Y_AXIS, earthRotation)
         .applyAxisAngle(Z_AXIS, -EARTH_TILT);
 
@@ -104,6 +105,10 @@ export default function App() {
         </Suspense>
 
         <Moon />
+
+        <Suspense fallback={null}>
+          <HomeContent visible={cameraMode === "home"} />
+        </Suspense>
 
         {/* CubeSat */}
         <CubeSat
