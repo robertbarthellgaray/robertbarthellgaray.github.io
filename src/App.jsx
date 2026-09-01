@@ -1,7 +1,7 @@
 import { Suspense, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Vector3 } from "three";
+import { Quaternion, Vector3 } from "three";
 import Earth from "./components/Earth";
 import Moon from "./components/Moon";
 import CubeSat from "./components/CubeSat";
@@ -16,12 +16,14 @@ import {
 const Y_AXIS = new Vector3(0, 1, 0);
 const Z_AXIS = new Vector3(0, 0, 1);
 
-function CameraControls({ mode, cubeSatRef }) {
+function CameraControls({ mode, cubeSatRef, resumeRef }) {
   const controlsRef = useRef();
   const homePositionRef = useRef(new Vector3());
   const targetRef = useRef(new Vector3());
   const offsetRef = useRef(new Vector3());
   const previousTargetRef = useRef(new Vector3());
+  const resumeNormalRef = useRef(new Vector3());
+  const resumeQuaternionRef = useRef(new Quaternion());
   const lastModeRef = useRef(mode);
   const { camera, clock, size } = useThree();
 
@@ -61,6 +63,19 @@ function CameraControls({ mode, cubeSatRef }) {
       controlsRef.current.update();
     }
 
+    if (mode === "resume" && resumeRef.current) {
+      resumeRef.current.getWorldPosition(targetRef.current);
+      resumeRef.current.getWorldQuaternion(resumeQuaternionRef.current);
+      resumeNormalRef.current
+        .set(0, 0, -1)
+        .applyQuaternion(resumeQuaternionRef.current)
+        .multiplyScalar(8);
+
+      camera.position.copy(targetRef.current).add(resumeNormalRef.current);
+      controlsRef.current.target.copy(targetRef.current);
+      controlsRef.current.update();
+    }
+
     lastModeRef.current = mode;
   });
 
@@ -80,6 +95,7 @@ function CameraControls({ mode, cubeSatRef }) {
 export default function App() {
   const [cameraMode, setCameraMode] = useState("home");
   const cubeSatRef = useRef();
+  const resumeRef = useRef();
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
@@ -110,6 +126,8 @@ export default function App() {
           <HomeContent
             visible={cameraMode !== "cubesat"}
             faceCamera={cameraMode === "home"}
+            resumeRef={resumeRef}
+            onSelectResume={() => setCameraMode("resume")}
           />
         </Suspense>
 
@@ -121,10 +139,14 @@ export default function App() {
           showLabel={cameraMode === "cubesat"}
         />
 
-        <CameraControls mode={cameraMode} cubeSatRef={cubeSatRef} />
+        <CameraControls
+          mode={cameraMode}
+          cubeSatRef={cubeSatRef}
+          resumeRef={resumeRef}
+        />
       </Canvas>
       <div className="view-mode-controls" role="group" aria-label="Camera view">
-        {["home", "free", "cubesat"].map((mode) => (
+        {["home", "free", "cubesat", "resume"].map((mode) => (
           <button
             className="view-mode-button"
             type="button"

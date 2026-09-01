@@ -79,6 +79,30 @@ canvas {
     color: #aeb8c3;
 }
 
+.resume-pointer {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    place-items: center;
+    color: #081018;
+    background: #7ebcff;
+    border: 1px solid #d8ebff;
+    border-radius: 50%;
+    box-shadow: 0 0 18px rgb(77 166 255 / 55%);
+    font: 700 28px/1 system-ui, sans-serif;
+    cursor: pointer;
+}
+
+.resume-pointer:hover {
+    background: #a8d3ff;
+}
+
+.resume-pointer:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
 .home-blurb {
     width: min(620px, 90vw);
     padding: 18px;

@@ -3,6 +3,8 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Billboard, Html, useGLTF } from "@react-three/drei";
 import { Box3, MeshBasicMaterial, Vector3 } from "three";
 import faceUrl from "../assets/MyFaces.glb?url";
+import resumeUrl from "../assets/Resume.glb?url";
+import resumePdfUrl from "../assets/resume 202609.pdf?url";
 import { HOME_CONTENT } from "../homeContent";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 
@@ -28,6 +30,9 @@ function NormalizedModel({
     position,
     faceCamera,
     unlit = false,
+    rotation = [0, 0, 0],
+    objectRef,
+    onClick,
 }) {
     const { scene } = useGLTF(url);
     const model = useMemo(() => {
@@ -59,20 +64,46 @@ function NormalizedModel({
     }, [scene, size, unlit]);
 
     return (
-        <Billboard position={position} follow={faceCamera}>
-            <group scale={model.scale} rotation={[0, Math.PI / 2, 0]}>
+        <Billboard
+            ref={objectRef}
+            position={position}
+            follow={faceCamera}
+            rotation={rotation}
+        >
+            <group
+                scale={model.scale}
+                rotation={[0, Math.PI / 2, 0]}
+                onClick={onClick}
+            >
                 <primitive object={model.object} position={model.center} />
             </group>
         </Billboard>
     );
 }
 
-export default function HomeContent({ visible, faceCamera }) {
+export default function HomeContent({
+    visible,
+    faceCamera,
+    resumeRef,
+    onSelectResume,
+}) {
     const orbitRef = useRef();
     const [language, setLanguage] = useState("en");
     const { size } = useThree();
     const compact = size.width < 700;
     const content = HOME_CONTENT[language];
+
+    const openResume = (event) => {
+        event.stopPropagation();
+        onSelectResume();
+
+        if (window.confirm("Would you like to download Robert's résumé PDF?")) {
+            const link = document.createElement("a");
+            link.href = resumePdfUrl;
+            link.download = "Robert-Barthell-Garay-Resume.pdf";
+            link.click();
+        }
+    };
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {
@@ -103,6 +134,35 @@ export default function HomeContent({ visible, faceCamera }) {
                     position={compact ? [-0.6, -1.6, 52] : [1.8, -0.9, 35]}
                     faceCamera={faceCamera}
                 />
+                <NormalizedModel
+                    url={resumeUrl}
+                    size={compact ? 4.2 : 5}
+                    position={compact ? [3.7, -1, 52] : [4.5, -0.5, 35]}
+                    rotation={[0, -Math.PI / 2, 0]}
+                    faceCamera={false}
+                    objectRef={resumeRef}
+                    onClick={openResume}
+                    unlit
+                />
+                {visible && faceCamera && (
+                    <Billboard
+                        position={compact ? [2.5, -2.5, 52] : [3.4, -2.4, 35]}
+                        follow
+                    >
+                        <Html center transform distanceFactor={compact ? 1 : 2}>
+                            <button
+                                className="resume-pointer"
+                                type="button"
+                                title="View résumé"
+                                aria-label="Turn toward résumé"
+                                onPointerDown={(event) => event.stopPropagation()}
+                                onClick={onSelectResume}
+                            >
+                                <span aria-hidden="true">→</span>
+                            </button>
+                        </Html>
+                    </Billboard>
+                )}
                 {visible && (
                     <Html
                         position={compact ? [0, -1.8, 52] : [1.8, 0, 35]}
@@ -140,6 +200,7 @@ export default function HomeContent({ visible, faceCamera }) {
 }
 
 useGLTF.preload(faceUrl);
+useGLTF.preload(resumeUrl);
 Object.values(HOME_CONTENT).forEach(({ nameModel, jobModel }) => {
     useGLTF.preload(nameModel);
     useGLTF.preload(jobModel);
