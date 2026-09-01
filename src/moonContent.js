@@ -10,7 +10,8 @@ const makeMedia = (labels) => youtubeMedia.map((media, index) => ({
 }));
 
 // Use "\n\n" inside blurb or description strings to start a new paragraph.
-// A Bilibili entry uses: { provider: "bilibili", id: "BV...", title, description }.
+// Add linkUrl when a title should open a collection/series instead of the embedded video.
+// Bilibili example: { provider: "bilibili", id: "BV...", linkUrl: "https://...", title, description }.
 export const MOON_CONTENT = {
     en: {
         blurb: "Since my childhood, I have been interested in 3D Modeling and Animation. I began making stuff in Blender at age 13, later producing my high school news videos with it. At 18, I had the honor of interning at NASA and doing 3D work for their Mars simulator.\n\nNowadays (and having picked up Unreal Engine 5 too) I work on 3D animation and visualization for both my line of work, and also miscellaneous sci-fi and architectural renderings.",
@@ -64,7 +65,7 @@ export const MOON_CONTENT = {
         blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo sed sapien luctus cursus. Donec vel sem at ligula volutpat facilisis.",
         media: makeMedia([
             { title: "标题一", description: "在此编辑说明。" },
-            { title: "标题二", description: "在此编辑说明。" },
+            { provider: "bilibili", id: "BV1jzQKBrEqq", linkUrl: "", title: "标题二", description: "在此编辑说明。" },
             { title: "标题三", description: "在此编辑说明。" },
         ]),
     },

@@ -21,7 +21,9 @@ function getMediaUrl({ provider, id }) {
     return `https://www.youtube-nocookie.com/embed/videoseries?list=${id}`;
 }
 
-function getMediaLink({ provider, id }) {
+function getMediaLink({ provider, id, linkUrl }) {
+    if (linkUrl) return linkUrl;
+
     if (provider === "bilibili") {
         return `https://www.bilibili.com/video/${id}/`;
     }
