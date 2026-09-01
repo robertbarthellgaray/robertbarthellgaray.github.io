@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Vector3 } from "three";
@@ -126,10 +126,45 @@ function CameraControls({
 export default function App() {
   const [cameraMode, setCameraMode] = useState("home");
   const [language, setLanguage] = useState("en");
+  const [cubeSatTargetVisible, setCubeSatTargetVisible] = useState(false);
+  const [showCatchMessage, setShowCatchMessage] = useState(false);
   const cubeSatRef = useRef();
   const resumeRef = useRef();
   const moonRef = useRef();
   const moonPanelRef = useRef();
+  const targetTimerRef = useRef();
+  const messageTimerRef = useRef();
+
+  useEffect(() => () => {
+    window.clearTimeout(targetTimerRef.current);
+    window.clearTimeout(messageTimerRef.current);
+    document.body.style.cursor = "default";
+  }, []);
+
+  const startCatchWindow = () => {
+    window.clearTimeout(targetTimerRef.current);
+    document.body.style.cursor = "pointer";
+    setCubeSatTargetVisible(true);
+  };
+
+  const endCatchWindow = () => {
+    document.body.style.cursor = "default";
+    window.clearTimeout(targetTimerRef.current);
+    targetTimerRef.current = window.setTimeout(() => {
+      setCubeSatTargetVisible(false);
+    }, 1500);
+  };
+
+  const catchCubeSat = () => {
+    window.clearTimeout(targetTimerRef.current);
+    window.clearTimeout(messageTimerRef.current);
+    setCubeSatTargetVisible(false);
+    setShowCatchMessage(true);
+    setCameraMode("cubesat");
+    messageTimerRef.current = window.setTimeout(() => {
+      setShowCatchMessage(false);
+    }, 4500);
+  };
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
@@ -152,7 +187,11 @@ export default function App() {
         <Sun visible={cameraMode !== "moon"} />
 
         <Suspense fallback={null}>
-          <Earth quality="auto" />
+          <Earth
+            quality="auto"
+            onHoverStart={startCatchWindow}
+            onHoverEnd={endCatchWindow}
+          />
         </Suspense>
 
         <Moon
@@ -182,6 +221,8 @@ export default function App() {
           objectRef={cubeSatRef}
           onSelect={() => setCameraMode("cubesat")}
           showLabel={cameraMode === "cubesat"}
+          showTarget={cubeSatTargetVisible && cameraMode !== "cubesat"}
+          onCatch={catchCubeSat}
         />
 
         <CameraControls
@@ -205,6 +246,11 @@ export default function App() {
           </button>
         ))}
       </div>
+      {showCatchMessage && (
+        <div className="catch-message" role="status">
+          Congrats on catching the CubeSat!
+        </div>
+      )}
       <LoadingScreen />
     </div>
   );

@@ -27,6 +27,8 @@ const TEXTURE_SETS = {
 export default function Earth({
     quality = "auto",
     highResolutionDistance = HIGH_RES_TEXTURE_DISTANCE,
+    onHoverStart,
+    onHoverEnd,
 }) {
     const earthRef = useRef();
     const cloudsRef = useRef();
@@ -72,7 +74,14 @@ export default function Earth({
                 />
             </mesh>
 
-            <mesh ref={cloudsRef}>
+            <mesh
+                ref={cloudsRef}
+                onPointerOver={(event) => {
+                    event.stopPropagation();
+                    onHoverStart?.();
+                }}
+                onPointerOut={onHoverEnd}
+            >
                 <sphereGeometry args={[6.4, 96, 96]} />
                 <meshStandardMaterial
                     map={textures.clouds}

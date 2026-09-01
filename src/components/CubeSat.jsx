@@ -114,6 +114,8 @@ export default function CubeSat({
     objectRef,
     onSelect,
     showLabel = false,
+    showTarget = false,
+    onCatch,
 }) {
     const orbitRef = useRef();
 
@@ -147,6 +149,25 @@ export default function CubeSat({
                                 <DefaultCubeSat />
                             )}
                         </Suspense>
+                        {showTarget && (
+                            <Html position={[0, 0, 0]} center>
+                                <button
+                                    className="cubesat-target"
+                                    type="button"
+                                    aria-label="Catch the CubeSat"
+                                    title="Catch the CubeSat"
+                                    onPointerDown={(event) => event.stopPropagation()}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        onCatch?.();
+                                    }}
+                                >
+                                    <span className="visually-hidden">
+                                        Catch the CubeSat
+                                    </span>
+                                </button>
+                            </Html>
+                        )}
                         {showLabel && (
                             <Html position={[0.12, 0.1, 0]} center>
                                 <section className="cubesat-blurb">
