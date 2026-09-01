@@ -86,10 +86,7 @@ export default function HomeContent({
     faceCamera,
     resumeRef,
     onSelectResume,
-    resumeActive,
-    onGoHome,
     language,
-    onLanguageChange,
     onSelectTrajectories,
 }) {
     const orbitRef = useRef();
@@ -148,31 +145,21 @@ export default function HomeContent({
                     onClick={openResume}
                     unlit
                 />
-                {visible && (faceCamera || resumeActive) && (
+                {visible && faceCamera && (
                     <Billboard
-                        position={
-                            resumeActive
-                                ? (compact ? [12, -2.4, 50] : [9.5, -2.5, 34])
-                                : (compact ? [2.5, -1.2, 52] : [3.4, 0, 35])
-                        }
+                        position={compact ? [2.5, -1.2, 52] : [3.4, 0, 35]}
                         follow
                     >
                         <Html center transform distanceFactor={compact ? 1 : 2}>
                             <button
                                 className="resume-pointer"
                                 type="button"
-                                title={resumeActive ? "Go home" : "View résumé"}
-                                aria-label={
-                                    resumeActive
-                                        ? "Return to home view"
-                                        : "Turn toward résumé"
-                                }
+                                title="View résumé"
+                                aria-label="Turn toward résumé"
                                 onPointerDown={(event) => event.stopPropagation()}
-                                onClick={resumeActive ? onGoHome : onSelectResume}
+                                onClick={onSelectResume}
                             >
-                                <span aria-hidden="true">
-                                    {resumeActive ? "←" : "→"}
-                                </span>
+                                <span aria-hidden="true">→</span>
                             </button>
                         </Html>
                     </Billboard>
@@ -208,22 +195,6 @@ export default function HomeContent({
                             onPointerDown={(event) => event.stopPropagation()}
                         >
                             <p>{content.blurb}</p>
-                            <div
-                                className="language-switcher"
-                                role="group"
-                                aria-label="Language"
-                            >
-                                {Object.entries(HOME_CONTENT).map(([code, entry]) => (
-                                    <button
-                                        type="button"
-                                        key={code}
-                                        aria-pressed={language === code}
-                                        onClick={() => onLanguageChange(code)}
-                                    >
-                                        {entry.label}
-                                    </button>
-                                ))}
-                            </div>
                         </section>
                     </Html>
                 )}

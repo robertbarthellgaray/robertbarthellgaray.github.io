@@ -121,10 +121,12 @@ canvas {
 
 .view-mode-controls {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     left: 50%;
     z-index: 20;
     display: flex;
+    max-width: calc(100vw - 32px);
+    justify-content: center;
     transform: translateX(-50%);
 }
 
@@ -306,35 +308,36 @@ canvas {
     margin: 0 0 14px;
 }
 
-.language-switcher {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
+.global-language-menu {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    color: #b8c2cc;
+    background: rgb(8 12 16 / 88%);
+    border: 1px solid #3b4652;
+    border-radius: 4px;
+    font: 600 12px/1 system-ui, sans-serif;
 }
 
-.language-switcher button {
-    min-width: 0;
-    height: 34px;
-    padding: 0;
-    color: #b8c2cc;
+.global-language-menu select {
+    height: 30px;
+    padding: 0 26px 0 8px;
+    color: #f4f7fb;
     background: #10161d;
-    border: 1px solid #35404b;
+    border: 1px solid #536171;
     border-radius: 3px;
-    font: 600 12px/1 system-ui, sans-serif;
+    font: 600 13px/1 system-ui, sans-serif;
     cursor: pointer;
 }
 
-.language-switcher button[aria-pressed="true"] {
-    color: #081018;
-    background: #7ebcff;
-    border-color: #7ebcff;
-}
-
-.language-switcher button:focus-visible {
-    position: relative;
-    z-index: 1;
-    outline: 2px solid #fff;
-    outline-offset: -2px;
+.global-language-menu select:focus-visible {
+    outline: 2px solid #7ebcff;
+    outline-offset: 2px;
 }
 
 .loading-screen {

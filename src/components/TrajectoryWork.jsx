@@ -70,8 +70,9 @@ function MissionPanel({ mission }) {
     );
 }
 
-export default function TrajectoryWork({ objectRef }) {
+export default function TrajectoryWork({ objectRef, language }) {
     const orbitRef = useRef();
+    const content = TRAJECTORY_CONTENT[language] ?? TRAJECTORY_CONTENT.en;
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {
@@ -86,16 +87,16 @@ export default function TrajectoryWork({ objectRef }) {
                 <group ref={objectRef} {...TRAJECTORY_TRANSFORM}>
                     <Html position={[0, 3.5, 0]} center transform distanceFactor={2}>
                         <h1 className="trajectory-title">
-                            {TRAJECTORY_CONTENT.title}
+                            {content.title}
                         </h1>
                     </Html>
                     <NormalizedTrajectory url={claudiusUrl} position={[-3, 0.8, 0]} />
                     <NormalizedTrajectory url={remusUrl} position={[3, 0.8, 0]} />
                     <Html position={[-3, -2.5, 0]} center transform distanceFactor={1.8}>
-                        <MissionPanel mission={TRAJECTORY_CONTENT.claudius} />
+                        <MissionPanel mission={content.claudius} />
                     </Html>
                     <Html position={[3, -2.5, 0]} center transform distanceFactor={1.8}>
-                        <MissionPanel mission={TRAJECTORY_CONTENT.remus} />
+                        <MissionPanel mission={content.remus} />
                     </Html>
                 </group>
             </group>

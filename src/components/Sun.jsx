@@ -1,6 +1,6 @@
 import { AdditiveBlending } from "three";
 
-const SUN_POSITION = [490, 294, 490];
+const SUN_POSITION = [495, 0, 495];
 
 export default function Sun({ visible = true }) {
     return (

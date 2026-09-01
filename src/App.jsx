@@ -9,6 +9,7 @@ import HomeContent from "./components/HomeContent";
 import LoadingScreen from "./components/LoadingScreen";
 import Sun from "./components/Sun";
 import TrajectoryWork from "./components/TrajectoryWork";
+import { HOME_CONTENT } from "./homeContent";
 import {
   CUBESAT_MODEL_URL,
   EARTH_ROTATION_SPEED,
@@ -195,7 +196,7 @@ export default function App() {
 
         {/* Sun */}
         <directionalLight
-          position={[5, 3, 5]}
+          position={[5, 0, 5]}
           intensity={30}
         />
         <Sun />
@@ -222,16 +223,13 @@ export default function App() {
             faceCamera={cameraMode === "home"}
             resumeRef={resumeRef}
             onSelectResume={() => setCameraMode("resume")}
-            resumeActive={cameraMode === "resume"}
-            onGoHome={() => setCameraMode("home")}
             language={language}
-            onLanguageChange={setLanguage}
             onSelectTrajectories={() => setCameraMode("trajectory")}
           />
         </Suspense>
 
         <Suspense fallback={null}>
-          <TrajectoryWork objectRef={trajectoryRef} />
+          <TrajectoryWork objectRef={trajectoryRef} language={language} />
         </Suspense>
 
         {/* CubeSat */}
@@ -239,6 +237,7 @@ export default function App() {
           modelUrl={CUBESAT_MODEL_URL}
           objectRef={cubeSatRef}
           onSelect={() => setCameraMode("cubesat")}
+          language={language}
           showLabel
           showTarget={cubeSatTargetVisible && cameraMode !== "cubesat"}
           onCatch={catchCubeSat}
@@ -253,23 +252,48 @@ export default function App() {
           trajectoryRef={trajectoryRef}
         />
       </Canvas>
-      <div className="view-mode-controls" role="group" aria-label="Camera view">
-        {["home", "free", "cubesat", "moon", "trajectory", "resume"].map((mode) => (
+      <label className="global-language-menu">
+        <span>Language</span>
+        <select
+          value={language}
+          onChange={(event) => setLanguage(event.target.value)}
+          aria-label="Language"
+        >
+          {Object.entries(HOME_CONTENT).map(([code, content]) => (
+            <option key={code} value={code}>
+              {content.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <nav className="view-mode-controls" aria-label="Destinations">
+        {cameraMode === "home" ? (
+          [
+            ["free", "Free view"],
+            ["cubesat", "CubeSat"],
+            ["moon", "Moon"],
+            ["trajectory", "Trajectories"],
+            ["resume", "Résumé"],
+          ].map(([mode, label]) => (
+            <button
+              className="view-mode-button"
+              type="button"
+              key={mode}
+              onClick={() => setCameraMode(mode)}
+            >
+              {label}
+            </button>
+          ))
+        ) : (
           <button
             className="view-mode-button"
             type="button"
-            key={mode}
-            aria-pressed={cameraMode === mode}
-            onClick={() => setCameraMode(mode)}
+            onClick={() => setCameraMode("home")}
           >
-            {mode === "cubesat"
-              ? "CubeSat"
-              : mode === "trajectory"
-                ? "Trajectories"
-                : mode[0].toUpperCase() + mode.slice(1)}
+            Take me home
           </button>
-        ))}
-      </div>
+        )}
+      </nav>
       {showCatchMessage && (
         <div className="catch-message" role="status">
           Congrats on catching the CubeSat!
