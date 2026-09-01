@@ -5,43 +5,43 @@ import defaultNameModel from "./assets/MyName.glb?url";
 // Edit each blurb directly here; the UI updates from this single content source.
 export const HOME_CONTENT = {
     en: {
-        label: "EN",
-        blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        label: "English",
+        blurb: "I am graduating from the University of Illinois this Fall with a Bachelor's degree in Aerospace Engineering. My areas of interest are Astrodynamics and Attitude Control Systems, with a particular focus on interplanetary orbital mechanics.",
         nameModel: defaultNameModel,
         jobModel: defaultJobsModel,
     },
     es: {
-        label: "ES",
+        label: "Español",
         blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         nameModel: defaultNameModel,
         jobModel: defaultJobsModel,
     },
     fr: {
-        label: "FR",
+        label: "Français",
         blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         nameModel: defaultNameModel,
         jobModel: defaultJobsModel,
     },
     de: {
-        label: "DE",
+        label: "Deutsch",
         blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         nameModel: defaultNameModel,
         jobModel: defaultJobsModel,
     },
     ru: {
-        label: "RU",
+        label: "Русский",
         blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         nameModel: defaultNameModel,
         jobModel: defaultJobsModel,
     },
     hi: {
-        label: "HI",
+        label: "हिन्दी",
         blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         nameModel: defaultNameModel,
         jobModel: defaultJobsModel,
     },
     zh: {
-        label: "ZH",
+        label: "中文",
         blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         nameModel: defaultNameModel,
         jobModel: defaultJobsModel,

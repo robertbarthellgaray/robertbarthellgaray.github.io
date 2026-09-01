@@ -22,7 +22,13 @@ function makePhotoMaterial(material) {
     return unlit;
 }
 
-function NormalizedModel({ url, size, position, unlit = false }) {
+function NormalizedModel({
+    url,
+    size,
+    position,
+    faceCamera,
+    unlit = false,
+}) {
     const { scene } = useGLTF(url);
     const model = useMemo(() => {
         const object = scene.clone(true);
@@ -53,7 +59,7 @@ function NormalizedModel({ url, size, position, unlit = false }) {
     }, [scene, size, unlit]);
 
     return (
-        <Billboard position={position} follow>
+        <Billboard position={position} follow={faceCamera}>
             <group scale={model.scale} rotation={[0, Math.PI / 2, 0]}>
                 <primitive object={model.object} position={model.center} />
             </group>
@@ -61,7 +67,7 @@ function NormalizedModel({ url, size, position, unlit = false }) {
     );
 }
 
-export default function HomeContent({ visible }) {
+export default function HomeContent({ visible, faceCamera }) {
     const orbitRef = useRef();
     const [language, setLanguage] = useState("en");
     const { size } = useThree();
@@ -82,22 +88,27 @@ export default function HomeContent({ visible }) {
                     url={faceUrl}
                     size={compact ? 1.3 : 2.4}
                     position={compact ? [-1, 1.5, 52] : [-2.5, 0, 35]}
+                    faceCamera={faceCamera}
                     unlit
                 />
                 <NormalizedModel
                     url={content.nameModel}
                     size={compact ? 1.7 : 2.4}
                     position={compact ? [-0.3, 1.5, 52] : [1.8, 0.9, 35]}
+                    faceCamera={faceCamera}
                 />
                 <NormalizedModel
                     url={content.jobModel}
                     size={compact ? 1.6 : 2.2}
                     position={compact ? [-0.6, -1.6, 52] : [1.8, -0.9, 35]}
+                    faceCamera={faceCamera}
                 />
                 {visible && (
                     <Html
-                        position={compact ? [0, -2.8, 52] : [1.8, 0, 35]}
+                        position={compact ? [0, -1.8, 52] : [1.8, 0, 35]}
                         center
+                        transform
+                        distanceFactor={compact ? 2 : 2.5}
                     >
                         <section
                             className="home-blurb"

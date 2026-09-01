@@ -80,47 +80,36 @@ canvas {
 }
 
 .home-blurb {
-    width: min(300px, 72vw);
-    padding: 12px;
+    width: min(480px, 86vw);
+    padding: 18px;
     box-sizing: border-box;
     color: #f4f7fb;
     background: rgb(8 12 16 / 78%);
     border: 1px solid #3b4652;
     border-radius: 4px;
-    font: 13px/1.45 system-ui, sans-serif;
+    font: 16px/1.5 system-ui, sans-serif;
 }
 
 .home-blurb p {
-    margin: 0 0 10px;
+    margin: 0 0 14px;
 }
 
 .language-switcher {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
 }
 
 .language-switcher button {
     min-width: 0;
-    height: 28px;
+    height: 34px;
     padding: 0;
     color: #b8c2cc;
     background: #10161d;
     border: 1px solid #35404b;
-    border-radius: 0;
-    font: 600 10px/1 system-ui, sans-serif;
+    border-radius: 3px;
+    font: 600 12px/1 system-ui, sans-serif;
     cursor: pointer;
-}
-
-.language-switcher button + button {
-    margin-left: -1px;
-}
-
-.language-switcher button:first-child {
-    border-radius: 3px 0 0 3px;
-}
-
-.language-switcher button:last-child {
-    border-radius: 0 3px 3px 0;
 }
 
 .language-switcher button[aria-pressed="true"] {
