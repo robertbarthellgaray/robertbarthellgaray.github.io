@@ -79,6 +79,63 @@ canvas {
     color: #aeb8c3;
 }
 
+.home-blurb {
+    width: min(300px, 72vw);
+    padding: 12px;
+    box-sizing: border-box;
+    color: #f4f7fb;
+    background: rgb(8 12 16 / 78%);
+    border: 1px solid #3b4652;
+    border-radius: 4px;
+    font: 13px/1.45 system-ui, sans-serif;
+}
+
+.home-blurb p {
+    margin: 0 0 10px;
+}
+
+.language-switcher {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.language-switcher button {
+    min-width: 0;
+    height: 28px;
+    padding: 0;
+    color: #b8c2cc;
+    background: #10161d;
+    border: 1px solid #35404b;
+    border-radius: 0;
+    font: 600 10px/1 system-ui, sans-serif;
+    cursor: pointer;
+}
+
+.language-switcher button + button {
+    margin-left: -1px;
+}
+
+.language-switcher button:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.language-switcher button:last-child {
+    border-radius: 0 3px 3px 0;
+}
+
+.language-switcher button[aria-pressed="true"] {
+    color: #081018;
+    background: #7ebcff;
+    border-color: #7ebcff;
+}
+
+.language-switcher button:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+}
+
 .loading-screen {
     position: fixed;
     top: 50%;

@@ -107,7 +107,7 @@ export default function App() {
         <Moon />
 
         <Suspense fallback={null}>
-          <HomeContent visible={cameraMode === "home"} />
+          <HomeContent visible={cameraMode !== "cubesat"} />
         </Suspense>
 
         {/* CubeSat */}

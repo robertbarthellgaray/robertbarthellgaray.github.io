@@ -1,16 +1,41 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Billboard, useGLTF } from "@react-three/drei";
-import { Box3, Vector3 } from "three";
-import faceUrl from "../assets/MyFace.glb?url";
-import jobsUrl from "../assets/MyJobs.glb?url";
-import nameUrl from "../assets/MyName.glb?url";
+import { Billboard, Html, useGLTF } from "@react-three/drei";
+import { Box3, MeshBasicMaterial, Vector3 } from "three";
+import faceUrl from "../assets/MyFaces.glb?url";
+import { HOME_CONTENT } from "../homeContent";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 
-function NormalizedModel({ url, size, position }) {
+function makePhotoMaterial(material) {
+    const map = material.map ?? material.emissiveMap;
+    if (!map) return material;
+
+    const unlit = new MeshBasicMaterial({
+        map,
+        color: material.color,
+        transparent: material.transparent,
+        opacity: material.opacity,
+        alphaTest: material.alphaTest,
+        side: material.side,
+    });
+    unlit.toneMapped = false;
+    return unlit;
+}
+
+function NormalizedModel({ url, size, position, unlit = false }) {
     const { scene } = useGLTF(url);
     const model = useMemo(() => {
         const object = scene.clone(true);
+
+        if (unlit) {
+            object.traverse((child) => {
+                if (!child.isMesh) return;
+                child.material = Array.isArray(child.material)
+                    ? child.material.map(makePhotoMaterial)
+                    : makePhotoMaterial(child.material);
+            });
+        }
+
         const bounds = new Box3().setFromObject(object);
         const dimensions = bounds.getSize(new Vector3());
         const center = bounds.getCenter(new Vector3());
@@ -25,7 +50,7 @@ function NormalizedModel({ url, size, position }) {
             center: [-center.x, -center.y, -center.z],
             scale: largestDimension > 0 ? size / largestDimension : 1,
         };
-    }, [scene, size]);
+    }, [scene, size, unlit]);
 
     return (
         <Billboard position={position} follow>
@@ -38,8 +63,10 @@ function NormalizedModel({ url, size, position }) {
 
 export default function HomeContent({ visible }) {
     const orbitRef = useRef();
+    const [language, setLanguage] = useState("en");
     const { size } = useThree();
     const compact = size.width < 700;
+    const content = HOME_CONTENT[language];
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {
@@ -55,22 +82,54 @@ export default function HomeContent({ visible }) {
                     url={faceUrl}
                     size={compact ? 1.3 : 2.4}
                     position={compact ? [-1, 1.5, 52] : [-2.5, 0, 35]}
+                    unlit
                 />
                 <NormalizedModel
-                    url={nameUrl}
+                    url={content.nameModel}
                     size={compact ? 1.7 : 2.4}
                     position={compact ? [-0.3, 1.5, 52] : [1.8, 0.9, 35]}
                 />
                 <NormalizedModel
-                    url={jobsUrl}
+                    url={content.jobModel}
                     size={compact ? 1.6 : 2.2}
                     position={compact ? [-0.6, -1.6, 52] : [1.8, -0.9, 35]}
                 />
+                {visible && (
+                    <Html
+                        position={compact ? [0, -2.8, 52] : [1.8, 0, 35]}
+                        center
+                    >
+                        <section
+                            className="home-blurb"
+                            onPointerDown={(event) => event.stopPropagation()}
+                        >
+                            <p>{content.blurb}</p>
+                            <div
+                                className="language-switcher"
+                                role="group"
+                                aria-label="Language"
+                            >
+                                {Object.entries(HOME_CONTENT).map(([code, entry]) => (
+                                    <button
+                                        type="button"
+                                        key={code}
+                                        aria-pressed={language === code}
+                                        onClick={() => setLanguage(code)}
+                                    >
+                                        {entry.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </section>
+                    </Html>
+                )}
             </group>
         </group>
     );
 }
 
 useGLTF.preload(faceUrl);
-useGLTF.preload(nameUrl);
-useGLTF.preload(jobsUrl);
+Object.values(HOME_CONTENT).forEach(({ nameModel, jobModel }) => {
+    useGLTF.preload(nameModel);
+    useGLTF.preload(jobModel);
+});
