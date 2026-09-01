@@ -5,7 +5,7 @@ import { MathUtils, SRGBColorSpace } from "three";
 import { SIMULATION_TIME_SCALE } from "../spaceConstants";
 
 // Add the image to public/textures, then set this to "/textures/moon.jpg".
-const MOON_TEXTURE_URL = null;
+const MOON_TEXTURE_URL = "/textures/moon.jpg";
 
 const MOON_ORBIT_RADIUS = 384.4;
 const MOON_RADIUS = 1.737;
@@ -38,6 +38,7 @@ export default function Moon({ objectRef, panelRef, onSelect, showContent }) {
             <group ref={orbitRef}>
                 <group ref={objectRef} position={[MOON_ORBIT_RADIUS, 0, 0]}>
                     <mesh
+                        rotation={[0, Math.PI, 0]}
                         onClick={(event) => {
                             event.stopPropagation();
                             onSelect?.();
@@ -52,7 +53,7 @@ export default function Moon({ objectRef, panelRef, onSelect, showContent }) {
                             <meshStandardMaterial color="#9da1a6" roughness={1} />
                         )}
                     </mesh>
-                    <Billboard ref={panelRef} position={[0, 0, -3.4]} follow>
+                    <Billboard ref={panelRef} position={[0, 0, 3.4]} follow>
                         {showContent && (
                             <Html center transform distanceFactor={2.2}>
                                 <section className="moon-blurb">

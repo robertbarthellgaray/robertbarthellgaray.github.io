@@ -7,6 +7,7 @@ import Moon from "./components/Moon";
 import CubeSat from "./components/CubeSat";
 import HomeContent from "./components/HomeContent";
 import LoadingScreen from "./components/LoadingScreen";
+import Sun from "./components/Sun";
 import {
   CUBESAT_MODEL_URL,
   EARTH_ROTATION_SPEED,
@@ -92,7 +93,7 @@ function CameraControls({
       moonRadialRef.current.copy(targetRef.current).normalize();
       desiredCameraRef.current
         .copy(targetRef.current)
-        .addScaledVector(moonRadialRef.current, 8);
+        .addScaledVector(moonRadialRef.current, -8);
     }
 
     if (mode !== "free" && transitionTimeRef.current < 1.5) {
@@ -147,6 +148,7 @@ export default function App() {
           position={[5, 3, 5]}
           intensity={30}
         />
+        <Sun visible={cameraMode !== "moon"} />
 
         <Suspense fallback={null}>
           <Earth quality="auto" />
