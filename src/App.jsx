@@ -1,7 +1,7 @@
 import { Suspense, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Quaternion, Vector3 } from "three";
+import { Vector3 } from "three";
 import Earth from "./components/Earth";
 import Moon from "./components/Moon";
 import CubeSat from "./components/CubeSat";
@@ -22,60 +22,70 @@ function CameraControls({ mode, cubeSatRef, resumeRef }) {
   const targetRef = useRef(new Vector3());
   const offsetRef = useRef(new Vector3());
   const previousTargetRef = useRef(new Vector3());
-  const resumeNormalRef = useRef(new Vector3());
-  const resumeQuaternionRef = useRef(new Quaternion());
+  const desiredCameraRef = useRef(new Vector3());
+  const desiredTargetRef = useRef(new Vector3());
+  const transitionTimeRef = useRef(0);
   const lastModeRef = useRef(mode);
   const { camera, clock, size } = useThree();
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!controlsRef.current) return;
 
-    if (mode === "home") {
+    const modeChanged = lastModeRef.current !== mode;
+    if (modeChanged) transitionTimeRef.current = 0;
+
+    if (mode === "home" || mode === "resume") {
       const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
       homePositionRef.current
         .set(0, 0, size.width < 700 ? 60 : 42)
         .applyAxisAngle(Y_AXIS, earthRotation)
         .applyAxisAngle(Z_AXIS, -EARTH_TILT);
 
-      camera.position.copy(homePositionRef.current);
-      controlsRef.current.target.set(0, 0, 0);
-      controlsRef.current.update();
+      desiredCameraRef.current.copy(homePositionRef.current);
+      if (mode === "resume" && resumeRef.current) {
+        resumeRef.current.getWorldPosition(desiredTargetRef.current);
+      } else {
+        desiredTargetRef.current.set(0, 0, 0);
+      }
     }
 
     if (mode === "cubesat" && cubeSatRef.current) {
       cubeSatRef.current.getWorldPosition(targetRef.current);
 
-      if (lastModeRef.current !== "cubesat") {
+      if (modeChanged) {
         offsetRef.current.copy(targetRef.current).normalize().multiplyScalar(0.5);
-        camera.position
+        desiredCameraRef.current
           .copy(targetRef.current)
           .add(offsetRef.current)
           .addScaledVector(camera.up, 0.15);
+        desiredTargetRef.current.copy(targetRef.current);
       } else {
         offsetRef.current
           .copy(targetRef.current)
           .sub(previousTargetRef.current);
-        camera.position.add(offsetRef.current);
+        if (transitionTimeRef.current >= 1.5) {
+          camera.position.add(offsetRef.current);
+          controlsRef.current.target.copy(targetRef.current);
+        } else {
+          desiredCameraRef.current.add(offsetRef.current);
+          desiredTargetRef.current.copy(targetRef.current);
+        }
       }
 
-      controlsRef.current.target.copy(targetRef.current);
       previousTargetRef.current.copy(targetRef.current);
-      controlsRef.current.update();
     }
 
-    if (mode === "resume" && resumeRef.current) {
-      resumeRef.current.getWorldPosition(targetRef.current);
-      resumeRef.current.getWorldQuaternion(resumeQuaternionRef.current);
-      resumeNormalRef.current
-        .set(0, 0, -1)
-        .applyQuaternion(resumeQuaternionRef.current)
-        .multiplyScalar(8);
-
-      camera.position.copy(targetRef.current).add(resumeNormalRef.current);
-      controlsRef.current.target.copy(targetRef.current);
-      controlsRef.current.update();
+    if (mode !== "free" && transitionTimeRef.current < 1.5) {
+      const blend = 1 - Math.exp(-4 * delta);
+      camera.position.lerp(desiredCameraRef.current, blend);
+      controlsRef.current.target.lerp(desiredTargetRef.current, blend);
+      transitionTimeRef.current += delta;
+    } else if (mode === "home" || mode === "resume") {
+      camera.position.copy(desiredCameraRef.current);
+      controlsRef.current.target.copy(desiredTargetRef.current);
     }
 
+    controlsRef.current.update();
     lastModeRef.current = mode;
   });
 
@@ -128,6 +138,8 @@ export default function App() {
             faceCamera={cameraMode === "home"}
             resumeRef={resumeRef}
             onSelectResume={() => setCameraMode("resume")}
+            resumeActive={cameraMode === "resume"}
+            onGoHome={() => setCameraMode("home")}
           />
         </Suspense>
 

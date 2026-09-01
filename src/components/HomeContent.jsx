@@ -86,6 +86,8 @@ export default function HomeContent({
     faceCamera,
     resumeRef,
     onSelectResume,
+    resumeActive,
+    onGoHome,
 }) {
     const orbitRef = useRef();
     const [language, setLanguage] = useState("en");
@@ -136,29 +138,39 @@ export default function HomeContent({
                 />
                 <NormalizedModel
                     url={resumeUrl}
-                    size={compact ? 4.2 : 5}
-                    position={compact ? [3.7, -1, 52] : [4.5, -0.5, 35]}
-                    rotation={[0, -Math.PI / 2, 0]}
+                    size={compact ? 3.2 : 4}
+                    position={compact ? [3, 0, 50] : [4, 0, 29]}
+                    rotation={[0, Math.PI / 9, 0]}
                     faceCamera={false}
                     objectRef={resumeRef}
                     onClick={openResume}
                     unlit
                 />
-                {visible && faceCamera && (
+                {visible && (faceCamera || resumeActive) && (
                     <Billboard
-                        position={compact ? [2.5, -2.5, 52] : [3.4, -2.4, 35]}
+                        position={
+                            resumeActive
+                                ? (compact ? [3, -2.4, 50] : [4, -2.5, 29])
+                                : (compact ? [2.5, -1.2, 52] : [3.4, 0, 35])
+                        }
                         follow
                     >
                         <Html center transform distanceFactor={compact ? 1 : 2}>
                             <button
                                 className="resume-pointer"
                                 type="button"
-                                title="View résumé"
-                                aria-label="Turn toward résumé"
+                                title={resumeActive ? "Go home" : "View résumé"}
+                                aria-label={
+                                    resumeActive
+                                        ? "Return to home view"
+                                        : "Turn toward résumé"
+                                }
                                 onPointerDown={(event) => event.stopPropagation()}
-                                onClick={onSelectResume}
+                                onClick={resumeActive ? onGoHome : onSelectResume}
                             >
-                                <span aria-hidden="true">→</span>
+                                <span aria-hidden="true">
+                                    {resumeActive ? "←" : "→"}
+                                </span>
                             </button>
                         </Html>
                     </Billboard>
