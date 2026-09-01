@@ -98,13 +98,33 @@ canvas {
     margin: 0;
 }
 
+.moon-playlist-row {
+    display: flex;
+    align-items: stretch;
+}
+
+.moon-playlist-title {
+    display: grid;
+    width: 150px;
+    padding: 16px;
+    box-sizing: border-box;
+    place-items: center;
+    color: #f4f7fb;
+    background: rgb(8 12 16 / 90%);
+    border: 1px solid #778492;
+    border-right: 0;
+    border-radius: 3px 0 0 3px;
+    font: 600 16px/1.35 system-ui, sans-serif;
+    text-align: center;
+}
+
 .moon-playlist {
     display: block;
-    width: 210px;
+    width: 420px;
     aspect-ratio: 16 / 9;
     background: #050505;
     border: 1px solid #778492;
-    border-radius: 3px;
+    border-radius: 0 3px 3px 0;
     box-shadow: 0 4px 14px rgb(0 0 0 / 55%);
     pointer-events: auto;
 }

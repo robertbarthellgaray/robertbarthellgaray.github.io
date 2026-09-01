@@ -12,9 +12,18 @@ const MOON_RADIUS = 1.737;
 const MOON_ORBIT_SPEED =
     (Math.PI * 2 * SIMULATION_TIME_SCALE) / (28 * 86400);
 const MOON_PLAYLISTS = [
-    "PLBt9xFJ_FiRE",
-    "PLLR29pi1Q4gBnNYs49NG_gnr3ArA-ELxs",
-    "PLLR29pi1Q4gAxXkMaBPdWQdicUqoDFsbL",
+    {
+        title: "Playlist One",
+        playlistId: "PLBt9xFJ_FiRE",
+    },
+    {
+        title: "Playlist Two",
+        playlistId: "PLLR29pi1Q4gBnNYs49NG_gnr3ArA-ELxs",
+    },
+    {
+        title: "Playlist Three",
+        playlistId: "PLLR29pi1Q4gAxXkMaBPdWQdicUqoDFsbL",
+    },
 ];
 
 function MoonMaterial({ textureUrl }) {
@@ -72,10 +81,10 @@ export default function Moon({ objectRef, panelRef, onSelect, showContent }) {
                             </Html>
                         )}
                     </Billboard>
-                    {showContent && MOON_PLAYLISTS.map((playlistId, index) => (
+                    {showContent && MOON_PLAYLISTS.map(({ title, playlistId }, index) => (
                         <Billboard
                             key={playlistId}
-                            position={[-1.8, 0.45, (index - 1) * 1.05]}
+                            position={[-1.8, (1 - index) * 1.35, 0]}
                             follow
                         >
                             <Html
@@ -84,15 +93,18 @@ export default function Moon({ objectRef, panelRef, onSelect, showContent }) {
                                 distanceFactor={1.2}
                                 onPointerDown={(event) => event.stopPropagation()}
                             >
-                                <iframe
-                                    className="moon-playlist"
-                                    src={`https://www.youtube-nocookie.com/embed/videoseries?list=${playlistId}`}
-                                    title={`Moon playlist ${index + 1}`}
-                                    loading="lazy"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                    allowFullScreen
-                                />
+                                <div className="moon-playlist-row">
+                                    <div className="moon-playlist-title">{title}</div>
+                                    <iframe
+                                        className="moon-playlist"
+                                        src={`https://www.youtube-nocookie.com/embed/videoseries?list=${playlistId}`}
+                                        title={title || `Moon playlist ${index + 1}`}
+                                        loading="lazy"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerPolicy="strict-origin-when-cross-origin"
+                                        allowFullScreen
+                                    />
+                                </div>
                             </Html>
                         </Billboard>
                     ))}
