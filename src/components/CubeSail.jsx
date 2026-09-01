@@ -18,6 +18,7 @@ const ORBIT_RADIUS_KM = ORBIT_RADIUS * SCENE_UNIT_KM;
 const ORBIT_SPEED = Math.sqrt(398600.4418 / ORBIT_RADIUS_KM ** 3);
 const DISPLAY_SIZE = 0.22;
 const SUN_WORLD_POSITION = new Vector3(...SUN_POSITION);
+const SAIL_YAW_OFFSET_DEGREES = 30;
 
 function SailModel() {
     const { scene } = useGLTF(sailModelUrl);
@@ -37,7 +38,9 @@ function SailModel() {
     }, [scene]);
 
     useFrame(() => {
-        sailRef.current?.lookAt(SUN_WORLD_POSITION);
+        if (!sailRef.current) return;
+        sailRef.current.lookAt(SUN_WORLD_POSITION);
+        sailRef.current.rotateY(MathUtils.degToRad(SAIL_YAW_OFFSET_DEGREES));
     });
 
     return (
@@ -47,7 +50,13 @@ function SailModel() {
     );
 }
 
-export default function CubeSail({ objectRef, onSelect, language }) {
+export default function CubeSail({
+    objectRef,
+    onSelect,
+    language,
+    showTarget = false,
+    onCatch,
+}) {
     const orbitRef = useRef();
     const content = CUBESAIL_CONTENT[language] ?? CUBESAIL_CONTENT.en;
 
@@ -73,6 +82,25 @@ export default function CubeSail({ objectRef, onSelect, language }) {
                         onPointerOut={() => { document.body.style.cursor = "default"; }}
                     >
                         <SailModel />
+                        {showTarget && (
+                            <Html position={[0, 0, 0]} center>
+                                <button
+                                    className="cubesat-target"
+                                    type="button"
+                                    aria-label="Catch CubeSail"
+                                    title="Catch CubeSail"
+                                    onPointerDown={(event) => event.stopPropagation()}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        onCatch?.();
+                                    }}
+                                >
+                                    <span className="visually-hidden">
+                                        Catch CubeSail
+                                    </span>
+                                </button>
+                            </Html>
+                        )}
                         <Html
                             position={[0, 0.18, 0]}
                             center

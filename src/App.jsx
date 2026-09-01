@@ -185,6 +185,12 @@ export default function App() {
     }, 4500);
   };
 
+  const catchCubeSail = () => {
+    window.clearTimeout(targetTimerRef.current);
+    setCubeSatTargetVisible(false);
+    setCameraMode("cubesail");
+  };
+
   return (
     <div style={{ width: "100vw", height: "100vh", background: "black" }}>
       <Canvas
@@ -251,6 +257,8 @@ export default function App() {
           objectRef={cubeSailRef}
           onSelect={() => setCameraMode("cubesail")}
           language={language}
+          showTarget={cubeSatTargetVisible && cameraMode !== "cubesail"}
+          onCatch={catchCubeSail}
         />
 
         <CameraControls
