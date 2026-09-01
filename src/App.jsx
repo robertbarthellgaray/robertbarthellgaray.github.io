@@ -230,9 +230,13 @@ export default function App() {
           />
         </Suspense>
 
-        {cameraMode === "trajectory" && (
+        {(cameraMode === "home" || cameraMode === "trajectory") && (
           <Suspense fallback={null}>
-            <TrajectoryWork objectRef={trajectoryRef} />
+            <TrajectoryWork
+              objectRef={trajectoryRef}
+              showContent={cameraMode === "trajectory"}
+              onSelect={() => setCameraMode("trajectory")}
+            />
           </Suspense>
         )}
 
