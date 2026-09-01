@@ -93,7 +93,7 @@ export default function HomeContent({ visible, faceCamera }) {
                 />
                 <NormalizedModel
                     url={content.nameModel}
-                    size={compact ? 1.7 : 2.4}
+                    size={(compact ? 1.7 : 2.4) * (content.nameScale ?? 1)}
                     position={compact ? [-0.3, 1.5, 52] : [1.8, 0.9, 35]}
                     faceCamera={faceCamera}
                 />
@@ -108,7 +108,7 @@ export default function HomeContent({ visible, faceCamera }) {
                         position={compact ? [0, -1.8, 52] : [1.8, 0, 35]}
                         center
                         transform
-                        distanceFactor={compact ? 2 : 2.5}
+                        distanceFactor={compact ? 1 : 2.0}
                     >
                         <section
                             className="home-blurb"
