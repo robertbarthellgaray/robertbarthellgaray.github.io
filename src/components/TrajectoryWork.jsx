@@ -7,10 +7,17 @@ import remusUrl from "../assets/Remuslowpolywhite.glb?url";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 import { TRAJECTORY_CONTENT } from "../trajectoryContent";
 
-const TRAJECTORY_TRANSFORM = {
-    position: [-4, 0, 40],
-    rotation: [0, 4*Math.PI / 10, 0],
-    scale: 0.6,
+const TRAJECTORY_TRANSFORMS = {
+    desktop: {
+        position: [-4, 0, 40],
+        rotation: [0, (4 * Math.PI) / 10, 0],
+        scale: 0.6,
+    },
+    mobile: {
+        position: [-2, 0, 48],
+        rotation: [0, (4 * Math.PI) / 10, 0],
+        scale: 0.55,
+    },
 };
 
 function NormalizedTrajectory({ url, position }) {
@@ -76,12 +83,8 @@ export default function TrajectoryWork({ objectRef, language }) {
     const compact = size.width < 700;
     const content = TRAJECTORY_CONTENT[language] ?? TRAJECTORY_CONTENT.en;
     const transform = compact
-        ? {
-            position: [-2, 0, 48],
-            rotation: TRAJECTORY_TRANSFORM.rotation,
-            scale: 0.55,
-        }
-        : TRAJECTORY_TRANSFORM;
+        ? TRAJECTORY_TRANSFORMS.mobile
+        : TRAJECTORY_TRANSFORMS.desktop;
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {
