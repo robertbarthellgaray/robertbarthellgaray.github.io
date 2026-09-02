@@ -18,7 +18,14 @@ const ORBIT_RADIUS_KM = ORBIT_RADIUS * SCENE_UNIT_KM;
 const ORBIT_SPEED = Math.sqrt(398600.4418 / ORBIT_RADIUS_KM ** 3);
 const DISPLAY_SIZE = 0.22;
 const SUN_WORLD_POSITION = new Vector3(...SUN_POSITION);
-const SAIL_YAW_OFFSET_DEGREES = 30;
+const SUN_IN_EARTH_FRAME = SUN_WORLD_POSITION.clone().applyAxisAngle(
+    new Vector3(0, 0, 1),
+    EARTH_TILT,
+);
+const TERMINATOR_ORBIT_ROTATION = Math.atan2(
+    SUN_IN_EARTH_FRAME.x,
+    SUN_IN_EARTH_FRAME.z,
+);
 
 function SailModel() {
     const { scene } = useGLTF(sailModelUrl);
@@ -40,7 +47,6 @@ function SailModel() {
     useFrame(() => {
         if (!sailRef.current) return;
         sailRef.current.lookAt(SUN_WORLD_POSITION);
-        sailRef.current.rotateY(MathUtils.degToRad(SAIL_YAW_OFFSET_DEGREES));
     });
 
     return (
@@ -69,54 +75,56 @@ export default function CubeSail({
 
     return (
         <group rotation={[0, 0, -EARTH_TILT]}>
-            <group rotation={[MathUtils.degToRad(97.7), 0, 0]}>
-                <group ref={orbitRef}>
-                    <group
-                        ref={objectRef}
-                        position={[ORBIT_RADIUS, 0, 0]}
-                        onClick={(event) => {
-                            event.stopPropagation();
-                            onSelect?.();
-                        }}
-                        onPointerOver={() => { document.body.style.cursor = "pointer"; }}
-                        onPointerOut={() => { document.body.style.cursor = "default"; }}
-                    >
-                        <SailModel />
-                        {showTarget && (
-                            <Html position={[0, 0, 0]} center>
-                                <button
-                                    className="cubesat-target"
-                                    type="button"
-                                    aria-label="Catch CubeSail"
-                                    title="Catch CubeSail"
-                                    onPointerDown={(event) => event.stopPropagation()}
-                                    onClick={(event) => {
-                                        event.stopPropagation();
-                                        onCatch?.();
-                                    }}
-                                >
-                                    <span className="visually-hidden">
-                                        Catch CubeSail
-                                    </span>
-                                </button>
-                            </Html>
-                        )}
-                        <Html
-                            position={[0, 0.18, 0]}
-                            center
-                            transform
-                            sprite
-                            distanceFactor={0.35}
+            <group rotation={[0, TERMINATOR_ORBIT_ROTATION, 0]}>
+                <group rotation={[MathUtils.degToRad(97.7), 0, 0]}>
+                    <group ref={orbitRef}>
+                        <group
+                            ref={objectRef}
+                            position={[ORBIT_RADIUS, 0, 0]}
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                onSelect?.();
+                            }}
+                            onPointerOver={() => { document.body.style.cursor = "pointer"; }}
+                            onPointerOut={() => { document.body.style.cursor = "default"; }}
                         >
-                            <section className="cubesat-blurb">
-                                <strong>{content.title}</strong>
-                                {content.paragraphs.map((paragraph, index) => (
-                                    <p key={`cubesail-paragraph-${index}`}>
-                                        {paragraph}
-                                    </p>
-                                ))}
-                            </section>
-                        </Html>
+                            <SailModel />
+                            {showTarget && (
+                                <Html position={[0, 0, 0]} center>
+                                    <button
+                                        className="cubesat-target"
+                                        type="button"
+                                        aria-label="Catch CubeSail"
+                                        title="Catch CubeSail"
+                                        onPointerDown={(event) => event.stopPropagation()}
+                                        onClick={(event) => {
+                                            event.stopPropagation();
+                                            onCatch?.();
+                                        }}
+                                    >
+                                        <span className="visually-hidden">
+                                            Catch CubeSail
+                                        </span>
+                                    </button>
+                                </Html>
+                            )}
+                            <Html
+                                position={[0, 0.18, 0]}
+                                center
+                                transform
+                                sprite
+                                distanceFactor={0.35}
+                            >
+                                <section className="cubesat-blurb">
+                                    <strong>{content.title}</strong>
+                                    {content.paragraphs.map((paragraph, index) => (
+                                        <p key={`cubesail-paragraph-${index}`}>
+                                            {paragraph}
+                                        </p>
+                                    ))}
+                                </section>
+                            </Html>
+                        </group>
                     </group>
                 </group>
             </group>
