@@ -378,3 +378,64 @@ canvas {
     transform-origin: left;
     background: #4da6ff;
 }
+
+@media (max-width: 700px) {
+    .view-mode-controls {
+        bottom: 12px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: calc(100vw - 24px);
+    }
+
+    .view-mode-button,
+    .view-mode-button:first-child,
+    .view-mode-button:last-child {
+        min-width: 0;
+        padding: 0 6px;
+        border-radius: 3px;
+        font-size: 12px;
+    }
+
+    .view-mode-button + .view-mode-button {
+        margin: -1px 0 0 -1px;
+    }
+
+    .global-language-menu {
+        top: 12px;
+        right: 12px;
+        max-width: calc(100vw - 24px);
+    }
+
+    .global-language-menu span {
+        display: none;
+    }
+
+    .global-language-menu select {
+        max-width: 150px;
+    }
+
+    .home-blurb {
+        width: 86vw;
+        padding: 12px;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .trajectory-title {
+        max-width: 82vw;
+        font-size: 23px;
+        line-height: 1.1;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .trajectory-panel {
+        width: min(280px, 84vw);
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    .trajectory-panel h2 {
+        font-size: 15px;
+    }
+}

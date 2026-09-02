@@ -1,16 +1,16 @@
 import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Html, useGLTF } from "@react-three/drei";
 import { Box3, Vector3 } from "three";
 import claudiusUrl from "../assets/ClaudiusOrbitv2.glb?url";
-import remusUrl from "../assets/RemusOrbitv2.glb?url";
+import remusUrl from "../assets/Remuslowpolywhite.glb?url";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 import { TRAJECTORY_CONTENT } from "../trajectoryContent";
 
 const TRAJECTORY_TRANSFORM = {
-    position: [-5, 0, 40],
-    rotation: [0, Math.PI / 2, 0],
-    scale: 1,
+    position: [-4, 0, 40],
+    rotation: [0, 4*Math.PI / 10, 0],
+    scale: 0.6,
 };
 
 function NormalizedTrajectory({ url, position }) {
@@ -72,7 +72,16 @@ function MissionPanel({ mission }) {
 
 export default function TrajectoryWork({ objectRef, language }) {
     const orbitRef = useRef();
+    const { size } = useThree();
+    const compact = size.width < 700;
     const content = TRAJECTORY_CONTENT[language] ?? TRAJECTORY_CONTENT.en;
+    const transform = compact
+        ? {
+            position: [-2, 0, 48],
+            rotation: TRAJECTORY_TRANSFORM.rotation,
+            scale: 0.55,
+        }
+        : TRAJECTORY_TRANSFORM;
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {
@@ -84,18 +93,39 @@ export default function TrajectoryWork({ objectRef, language }) {
     return (
         <group rotation={[0, 0, -EARTH_TILT]}>
             <group ref={orbitRef}>
-                <group ref={objectRef} {...TRAJECTORY_TRANSFORM}>
-                    <Html position={[0, 3.5, 0]} center transform distanceFactor={2}>
+                <group ref={objectRef} {...transform}>
+                    <Html
+                        position={compact ? [0, 3.2, 0] : [0, 3.5, 0]}
+                        center
+                        transform
+                        distanceFactor={compact ? 2.5 : 2}
+                    >
                         <h1 className="trajectory-title">
                             {content.title}
                         </h1>
                     </Html>
-                    <NormalizedTrajectory url={claudiusUrl} position={[-3, 0.8, 0]} />
-                    <NormalizedTrajectory url={remusUrl} position={[3, 0.8, 0]} />
-                    <Html position={[-3, -2.5, 0]} center transform distanceFactor={1.8}>
+                    <NormalizedTrajectory
+                        url={claudiusUrl}
+                        position={compact ? [-1.4, 1.7, 0] : [-3, 0.8, 0]}
+                    />
+                    <NormalizedTrajectory
+                        url={remusUrl}
+                        position={compact ? [1.4, 1.7, 0] : [3, 0.8, 0]}
+                    />
+                    <Html
+                        position={compact ? [0, 0, 0] : [-4.5, -1.5, 0]}
+                        center
+                        transform
+                        distanceFactor={compact ? 2.2 : 3.5}
+                    >
                         <MissionPanel mission={content.claudius} />
                     </Html>
-                    <Html position={[3, -2.5, 0]} center transform distanceFactor={1.8}>
+                    <Html
+                        position={compact ? [0, -4.1, 0] : [0.75, -1.5, 0]}
+                        center
+                        transform
+                        distanceFactor={compact ? 2.2 : 3.5}
+                    >
                         <MissionPanel mission={content.remus} />
                     </Html>
                 </group>
