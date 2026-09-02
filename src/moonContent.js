@@ -14,7 +14,7 @@ const makeMedia = (labels) => youtubeMedia.map((media, index) => ({
 // Bilibili example: { provider: "bilibili", id: "BV...", linkUrl: "https://...", title, description }.
 export const MOON_CONTENT = {
     en: {
-        blurb: "Since my childhood, I have been interested in 3D Modeling and Animation. I began making stuff in Blender at age 13, later producing my high school news videos with it. At 18, I had the honor of interning at NASA and doing 3D work for their Mars simulator.\n\nNowadays (and having picked up Unreal Engine 5 too) I work on 3D animation and visualization for both my line of work, and also miscellaneous sci-fi and architectural renderings.",
+        blurb: "Since my childhood, I have been interested in 3D Modeling and Animation. I began making stuff in Blender at age 13, later producing my high school news videos with it. At 18, I had the honor of interning at NASA and doing 3D work for their Moon simulator.\n\nNowadays (and having picked up Unreal Engine 5 too) I work on 3D animation and visualization for both my line of work, and also miscellaneous sci-fi and architectural renderings.",
         media: makeMedia([
             { title: "My Orbits/ Astrodynamics Simulations", description: "Actual, physically accurate propagated trajectories." },
             { title: "My Filmography and Videography", description: "My most recent short film is about pilots of a cargo ship." },
@@ -22,11 +22,11 @@ export const MOON_CONTENT = {
         ]),
     },
     es: {
-        blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo sed sapien luctus cursus. Donec vel sem at ligula volutpat facilisis.",
+        blurb: "Desde niño me ha interesado la animación y modelos 3D. Empecé a hacer cosas con Blender a los 13 años, luego producí los videos de noticias de mi secundaria con él. A los 18 tuve el honor de internar en NASA y hacer trabajos 3D para su simulador de la Luna.\n\nHoy en día (aprendí a usar Unreal Engine 5 también) trabajo en animación 3D y visualización para mi tipo de trabajo y renders misceláneos de ciencia ficción y arquitectura.",
         media: makeMedia([
-            { title: "Título uno", description: "Edita esta descripción." },
-            { title: "Título dos", description: "Edita esta descripción." },
-            { title: "Título tres", description: "Edita esta descripción." },
+            { title: "Mis simulaciones de órbitas/ astrodinámica", description: "Trayectorios propagados, verdaderos, físicamente correctos" },
+            { title: "Mi filmografía y videografía", description: "Mi película corta más reciente trata sobre pilots de una nave de carga." },
+            { title: "Mis otros renderes 3D misceláneos", description: "Ciencia ficción menos realista de cuando estaba más joven, y renders de arquitectura." },
         ]),
     },
     fr: {

@@ -14,9 +14,9 @@ const TRAJECTORY_TRANSFORMS = {
         scale: 0.6,
     },
     mobile: {
-        position: [-2, 0, 48],
-        rotation: [0, (4 * Math.PI) / 10, 0],
-        scale: 0.55,
+        position: [-2, 0.75, 54],
+        rotation: [0, (2 * Math.PI) / 10, 0],
+        scale: 0.35,
     },
 };
 
@@ -109,25 +109,25 @@ export default function TrajectoryWork({ objectRef, language }) {
                     </Html>
                     <NormalizedTrajectory
                         url={claudiusUrl}
-                        position={compact ? [-1.4, 1.7, 0] : [-3, 0.8, 0]}
+                        position={compact ? [1.25, 0.7, 0] : [-3, 0.8, 0]}
                     />
                     <NormalizedTrajectory
                         url={remusUrl}
-                        position={compact ? [1.4, 1.7, 0] : [3, 0.8, 0]}
+                        position={compact ? [1.25, -4, 0] : [3, 0.8, 0]}
                     />
                     <Html
-                        position={compact ? [0, 0, 0] : [-4.5, -1.5, 0]}
+                        position={compact ? [-2, 0, 0] : [-4.5, -1.5, 0]}
                         center
                         transform
-                        distanceFactor={compact ? 2.2 : 3.5}
+                        distanceFactor={compact ? 3.7 : 3.5}
                     >
                         <MissionPanel mission={content.claudius} />
                     </Html>
                     <Html
-                        position={compact ? [0, -4.1, 0] : [0.75, -1.5, 0]}
+                        position={compact ? [-2, -4.1, 0] : [0.75, -1.5, 0]}
                         center
                         transform
-                        distanceFactor={compact ? 2.2 : 3.5}
+                        distanceFactor={compact ? 3.7 : 3.5}
                     >
                         <MissionPanel mission={content.remus} />
                     </Html>

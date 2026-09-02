@@ -30,7 +30,7 @@ function ThrusterFlame({ position, color, radius, length, phase }) {
     });
 
     return (
-        <group position={position} rotation={[Math.PI / 2, 0, 0]}>
+        <group position={position} rotation={[0, 0, 0]}>
             <mesh ref={flameRef} position={[0, -length / 2, 0]}>
                 <coneGeometry args={[radius, length, 16, 1, true]} />
                 <meshBasicMaterial
@@ -52,21 +52,21 @@ function ThrusterExhaust() {
             <ThrusterFlame
                 position={[0, 0, 0]}
                 color="#ffffff"
-                radius={0.13}
-                length={0.8}
+                radius={0.53}
+                length={2}
                 phase={0}
             />
             <ThrusterFlame
-                position={[-0.7, 0, 0]}
+                position={[0, 0, -0.7]}
                 color="#55aaff"
-                radius={0.08}
+                radius={0.28}
                 length={0.5}
                 phase={1.8}
             />
             <ThrusterFlame
-                position={[0.7, 0, 0]}
+                position={[0, 0, 0.7]}
                 color="#55aaff"
-                radius={0.08}
+                radius={0.28}
                 length={0.5}
                 phase={3.6}
             />
@@ -116,11 +116,11 @@ export default function CubeSat({
     onSelect,
     showLabel = false,
     showTarget = false,
-    language,
     onCatch,
+    language,
 }) {
-    const content = CUBESAT_CONTENT[language] ?? CUBESAT_CONTENT.en;
     const orbitRef = useRef();
+    const content = CUBESAT_CONTENT[language] ?? CUBESAT_CONTENT.en;
 
     useFrame(({ clock }) => {
         if (orbitRef.current) {

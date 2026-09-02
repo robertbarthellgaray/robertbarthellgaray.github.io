@@ -87,7 +87,7 @@ export default function Earth({
                     map={textures.clouds}
                     alphaMap={textures.clouds}
                     transparent
-                    opacity={0.32}
+                    opacity={0.96}
                     depthWrite={false}
                 />
             </mesh>

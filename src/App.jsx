@@ -106,7 +106,7 @@ function CameraControls({
       moonRadialRef.current.copy(targetRef.current).normalize();
       desiredCameraRef.current
         .copy(targetRef.current)
-        .addScaledVector(moonRadialRef.current, -8);
+        .addScaledVector(moonRadialRef.current, size.width < 700 ? -14 : -8);
       targetReady = true;
     }
 

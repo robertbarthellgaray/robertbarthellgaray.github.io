@@ -118,34 +118,34 @@ export default function HomeContent({
             <group ref={orbitRef}>
                 <NormalizedModel
                     url={faceUrl}
-                    size={compact ? 1.05 : 2.4}
-                    position={compact ? [-0.7, 1.8, 52] : [-2.5, 0, 35]}
+                    size={compact ? 1.5 : 2.4}
+                    position={compact ? [-0.9, 1.8, 52] : [-2.5, 0, 35]}
                     faceCamera={faceCamera}
                     unlit
                 />
                 <NormalizedModel
                     url={content.nameModel}
-                    size={(compact ? 1.15 : 2.4) * (content.nameScale ?? 1)}
-                    position={compact ? [0.55, 1.85, 52] : [1.8, 0.9, 35]}
+                    size={(compact ? 1.75 : 2.4) * (content.nameScale ?? 1)}
+                    position={compact ? [0.65, 1.85, 52] : [1.8, 0.9, 35]}
                     faceCamera={faceCamera}
                 />
                 <NormalizedModel
                     url={content.jobModel}
-                    size={compact ? 1.3 : 2.2}
-                    position={compact ? [0, -2.2, 52] : [1.8, -0.9, 35]}
+                    size={compact ? 1.5 : 2.2}
+                    position={compact ? [0.5, 1.25, 52] : [1.8, -0.9, 35]}
                     faceCamera={faceCamera}
                 />
                 <NormalizedModel
                     url={resumeUrl}
                     size={compact ? 2.6 : 4.5}
-                    position={compact ? [2.7, 0, 52] : [5, -0.5, 36]}
+                    position={compact ? [2.1, 0, 52] : [5, -0.5, 36]}
                     rotation={[0, (-Math.PI * 5) / 18, 0]}
                     faceCamera={false}
                     objectRef={resumeRef}
                     onClick={openResume}
                     unlit
                 />
-                {visible && faceCamera && !compact && (
+                {visible && faceCamera && (
                     <Billboard
                         position={compact ? [2.5, -1.2, 52] : [3.4, 0, 35]}
                         follow
@@ -164,7 +164,7 @@ export default function HomeContent({
                         </Html>
                     </Billboard>
                 )}
-                {visible && faceCamera && !compact && (
+                {visible && faceCamera && (
                     <Billboard
                         position={compact ? [-2.6, -1.2, 52] : [-4, 0, 35]}
                         follow
@@ -185,10 +185,10 @@ export default function HomeContent({
                 )}
                 {visible && (
                     <Html
-                        position={compact ? [0, -0.25, 52] : [1.8, 0, 35]}
+                        position={compact ? [0, -1.5, 52] : [1.8, 0, 35]}
                         center
                         transform
-                        distanceFactor={compact ? 1 : 2.0}
+                        distanceFactor={compact ? 2.25 : 2.0}
                     >
                         <section
                             className="home-blurb"
