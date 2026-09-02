@@ -14,7 +14,7 @@ const TRAJECTORY_TRANSFORMS = {
         scale: 0.6,
     },
     mobile: {
-        position: [-2, 0.75, 54],
+        position: [-2, 0, 54],
         rotation: [0, (2 * Math.PI) / 10, 0],
         scale: 0.35,
     },

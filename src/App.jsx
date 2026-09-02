@@ -52,7 +52,7 @@ function CameraControls({
     if (mode === "home" || mode === "resume" || mode === "trajectory") {
       const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
       homePositionRef.current
-        .set(0, 0, size.width < 700 ? 60 : 42)
+        .set(0, 0, size.width < 700 ? 64 : 42)
         .applyAxisAngle(Y_AXIS, earthRotation)
         .applyAxisAngle(Z_AXIS, -EARTH_TILT);
 
