@@ -332,7 +332,7 @@ export default function App() {
             type="button"
             onClick={() => setCameraMode("home")}
           >
-            Take me home
+            {cameraMode === "rolamgas" ? solverText.home : "Take me home"}
           </button>
           </>
         )}

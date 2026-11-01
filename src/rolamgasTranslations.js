@@ -43,7 +43,8 @@ export const SOLVER_TRANSLATIONS = {
             ]
         ],
         "missions": null,
-        "portalLead": "HANDMADE TRAJECTORIES ON TOP, BUT YOU’RE PROBABLY LOOKING FOR"
+        "portalLead": "HANDMADE TRAJECTORIES ON TOP, BUT YOU’RE PROBABLY LOOKING FOR",
+        "home": "Take me home"
     },
     "es": {
         "eyebrow": "LABORATORIO DE DISEÑO DE MISIONES DE ROBERT",
@@ -113,7 +114,8 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "El coste de crucero exportado es 899.7 m/s, incluidas las correcciones de empalme y de velocidad de los sobrevuelos. La inyección de lanzamiento y la captura en Mercurio quedan fuera. El archivo termina a 200 km de altitud, sin captura orbital. Se muestra el modelo de Robert de la trayectoria ba36e139b812."
             }
         ],
-        "portalLead": "ARRIBA ESTÁN LAS TRAYECTORIAS HECHAS A MANO, PERO PROBABLEMENTE BUSCAS"
+        "portalLead": "ARRIBA ESTÁN LAS TRAYECTORIAS HECHAS A MANO, PERO PROBABLEMENTE BUSCAS",
+        "home": "Volver al inicio"
     },
     "fr": {
         "eyebrow": "LABORATOIRE DE CONCEPTION DE MISSIONS DE ROBERT",
@@ -183,7 +185,8 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "Le coût de croisière exporté est de 899.7 m/s, corrections de raccordement et de vitesse des survols comprises. L’injection au lancement et la capture à Mercure sont exclues. Le fichier se termine à 200 km d’altitude, sans capture orbitale. Le modèle de Robert représente la trajectoire ba36e139b812."
             }
         ],
-        "portalLead": "LES TRAJECTOIRES CONÇUES À LA MAIN SONT AU-DESSUS, MAIS VOUS CHERCHEZ SANS DOUTE"
+        "portalLead": "LES TRAJECTOIRES CONÇUES À LA MAIN SONT AU-DESSUS, MAIS VOUS CHERCHEZ SANS DOUTE",
+        "home": "Retour à l’accueil"
     },
     "de": {
         "eyebrow": "ROBERTS LABOR FÜR MISSIONSENTWURF",
@@ -253,7 +256,8 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "Das exportierte Reiseflugbudget beträgt 899.7 m/s einschließlich Anschluss- und Geschwindigkeitskorrekturen an den Vorbeiflügen. Startinjektion und Einbremsen am Merkur sind ausgeschlossen. Die Datei endet in 200 km Höhe ohne Orbitaleinfang. Roberts Modell zeigt die Flugbahn ba36e139b812."
             }
         ],
-        "portalLead": "OBEN SIND DIE VON HAND ENTWORFENEN FLUGBAHNEN, ABER WAHRSCHEINLICH SUCHST DU"
+        "portalLead": "OBEN SIND DIE VON HAND ENTWORFENEN FLUGBAHNEN, ABER WAHRSCHEINLICH SUCHST DU",
+        "home": "Zur Startansicht"
     },
     "ru": {
         "eyebrow": "ЛАБОРАТОРИЯ ПРОЕКТИРОВАНИЯ МИССИЙ РОБЕРТА",
@@ -323,7 +327,8 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "Экспортированный бюджет перелёта составляет 899.7 m/s, включая стыковочные импульсы и согласование скоростей при пролётах. Выведение на траекторию и захват у Меркурия исключены. Файл заканчивается на высоте 200 km без выхода на орбиту. Модель Роберта показывает траекторию ba36e139b812."
             }
         ],
-        "portalLead": "ВЫШЕ — ТРАЕКТОРИИ РУЧНОЙ РАЗРАБОТКИ, НО ВЫ, ВЕРОЯТНО, ИЩЕТЕ"
+        "portalLead": "ВЫШЕ — ТРАЕКТОРИИ РУЧНОЙ РАЗРАБОТКИ, НО ВЫ, ВЕРОЯТНО, ИЩЕТЕ",
+        "home": "На главную"
     },
     "hi": {
         "eyebrow": "रॉबर्ट की मिशन डिज़ाइन प्रयोगशाला",
@@ -393,7 +398,8 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "एक्सपोर्ट का यात्रा बजट 899.7 m/s है, जिसमें जोड़-बिंदु और फ्लाइबाइ की गति-मिलान सुधार शामिल हैं। प्रक्षेपण के बाद पथ में प्रवेश और बुध की कक्षा में प्रवेश इसमें शामिल नहीं हैं। फ़ाइल 200 km की ऊँचाई पर समाप्त होती है, कक्षा में प्रवेश किए बिना। रॉबर्ट का मॉडल ba36e139b812 प्रक्षेपपथ दिखाता है।"
             }
         ],
-        "portalLead": "हाथ से डिज़ाइन किए गए प्रक्षेपपथ ऊपर हैं, लेकिन आप शायद ढूँढ़ रहे हैं"
+        "portalLead": "हाथ से डिज़ाइन किए गए प्रक्षेपपथ ऊपर हैं, लेकिन आप शायद ढूँढ़ रहे हैं",
+        "home": "मुख्य दृश्य"
     },
     "zh": {
         "eyebrow": "ROBERT 的任务设计实验室",
@@ -463,7 +469,8 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "导出的巡航预算为 899.7 m/s，包含弧段连接修正与飞越速度匹配机动，不包括发射注入和水星捕获。文件在距水星表面 200 km 处结束，并未入轨。Robert 的模型展示的是 ba36e139b812 轨迹。"
             }
         ],
-        "portalLead": "上方是手工设计的轨迹，不过你可能在找"
+        "portalLead": "上方是手工设计的轨迹，不过你可能在找",
+        "home": "返回主页"
     }
 };
 
