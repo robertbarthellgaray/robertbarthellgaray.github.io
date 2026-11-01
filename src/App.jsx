@@ -12,6 +12,7 @@ import Sun from "./components/Sun";
 import TrajectoryWork from "./components/TrajectoryWork";
 import RoLaMGASWork from "./components/RoLaMGASWork";
 import { HOME_CONTENT } from "./homeContent";
+import { getSolverTranslation } from "./rolamgasTranslations";
 import {
   CUBESAT_MODEL_URL,
   EARTH_ROTATION_SPEED,
@@ -148,6 +149,7 @@ function CameraControls({
 export default function App() {
   const [cameraMode, setCameraMode] = useState("home");
   const [language, setLanguage] = useState("en");
+  const solverText = getSolverTranslation(language);
   const [cubeSatTargetVisible, setCubeSatTargetVisible] = useState(false);
   const [showCatchMessage, setShowCatchMessage] = useState(false);
   const cubeSatRef = useRef();
@@ -198,7 +200,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ width: "100vw", height: "100vh", background: "black" }}>
+    <div lang={language} style={{ width: "100vw", height: "100vh", background: "black" }}>
       <Canvas
         camera={{ position: [0, 0, 42], fov: 40 }}
         gl={{ alpha: false }}
@@ -246,7 +248,7 @@ export default function App() {
 
         <Suspense fallback={null}>
           <TrajectoryWork objectRef={trajectoryRef} language={language} active={cameraMode === "trajectory"} onSelectSolver={() => setCameraMode("rolamgas")} />
-          <RoLaMGASWork objectRef={solverRef} active={cameraMode === "rolamgas"} />
+          <RoLaMGASWork objectRef={solverRef} active={cameraMode === "rolamgas"} language={language} />
         </Suspense>
 
         {/* CubeSat */}
@@ -323,7 +325,7 @@ export default function App() {
           </>
         ) : (
           <>
-          {cameraMode === "rolamgas" && <button className="view-mode-button" type="button" onClick={() => setCameraMode("trajectory")}>Handmade trajectories →</button>}
+          {cameraMode === "rolamgas" && <button className="view-mode-button" type="button" onClick={() => setCameraMode("trajectory")}>{solverText.handmade} →</button>}
           {cameraMode === "trajectory" && <button className="view-mode-button" type="button" onClick={() => setCameraMode("rolamgas")}>← RoLaMGAS</button>}
           <button
             className="view-mode-button"

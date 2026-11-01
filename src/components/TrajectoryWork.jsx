@@ -6,12 +6,13 @@ import claudiusUrl from "../assets/ClaudiusOrbitv2.glb?url";
 import remusUrl from "../assets/Remuslowpolywhite.glb?url";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 import { TRAJECTORY_CONTENT } from "../trajectoryContent";
+import { getSolverTranslation } from "../rolamgasTranslations";
 
 const TRAJECTORY_TRANSFORMS = {
     desktop: {
-        position: [-4, 1, 40],
+        position: [-4, 0, 38],
         rotation: [0, (4 * Math.PI) / 10, 0],
-        scale: 0.45,
+        scale: 0.65,
     },
     mobile: {
         position: [-2, 0, 54],
@@ -91,6 +92,7 @@ export default function TrajectoryWork({ objectRef, language, onSelectSolver, ac
     const { size } = useThree();
     const compact = size.width < 700;
     const content = TRAJECTORY_CONTENT[language] ?? TRAJECTORY_CONTENT.en;
+    const solverText = getSolverTranslation(language);
     const transform = compact
         ? TRAJECTORY_TRANSFORMS.mobile
         : TRAJECTORY_TRANSFORMS.desktop;
@@ -107,7 +109,7 @@ export default function TrajectoryWork({ objectRef, language, onSelectSolver, ac
             <group ref={orbitRef}>
                 <group ref={objectRef} {...transform}>
                     {active && <Html
-                        position={[0, 4.4, 0]}
+                        position={[0, 4, 0]}
                         center
                         transform
                         distanceFactor={compact ? 2.5 : 2}
@@ -118,14 +120,14 @@ export default function TrajectoryWork({ objectRef, language, onSelectSolver, ac
                     </Html>}
                     <NormalizedTrajectory
                         url={claudiusUrl}
-                        position={[-2.6, 2.8, 0]}
+                        position={[-2.2, 2.2, 0]}
                     />
                     <NormalizedTrajectory
                         url={remusUrl}
-                        position={[2.6, 2.8, 0]}
+                        position={[2.2, 2.2, 0]}
                     />
                     {active && <Html
-                        position={[-2.6, 0.6, 0]}
+                        position={[-2.2, 0., 0]}
                         center
                         transform
                         distanceFactor={2.5}
@@ -133,19 +135,19 @@ export default function TrajectoryWork({ objectRef, language, onSelectSolver, ac
                         <MissionPanel mission={content.claudius} />
                     </Html>}
                     {active && <Html
-                        position={[2.6, 0.6, 0]}
+                        position={[2.2, -0.5, 0]}
                         center
                         transform
-                        distanceFactor={2.5}
+                        distanceFactor={3.5}
                     >
                         <MissionPanel mission={content.remus} />
                     </Html>}
-                    {active && <Html position={[0, -2.6, 0]} center transform distanceFactor={compact ? 3 : 3.5}>
+                    {active && <Html position={[-1, -2, 0]} center transform distanceFactor={compact ? 3 : 3.5}>
                         <button className="solver-portal" type="button" onClick={onSelectSolver} tabIndex={active ? 0 : -1}>
-                            <span className="solver-portal__eyebrow">THE MISSION DESIGN LAB</span>
+                            <span className="solver-portal__eyebrow">{solverText.portalLead}</span>
                             <strong>RoLaMGAS <span aria-hidden="true">←</span></strong>
-                            <span>Robert’s Lambert Multi Gravity Assist Solver</span>
-                            <span className="solver-portal__hint">Turn left. Explore the possibilities.</span>
+                            <span>{solverText.subtitle}</span>
+                            <span className="solver-portal__hint">{solverText.portalHint}</span>
                         </button>
                     </Html>}
                 </group>

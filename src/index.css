@@ -424,7 +424,7 @@ canvas {
 .solver-room-heading p { color: #a9bdce; font-size: 14px; margin: 10px 0 0; }
 .solver-exhibit-label { width: 265px; padding: 12px 8px; display: grid; gap: 8px; text-align: left; background: transparent; border: 0; border-top: 1px solid #3b4652; color: #edf4fa; font-family: system-ui, sans-serif; cursor: pointer; }
 .solver-exhibit-label>span { color: #98afc2; font: 9px ui-monospace, monospace; letter-spacing: 1px; }
-.solver-exhibit-label strong { font-size: 18px; font-weight: 550; }
+.solver-exhibit-label strong { font-size: 18px; font-weight: 550; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .solver-exhibit-label small { color: #79d8f1; font: 12px ui-monospace, monospace; }
 .solver-exhibit-label[aria-pressed="true"] { border-top: 2px solid #79d8f1; background: linear-gradient(#102637aa, transparent); }
 .solver-exhibit-label:hover { border-color: #79d8f1; }
