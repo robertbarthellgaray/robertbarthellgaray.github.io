@@ -106,6 +106,12 @@ export default function TrajectoryWork({ objectRef, language }) {
                         <h1 className="trajectory-title">
                             {content.title}
                         </h1>
+                        <a
+                            className="trajectory-solver-link"
+                            href="https://robertbarthellgaray.github.io/RoLaMGAS/"
+                        >
+                            RoLaMGAS · Explore saved trajectories ↗
+                        </a>
                     </Html>
                     <NormalizedTrajectory
                         url={claudiusUrl}

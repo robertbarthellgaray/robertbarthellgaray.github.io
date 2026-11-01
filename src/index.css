@@ -141,6 +141,28 @@ canvas {
     cursor: pointer;
 }
 
+.rolamgas-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9bddf2;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.trajectory-solver-link {
+    display: block;
+    width: max-content;
+    margin: 12px auto 0;
+    color: #9bddf2;
+    font: 500 13px/1.5 system-ui, sans-serif;
+    text-decoration: none;
+}
+
+.trajectory-solver-link:hover {
+    text-decoration: underline;
+}
+
 .view-mode-button:first-child {
     border-radius: 4px 0 0 4px;
 }
@@ -380,6 +402,10 @@ canvas {
 }
 
 @media (max-width: 700px) {
+    .rolamgas-link {
+        grid-column: 1 / -1;
+    }
+
     .view-mode-controls {
         bottom: max(12px, env(safe-area-inset-bottom));
         display: grid;

@@ -287,23 +287,31 @@ export default function App() {
       </label>
       <nav className="view-mode-controls" aria-label="Destinations">
         {cameraMode === "home" ? (
-          [
-            ["free", "Free view"],
-            ["cubesat", "CubeSat"],
-            ["cubesail", "CubeSail"],
-            ["moon", "Moon"],
-            ["trajectory", "Trajectories"],
-            ["resume", "Résumé"],
-          ].map(([mode, label]) => (
-            <button
-              className="view-mode-button"
-              type="button"
-              key={mode}
-              onClick={() => setCameraMode(mode)}
+          <>
+            {[
+              ["free", "Free view"],
+              ["cubesat", "CubeSat"],
+              ["cubesail", "CubeSail"],
+              ["moon", "Moon"],
+              ["trajectory", "Trajectories"],
+              ["resume", "Résumé"],
+            ].map(([mode, label]) => (
+              <button
+                className="view-mode-button"
+                type="button"
+                key={mode}
+                onClick={() => setCameraMode(mode)}
+              >
+                {label}
+              </button>
+            ))}
+            <a
+              className="view-mode-button rolamgas-link"
+              href="https://robertbarthellgaray.github.io/RoLaMGAS/"
             >
-              {label}
-            </button>
-          ))
+              RoLaMGAS ↗
+            </a>
+          </>
         ) : (
           <button
             className="view-mode-button"
