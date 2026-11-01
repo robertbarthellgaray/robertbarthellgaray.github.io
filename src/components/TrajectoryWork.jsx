@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Html, useGLTF } from "@react-three/drei";
-import { Box3, Vector3 } from "three";
+import { Box3, MeshBasicMaterial, Vector3 } from "three";
 import claudiusUrl from "../assets/ClaudiusOrbitv2.glb?url";
 import remusUrl from "../assets/Remuslowpolywhite.glb?url";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
@@ -9,9 +9,9 @@ import { TRAJECTORY_CONTENT } from "../trajectoryContent";
 
 const TRAJECTORY_TRANSFORMS = {
     desktop: {
-        position: [-4, 0, 40],
+        position: [-4, 1, 40],
         rotation: [0, (4 * Math.PI) / 10, 0],
-        scale: 0.6,
+        scale: 0.45,
     },
     mobile: {
         position: [-2, 0, 54],
@@ -20,10 +20,19 @@ const TRAJECTORY_TRANSFORMS = {
     },
 };
 
-function NormalizedTrajectory({ url, position }) {
+export function NormalizedTrajectory({ url, position, size = 2.4, rotation = [Math.PI / 2, 0, 0], unlit = false }) {
     const { scene } = useGLTF(url);
     const model = useMemo(() => {
         const object = scene.clone(true);
+        if (unlit) object.traverse(child => {
+            if (!child.isMesh) return;
+            const material = source => new MeshBasicMaterial({
+                color: source.emissive && (source.emissive.r + source.emissive.g + source.emissive.b > 0) ? source.emissive : source.color,
+                map: source.map, transparent: source.transparent, opacity: source.opacity,
+                side: source.side, vertexColors: source.vertexColors, toneMapped: false,
+            });
+            child.material = Array.isArray(child.material) ? child.material.map(material) : material(child.material);
+        });
         const bounds = new Box3().setFromObject(object);
         const dimensions = bounds.getSize(new Vector3());
         const center = bounds.getCenter(new Vector3());
@@ -36,12 +45,12 @@ function NormalizedTrajectory({ url, position }) {
         return {
             object,
             center: [-center.x, -center.y, -center.z],
-            scale: largestDimension > 0 ? 4.2 / largestDimension : 1,
+            scale: largestDimension > 0 ? size / largestDimension : 1,
         };
-    }, [scene]);
+    }, [scene, size, unlit]);
 
     return (
-        <group position={position} rotation={[Math.PI / 2, 0, 0]}>
+        <group position={position} rotation={rotation}>
             <group scale={model.scale}>
                 <primitive object={model.object} position={model.center} />
             </group>
@@ -77,7 +86,7 @@ function MissionPanel({ mission }) {
     );
 }
 
-export default function TrajectoryWork({ objectRef, language }) {
+export default function TrajectoryWork({ objectRef, language, onSelectSolver, active }) {
     const orbitRef = useRef();
     const { size } = useThree();
     const compact = size.width < 700;
@@ -97,8 +106,8 @@ export default function TrajectoryWork({ objectRef, language }) {
         <group rotation={[0, 0, -EARTH_TILT]}>
             <group ref={orbitRef}>
                 <group ref={objectRef} {...transform}>
-                    <Html
-                        position={compact ? [0, 3.2, 0] : [0, 3.5, 0]}
+                    {active && <Html
+                        position={[0, 4.4, 0]}
                         center
                         transform
                         distanceFactor={compact ? 2.5 : 2}
@@ -106,37 +115,39 @@ export default function TrajectoryWork({ objectRef, language }) {
                         <h1 className="trajectory-title">
                             {content.title}
                         </h1>
-                        <a
-                            className="trajectory-solver-link"
-                            href="https://robertbarthellgaray.github.io/RoLaMGAS/"
-                        >
-                            RoLaMGAS · Explore saved trajectories ↗
-                        </a>
-                    </Html>
+                    </Html>}
                     <NormalizedTrajectory
                         url={claudiusUrl}
-                        position={compact ? [1.25, 0.7, 0] : [-3, 0.8, 0]}
+                        position={[-2.6, 2.8, 0]}
                     />
                     <NormalizedTrajectory
                         url={remusUrl}
-                        position={compact ? [1.25, -4, 0] : [3, 0.8, 0]}
+                        position={[2.6, 2.8, 0]}
                     />
-                    <Html
-                        position={compact ? [-2, 0, 0] : [-4.5, -1.5, 0]}
+                    {active && <Html
+                        position={[-2.6, 0.6, 0]}
                         center
                         transform
-                        distanceFactor={compact ? 3.7 : 3.5}
+                        distanceFactor={2.5}
                     >
                         <MissionPanel mission={content.claudius} />
-                    </Html>
-                    <Html
-                        position={compact ? [-2, -4.1, 0] : [0.75, -1.5, 0]}
+                    </Html>}
+                    {active && <Html
+                        position={[2.6, 0.6, 0]}
                         center
                         transform
-                        distanceFactor={compact ? 3.7 : 3.5}
+                        distanceFactor={2.5}
                     >
                         <MissionPanel mission={content.remus} />
-                    </Html>
+                    </Html>}
+                    {active && <Html position={[0, -2.6, 0]} center transform distanceFactor={compact ? 3 : 3.5}>
+                        <button className="solver-portal" type="button" onClick={onSelectSolver} tabIndex={active ? 0 : -1}>
+                            <span className="solver-portal__eyebrow">THE MISSION DESIGN LAB</span>
+                            <strong>RoLaMGAS <span aria-hidden="true">←</span></strong>
+                            <span>Robert’s Lambert Multi Gravity Assist Solver</span>
+                            <span className="solver-portal__hint">Turn left. Explore the possibilities.</span>
+                        </button>
+                    </Html>}
                 </group>
             </group>
         </group>

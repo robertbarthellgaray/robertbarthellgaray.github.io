@@ -10,6 +10,7 @@ import HomeContent from "./components/HomeContent";
 import LoadingScreen from "./components/LoadingScreen";
 import Sun from "./components/Sun";
 import TrajectoryWork from "./components/TrajectoryWork";
+import RoLaMGASWork from "./components/RoLaMGASWork";
 import { HOME_CONTENT } from "./homeContent";
 import {
   CUBESAT_MODEL_URL,
@@ -28,6 +29,7 @@ function CameraControls({
   moonRef,
   moonPanelRef,
   trajectoryRef,
+  solverRef,
 }) {
   const controlsRef = useRef();
   const homePositionRef = useRef(new Vector3());
@@ -49,7 +51,7 @@ function CameraControls({
     let targetReady = false;
     if (modeChanged) transitionTimeRef.current = 0;
 
-    if (mode === "home" || mode === "resume" || mode === "trajectory") {
+    if (["home", "resume", "trajectory", "rolamgas"].includes(mode)) {
       const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
       homePositionRef.current
         .set(0, 0, size.width < 700 ? 64 : 42)
@@ -62,6 +64,9 @@ function CameraControls({
         targetReady = true;
       } else if (mode === "trajectory" && trajectoryRef.current) {
         trajectoryRef.current.getWorldPosition(desiredTargetRef.current);
+        targetReady = true;
+      } else if (mode === "rolamgas" && solverRef.current) {
+        solverRef.current.getWorldPosition(desiredTargetRef.current);
         targetReady = true;
       } else {
         desiredTargetRef.current.set(0, 0, 0);
@@ -117,7 +122,7 @@ function CameraControls({
       transitionTimeRef.current += delta;
     } else if (
       targetReady &&
-      (mode === "home" || mode === "resume" || mode === "moon" || mode === "trajectory")
+      ["home", "resume", "moon", "trajectory", "rolamgas"].includes(mode)
     ) {
       camera.position.copy(desiredCameraRef.current);
       controlsRef.current.target.copy(desiredTargetRef.current);
@@ -151,6 +156,7 @@ export default function App() {
   const moonRef = useRef();
   const moonPanelRef = useRef();
   const trajectoryRef = useRef();
+  const solverRef = useRef();
   const targetTimerRef = useRef();
   const messageTimerRef = useRef();
 
@@ -239,7 +245,8 @@ export default function App() {
         </Suspense>
 
         <Suspense fallback={null}>
-          <TrajectoryWork objectRef={trajectoryRef} language={language} />
+          <TrajectoryWork objectRef={trajectoryRef} language={language} active={cameraMode === "trajectory"} onSelectSolver={() => setCameraMode("rolamgas")} />
+          <RoLaMGASWork objectRef={solverRef} active={cameraMode === "rolamgas"} />
         </Suspense>
 
         {/* CubeSat */}
@@ -269,6 +276,7 @@ export default function App() {
           moonRef={moonRef}
           moonPanelRef={moonPanelRef}
           trajectoryRef={trajectoryRef}
+          solverRef={solverRef}
         />
       </Canvas>
       <label className="global-language-menu">
@@ -305,14 +313,18 @@ export default function App() {
                 {label}
               </button>
             ))}
-            <a
+            <button
               className="view-mode-button rolamgas-link"
-              href="https://robertbarthellgaray.github.io/RoLaMGAS/"
+              type="button"
+              onClick={() => setCameraMode("rolamgas")}
             >
-              RoLaMGAS ↗
-            </a>
+              RoLaMGAS ←
+            </button>
           </>
         ) : (
+          <>
+          {cameraMode === "rolamgas" && <button className="view-mode-button" type="button" onClick={() => setCameraMode("trajectory")}>Handmade trajectories →</button>}
+          {cameraMode === "trajectory" && <button className="view-mode-button" type="button" onClick={() => setCameraMode("rolamgas")}>← RoLaMGAS</button>}
           <button
             className="view-mode-button"
             type="button"
@@ -320,6 +332,7 @@ export default function App() {
           >
             Take me home
           </button>
+          </>
         )}
       </nav>
       {showCatchMessage && (
