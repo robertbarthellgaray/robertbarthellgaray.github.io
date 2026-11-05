@@ -1,0 +1,2 @@
+# Blank final TSV fields are meaningful table cells.
+public/trajectories/**/*.tsv text eol=lf whitespace=-blank-at-eol

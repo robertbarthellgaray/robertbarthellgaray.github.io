@@ -1,0 +1,30 @@
+{
+  "model": "Sun-only Lambert/Kepler arcs, instantaneous asymptotic flyby joins",
+  "frame": "Sun-centered Ecliptic J2000; km, km/s; JD TDB",
+  "time_scale": "TDB",
+  "source": "JPL Horizons planetary ephemerides",
+  "nbody_validated": false,
+  "limits_used": {
+    "min_c3": 6.25,
+    "max_c3": 10.0,
+    "max_single_dsm_kms": 0.7,
+    "max_dsm_kms": 1.5,
+    "vinf_tolerance_mps": 20.0,
+    "minimum_altitude_km": {
+      "Mercury": 200.0,
+      "Venus": 300.0,
+      "Earth": 200.0,
+      "Mars": 200.0,
+      "Jupiter": 10000.0,
+      "Saturn": 10000.0,
+      "Uranus": 1000.0,
+      "Neptune": 1000.0
+    }
+  },
+  "validation": {
+    "candidates": 5,
+    "worst_endpoint_error_km": 0.006837436003542788,
+    "nbody_validated": false,
+    "all_sun_only_arcs_passed": true
+  }
+}

@@ -15,10 +15,10 @@ function RoutePreview({ data, position, size }) {
         const extent = bounds.getSize(new Vector3());
         const scale = size / Math.max(extent.x, extent.y, extent.z);
         const normalized = p => [ (p[0] - center.x) * scale, (p[1] - center.y) * scale, (p[2] - center.z) * scale ];
-        return { paths: data.paths.map(p => p.points.map(normalized)), sun: normalized([0, 0, 0]) };
+        return { paths: data.paths.map((p, i) => ({ points: p.points.map(normalized), color: p.color ?? (i % 2 ? "#ffd08a" : "#79d8f1") })), sun: normalized([0, 0, 0]) };
     }, [data, size]);
     return <group position={position}>
-        {routes.paths.map((points, i) => <Line key={i} points={points} color={i % 2 ? "#ffd08a" : "#79d8f1"} lineWidth={1.7} />)}
+        {routes.paths.map((path, i) => <Line key={i} points={path.points} color={path.color} lineWidth={1.7} />)}
         <mesh position={routes.sun}><sphereGeometry args={[0.035, 12, 12]} /><meshBasicMaterial color="#ffd08a" /></mesh>
     </group>;
 }
@@ -84,8 +84,8 @@ export default function RoLaMGASWork({ objectRef, active, language }) {
                             <p className="solver-model-note">{exhibit.note}</p>
                         </div>
                         <div className="solver-info__actions">
-                            <a className="solver-gallery-button" href={`${SOLVER_GALLERY}#mission=${exhibit.id}`} target="_blank" rel="noreferrer">{text.explore} <span aria-hidden="true">↗</span></a>
-                            <p className="solver-download-hint">{text.downloadHint}</p>
+                            <a className="solver-gallery-button" href={exhibit.galleryUrl ?? `${SOLVER_GALLERY}#mission=${exhibit.id}`} target="_blank" rel="noreferrer">{text.explore} <span aria-hidden="true">↗</span></a>
+                            <p className="solver-download-hint">{exhibit.downloadHint ?? text.downloadHint}</p>
                             <MethodNotes text={text} />
                             <a className="solver-source-link" href="https://github.com/robertbarthellgaray/RoLaMGAS" target="_blank" rel="noreferrer">{text.source} ↗</a>
                         </div>

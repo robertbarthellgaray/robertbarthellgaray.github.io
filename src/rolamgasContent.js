@@ -1,6 +1,5 @@
 import tianwenModel from "./assets/RebuiltTianwen.glb?url";
 import cassiniModel from "./assets/RebuiltCassini.glb?url";
-import jupiterModel from "./assets/EEVEEJ.glb?url";
 import Mercurymodel from "./assets/Mercury.glb?url";
 import previews from "./featuredTrajectories.json";
 
@@ -25,12 +24,13 @@ export const SOLVER_EXHIBITS = [
         note: "The 412.4 m/s is the ideal Lambert DSM. The current finite-radius export adds junction burns and totals 2.060 km/s before capture. This is a design comparison, not Cassini’s flown trajectory.",
     },
     {
-        id: "45a45fc7816a", title: "Jupiter on a Very Low Fuel Budget", category: "ORIGINAL TRAJECTORY / 01",
-        route: "EEVEEJ", dates: "2033 → 2041 · Jupiter", preview: previews["45a45fc7816a"],
-        modelUrl: jupiterModel,
-        description: "This follows roughly the same sequence as the JUICE probe launched by ESA. A low-launch-energy route that returns to Earth, visits Venus, and uses two more Earth encounters before reaching Jupiter. All four assists pass the saved unpowered speed and turn screens, with no designed cruise DSM.",
-        metrics: [["Launch C3", "12.68 km²/s²"], ["Designed DSM", "0 m/s"], ["Flight time", "7.88 years"]],
-        note: "Jupiter arrival V∞ is 8.58 km/s, so capture still needs its own budget. The displayed model is Robert’s EEVEEJ route; the gallery contains its encounter dates and downloadable solar coast states.",
+        id: "4d76acaf1f6f", title: "Jupiter with a Low-Energy Launch", category: "ORIGINAL TRAJECTORY / 01",
+        route: "EdvEVEEJ", dates: "2033 → 2041 · Jupiter", preview: previews["4d76acaf1f6f"],
+        galleryUrl: "/trajectories/jupiter-low-c3/index.html",
+        description: "A 494 m/s deep-space maneuver during the first Earth-return leg cuts launch C3 from 12.68 to 6.25 km²/s² while preserving the working encounter dates. Earth, Venus and two further Earth flybys then send the probe to Jupiter. All four assists pass the unpowered speed and turn screens.",
+        metrics: [["Launch C3", "6.25 km²/s²"], ["Designed DSM", "493.9 m/s"], ["Flight time", "7.88 years"]],
+        note: "Jupiter arrival V∞ is 8.58 km/s; capture needs a separate budget. This is an original design, not JUICE’s flown trajectory. Independent propagation checks the Sun-only arcs; finite-radius planetary passages and n-body dynamics remain separate.",
+        downloadHint: "Compare five C3/DSM choices, inspect encounter dates, and download the numerical seeds or event tables.",
     },
     {
         id: "ba36e139b812", title: "Mercury via Two turns at Venus", category: "ORIGINAL TRAJECTORY / 02",

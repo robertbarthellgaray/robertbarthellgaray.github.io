@@ -4,7 +4,7 @@ import { Billboard, Html, useGLTF } from "@react-three/drei";
 import { Box3, MeshBasicMaterial, Vector3 } from "three";
 import faceUrl from "../assets/MyFaces.glb?url";
 import resumeUrl from "../assets/Resume.glb?url";
-import resumePdfUrl from "../assets/resume 202609.pdf?url";
+import resumePdfUrl from "../assets/resume 20261101.pdf?url";
 import { HOME_CONTENT } from "../homeContent";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 

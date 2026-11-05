@@ -102,10 +102,11 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "Los 412.4 m/s corresponden a la DSM ideal de Lambert. La exportación actual con encuentros a distancia finita añade maniobras de empalme y suma 2.060 km/s antes de la captura. Es una comparación de diseños, no la trayectoria volada por Cassini."
             },
             {
-                "title": "Júpiter con muy poco combustible",
+                "title": "Júpiter con un lanzamiento de baja energía",
                 "dates": "2033 → 2041 · Júpiter",
-                "description": "Utiliza una secuencia planetaria parecida a la de JUICE, la sonda de la ESA. Una ruta de baja energía de lanzamiento que regresa a la Tierra, visita Venus y utiliza otros dos encuentros con la Tierra antes de llegar a Júpiter. Las cuatro asistencias superan las comprobaciones guardadas de velocidad y giro sin propulsión, sin una DSM de crucero diseñada.",
-                "note": "La V∞ de llegada a Júpiter es 8.58 km/s, por lo que la captura necesita su propio presupuesto. El modelo muestra la ruta EEVEEJ de Robert; la galería contiene sus fechas y los estados de los arcos solares descargables."
+                "description": "Una maniobra de 494 m/s durante el primer tramo de retorno a la Tierra reduce el C3 de lanzamiento de 12.68 a 6.25 km²/s² sin cambiar las fechas de encuentro. Después, un sobrevuelo de la Tierra, uno de Venus y otros dos de la Tierra conducen la sonda a Júpiter. Las cuatro asistencias superan las comprobaciones de velocidad y giro sin propulsión.",
+                "note": "La V∞ de llegada a Júpiter es 8.58 km/s; la captura necesita un presupuesto aparte. Es un diseño original, no la trayectoria volada por JUICE. La propagación independiente verifica los arcos bajo gravedad solar; los encuentros a distancia finita y la dinámica de varios cuerpos se estudian por separado.",
+                "downloadHint": "Compara cinco opciones de C3 y DSM, consulta las fechas y descarga las semillas numéricas o las tablas de encuentros."
             },
             {
                 "title": "Mercurio con dos giros en Venus",
@@ -173,10 +174,11 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "Les 412.4 m/s correspondent à la DSM idéale de Lambert. L’export actuel avec survols à distance finie ajoute des manœuvres de raccordement et totalise 2.060 km/s avant la capture. Il s’agit d’une comparaison de concepts, pas de la trajectoire réellement suivie par Cassini."
             },
             {
-                "title": "Jupiter avec très peu de carburant",
+                "title": "Jupiter avec un lancement à faible énergie",
                 "dates": "2033 → 2041 · Jupiter",
-                "description": "La séquence planétaire ressemble à celle de JUICE, la sonde de l’ESA. Un itinéraire à faible énergie de lancement revient vers la Terre, visite Vénus puis utilise deux autres rencontres avec la Terre avant Jupiter. Les quatre assistances passent les tests enregistrés de vitesse et de déviation sans propulsion, sans DSM de croisière prévue.",
-                "note": "La V∞ d’arrivée à Jupiter est de 8.58 km/s : la capture exige donc un budget propre. Le modèle montre l’itinéraire EEVEEJ de Robert ; la galerie fournit ses dates et les états téléchargeables des arcs solaires."
+                "description": "Une manœuvre de 494 m/s pendant le premier retour vers la Terre abaisse le C3 de lancement de 12.68 à 6.25 km²/s² sans modifier les dates des rencontres. Un survol terrestre, un survol de Vénus et deux autres survols terrestres conduisent ensuite la sonde à Jupiter. Les quatre assistances respectent les critères de vitesse et de déviation sans propulsion.",
+                "note": "La V∞ à l’arrivée sur Jupiter est de 8.58 km/s ; la capture demande un budget distinct. Cette conception originale ne reproduit pas le vol réel de JUICE. La propagation indépendante vérifie les arcs soumis à la gravité solaire ; les passages à distance finie et la dynamique à plusieurs corps restent des études séparées.",
+                "downloadHint": "Comparez cinq compromis entre C3 et DSM, consultez les dates et téléchargez les solutions numériques ou les tableaux des rencontres."
             },
             {
                 "title": "Mercure via deux virages à Vénus",
@@ -244,10 +246,11 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "Die 412.4 m/s bezeichnen die ideale Lambert-DSM. Der aktuelle Export mit endlichen Vorbeiflugabständen ergänzt Anschlussmanöver und erreicht vor dem Einbremsen insgesamt 2.060 km/s. Dies ist ein Entwurfsvergleich, nicht Cassinis tatsächlich geflogene Bahn."
             },
             {
-                "title": "Mit wenig Treibstoff zum Jupiter",
+                "title": "Jupiter mit energiearmem Start",
                 "dates": "2033 → 2041 · Jupiter",
-                "description": "Die Planetenfolge ähnelt der von JUICE, der ESA-Sonde. Diese Route mit niedriger Startenergie kehrt zur Erde zurück, besucht Venus und nutzt zwei weitere Erdbegegnungen vor Jupiter. Alle vier Swing-bys bestehen die gespeicherten Geschwindigkeits- und Ablenkungsprüfungen ohne Antrieb; eine Reiseflug-DSM ist nicht vorgesehen.",
-                "note": "Die Ankunfts-V∞ am Jupiter beträgt 8.58 km/s; das Einbremsen benötigt daher ein eigenes Budget. Das Modell zeigt Roberts EEVEEJ-Route. Termine und Zustandsdaten der solaren Transferbögen stehen in der Galerie zum Download bereit."
+                "description": "Ein Bahnmanöver von 494 m/s auf dem ersten Rückflug zur Erde senkt den Start-C3 von 12.68 auf 6.25 km²/s², ohne die Begegnungsdaten zu verändern. Ein Erdvorbeiflug, ein Venusvorbeiflug und zwei weitere Erdvorbeiflüge führen die Sonde anschließend zum Jupiter. Alle vier Vorbeiflüge erfüllen die Geschwindigkeits- und Ablenkungskriterien ohne Triebwerkseinsatz.",
+                "note": "Die Ankunfts-V∞ am Jupiter beträgt 8.58 km/s; das Einbremsen benötigt ein eigenes Budget. Dies ist ein eigener Entwurf, nicht die tatsächlich geflogene JUICE-Bahn. Die unabhängige Integration prüft die Bahnbögen unter Sonnengravitation; planetennahe Passagen mit endlichem Abstand und Mehrkörperdynamik werden getrennt untersucht.",
+                "downloadHint": "Fünf C3/DSM-Varianten vergleichen, Begegnungsdaten ansehen und numerische Startlösungen oder Ereignistabellen herunterladen."
             },
             {
                 "title": "Über zwei Venusvorbeiflüge zum Merkur",
@@ -315,10 +318,11 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "412.4 m/s — идеальная DSM решения Ламберта. Текущий экспорт с пролётами на конечном расстоянии добавляет стыковочные импульсы: до захвата суммарно требуется 2.060 km/s. Это сравнение проектов, а не реально выполненная траектория «Кассини»."
             },
             {
-                "title": "К Юпитеру с малым запасом топлива",
+                "title": "К Юпитеру с низкой энергией запуска",
                 "dates": "2033 → 2041 · Юпитер",
-                "description": "Последовательность планет похожа на маршрут аппарата JUICE Европейского космического агентства. Маршрут с низкой энергией запуска возвращается к Земле, посещает Венеру и использует ещё две встречи с Землёй перед Юпитером. Все четыре гравитационных манёвра проходят сохранённые проверки скорости и поворота без тяги; межпланетная DSM не предусмотрена.",
-                "note": "V∞ при прибытии к Юпитеру составляет 8.58 km/s, поэтому захват требует отдельного бюджета. Модель показывает маршрут EEVEEJ Роберта; даты и векторы состояния солнечных перелётных дуг доступны в галерее."
+                "description": "Манёвр 494 м/с на первом участке возвращения к Земле снижает C3 запуска с 12.68 до 6.25 км²/с², сохраняя даты встреч. Затем пролёт Земли, пролёт Венеры и ещё два пролёта Земли направляют аппарат к Юпитеру. Все четыре гравитационных манёвра проходят проверки скорости и угла поворота без включения двигателя.",
+                "note": "V∞ при прибытии к Юпитеру составляет 8.58 км/с; для захвата нужен отдельный бюджет. Это оригинальный проект, а не траектория реального полёта JUICE. Независимое интегрирование проверяет участки под действием гравитации Солнца; пролёты на конечном расстоянии и многотельная динамика рассматриваются отдельно.",
+                "downloadHint": "Сравните пять вариантов C3 и DSM, изучите даты встреч и скачайте численные начальные решения или таблицы событий."
             },
             {
                 "title": "К Меркурию через два пролёта Венеры",
@@ -386,10 +390,11 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "412.4 m/s आदर्श लैम्बर्ट DSM है। सीमित दूरी वाले फ्लाइबाइ का वर्तमान एक्सपोर्ट जोड़-बिंदुओं पर प्रणोदन-संशोधन जोड़ता है; कक्षा में प्रवेश से पहले कुल 2.060 km/s लगता है। यह डिज़ाइनों की तुलना है, कैसिनी की वास्तविक उड़ान नहीं।"
             },
             {
-                "title": "बहुत कम ईंधन बजट में बृहस्पति",
+                "title": "कम प्रक्षेपण ऊर्जा से बृहस्पति तक",
                 "dates": "2033 → 2041 · बृहस्पति",
-                "description": "ग्रहों का यह क्रम यूरोपीय अंतरिक्ष एजेंसी के JUICE यान से लगभग मिलता है। कम प्रक्षेपण ऊर्जा वाला यह मार्ग पृथ्वी पर लौटता है, शुक्र तक जाता है और बृहस्पति पहुँचने से पहले पृथ्वी से दो और मुठभेड़ें करता है। चारों गुरुत्वीय सहायताएँ बिना प्रणोदन वाली गति और मोड़ की सहेजी हुई जाँचें पास करती हैं; यात्रा के दौरान कोई DSM नियोजित नहीं है।",
-                "note": "बृहस्पति पर आगमन V∞, 8.58 km/s है, इसलिए उसकी कक्षा में प्रवेश का अलग बजट चाहिए। मॉडल रॉबर्ट का EEVEEJ मार्ग दिखाता है; गैलरी में तारीखें और सूर्य के गुरुत्व में स्थानांतरण चापों के डाउनलोड योग्य स्थिति-वेग डेटा हैं।"
+                "description": "पृथ्वी की ओर पहले वापसी चरण में 494 m/s की अंतरिक्षीय पैंतरेबाज़ी, मुलाकातों की तारीखें बदले बिना, प्रक्षेपण C3 को 12.68 से घटाकर 6.25 km²/s² करती है। इसके बाद पृथ्वी, शुक्र और फिर दो बार पृथ्वी के फ्लाइबाय यान को बृहस्पति की ओर भेजते हैं। चारों गुरुत्व सहायता चरण बिना इंजन चलाए गति और मोड़ की जाँच में सफल हैं।",
+                "note": "बृहस्पति पर आगमन V∞ 8.58 km/s है; कक्षा में प्रवेश के लिए अलग बजट चाहिए। यह मौलिक डिज़ाइन है, JUICE की वास्तविक उड़ान का पुनर्निर्माण नहीं। स्वतंत्र संख्यात्मक समाकलन केवल सूर्य के गुरुत्व वाले चापों की जाँच करता है; सीमित दूरी के ग्रह फ्लाइबाय और बहु-पिंड गतिकी अलग अध्ययन हैं।",
+                "downloadHint": "C3 और DSM के पाँच विकल्पों की तुलना करें, मुलाकातों की तारीखें देखें और संख्यात्मक प्रारंभिक समाधान या घटना तालिकाएँ डाउनलोड करें।"
             },
             {
                 "title": "शुक्र के दो फ्लाइबाइ से बुध तक",
@@ -457,10 +462,11 @@ export const SOLVER_TRANSLATIONS = {
                 "note": "412.4 m/s 是理想兰伯特解的 DSM。当前采用有限距离飞越的导出文件加入了弧段连接修正，在土星捕获前总计需要 2.060 km/s。这是设计方案的比较，并非卡西尼号实际飞行的轨迹。"
             },
             {
-                "title": "以低燃料预算前往木星",
+                "title": "以低发射能量前往木星",
                 "dates": "2033 → 2041 · 木星",
-                "description": "这条路线的行星顺序与欧洲航天局 JUICE 探测器大致相似。 这条低发射能量路线先返回地球，再经过金星，随后利用另外两次地球交会前往木星。四次助推均通过了保存的无动力速度匹配和转角检查，未设计巡航 DSM。",
-                "note": "木星到达 V∞ 为 8.58 km/s，因此捕获仍需单独预算。模型展示 Robert 的 EEVEEJ 路线；轨迹库提供交会日期以及可下载的太阳引力转移弧段状态数据。"
+                "description": "在首次返回地球的航段中，一次 494 m/s 的深空机动将发射 C3 从 12.68 降至 6.25 km²/s²，同时保持各次交会日期不变。此后，探测器依次飞越地球、金星，再飞越地球两次，最终抵达木星。四次无动力引力辅助均通过了速度和转向检查。",
+                "note": "抵达木星时的 V∞ 为 8.58 km/s，轨道捕获需要另行分配速度增量。这是原创方案，并非 JUICE 的实际飞行轨迹。独立数值积分验证了仅受太阳引力作用的弧段；有限距离的行星飞越及多体动力学仍需分别研究。",
+                "downloadHint": "比较五种 C3 与 DSM 的取舍，查看交会日期，并下载数值初始解或事件表。"
             },
             {
                 "title": "经两次金星飞越前往水星",
