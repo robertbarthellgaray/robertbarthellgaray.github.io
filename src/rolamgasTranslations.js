@@ -106,7 +106,7 @@ export const SOLVER_TRANSLATIONS = {
                 "dates": "2033 → 2041 · Júpiter",
                 "description": "Una maniobra de 494 m/s durante el primer tramo de retorno a la Tierra reduce el C3 de lanzamiento de 12.68 a 6.25 km²/s² sin cambiar las fechas de encuentro. Después, un sobrevuelo de la Tierra, uno de Venus y otros dos de la Tierra conducen la sonda a Júpiter. Las cuatro asistencias superan las comprobaciones de velocidad y giro sin propulsión.",
                 "note": "La V∞ de llegada a Júpiter es 8.58 km/s; la captura necesita un presupuesto aparte. Es un diseño original, no la trayectoria volada por JUICE. La propagación independiente verifica los arcos bajo gravedad solar; los encuentros a distancia finita y la dinámica de varios cuerpos se estudian por separado.",
-                "downloadHint": "Compara cinco opciones de C3 y DSM, consulta las fechas y descarga las semillas numéricas o las tablas de encuentros."
+                "downloadHint": "Consulta esta misión en RoLaMGAS, compara su energía de lanzamiento y duración, y descarga los estados CSV / XYZV."
             },
             {
                 "title": "Mercurio con dos giros en Venus",
@@ -178,7 +178,7 @@ export const SOLVER_TRANSLATIONS = {
                 "dates": "2033 → 2041 · Jupiter",
                 "description": "Une manœuvre de 494 m/s pendant le premier retour vers la Terre abaisse le C3 de lancement de 12.68 à 6.25 km²/s² sans modifier les dates des rencontres. Un survol terrestre, un survol de Vénus et deux autres survols terrestres conduisent ensuite la sonde à Jupiter. Les quatre assistances respectent les critères de vitesse et de déviation sans propulsion.",
                 "note": "La V∞ à l’arrivée sur Jupiter est de 8.58 km/s ; la capture demande un budget distinct. Cette conception originale ne reproduit pas le vol réel de JUICE. La propagation indépendante vérifie les arcs soumis à la gravité solaire ; les passages à distance finie et la dynamique à plusieurs corps restent des études séparées.",
-                "downloadHint": "Comparez cinq compromis entre C3 et DSM, consultez les dates et téléchargez les solutions numériques ou les tableaux des rencontres."
+                "downloadHint": "Consultez cette mission dans RoLaMGAS, comparez son énergie de lancement et sa durée, puis téléchargez les états CSV / XYZV."
             },
             {
                 "title": "Mercure via deux virages à Vénus",
@@ -250,7 +250,7 @@ export const SOLVER_TRANSLATIONS = {
                 "dates": "2033 → 2041 · Jupiter",
                 "description": "Ein Bahnmanöver von 494 m/s auf dem ersten Rückflug zur Erde senkt den Start-C3 von 12.68 auf 6.25 km²/s², ohne die Begegnungsdaten zu verändern. Ein Erdvorbeiflug, ein Venusvorbeiflug und zwei weitere Erdvorbeiflüge führen die Sonde anschließend zum Jupiter. Alle vier Vorbeiflüge erfüllen die Geschwindigkeits- und Ablenkungskriterien ohne Triebwerkseinsatz.",
                 "note": "Die Ankunfts-V∞ am Jupiter beträgt 8.58 km/s; das Einbremsen benötigt ein eigenes Budget. Dies ist ein eigener Entwurf, nicht die tatsächlich geflogene JUICE-Bahn. Die unabhängige Integration prüft die Bahnbögen unter Sonnengravitation; planetennahe Passagen mit endlichem Abstand und Mehrkörperdynamik werden getrennt untersucht.",
-                "downloadHint": "Fünf C3/DSM-Varianten vergleichen, Begegnungsdaten ansehen und numerische Startlösungen oder Ereignistabellen herunterladen."
+                "downloadHint": "Diese Mission in RoLaMGAS ansehen, Startenergie und Flugzeit vergleichen und Zustandsdaten als CSV / XYZV herunterladen."
             },
             {
                 "title": "Über zwei Venusvorbeiflüge zum Merkur",
@@ -322,7 +322,7 @@ export const SOLVER_TRANSLATIONS = {
                 "dates": "2033 → 2041 · Юпитер",
                 "description": "Манёвр 494 м/с на первом участке возвращения к Земле снижает C3 запуска с 12.68 до 6.25 км²/с², сохраняя даты встреч. Затем пролёт Земли, пролёт Венеры и ещё два пролёта Земли направляют аппарат к Юпитеру. Все четыре гравитационных манёвра проходят проверки скорости и угла поворота без включения двигателя.",
                 "note": "V∞ при прибытии к Юпитеру составляет 8.58 км/с; для захвата нужен отдельный бюджет. Это оригинальный проект, а не траектория реального полёта JUICE. Независимое интегрирование проверяет участки под действием гравитации Солнца; пролёты на конечном расстоянии и многотельная динамика рассматриваются отдельно.",
-                "downloadHint": "Сравните пять вариантов C3 и DSM, изучите даты встреч и скачайте численные начальные решения или таблицы событий."
+                "downloadHint": "Откройте миссию в RoLaMGAS, сравните энергию запуска и время полёта и скачайте векторы состояния CSV / XYZV."
             },
             {
                 "title": "К Меркурию через два пролёта Венеры",
@@ -394,7 +394,7 @@ export const SOLVER_TRANSLATIONS = {
                 "dates": "2033 → 2041 · बृहस्पति",
                 "description": "पृथ्वी की ओर पहले वापसी चरण में 494 m/s की अंतरिक्षीय पैंतरेबाज़ी, मुलाकातों की तारीखें बदले बिना, प्रक्षेपण C3 को 12.68 से घटाकर 6.25 km²/s² करती है। इसके बाद पृथ्वी, शुक्र और फिर दो बार पृथ्वी के फ्लाइबाय यान को बृहस्पति की ओर भेजते हैं। चारों गुरुत्व सहायता चरण बिना इंजन चलाए गति और मोड़ की जाँच में सफल हैं।",
                 "note": "बृहस्पति पर आगमन V∞ 8.58 km/s है; कक्षा में प्रवेश के लिए अलग बजट चाहिए। यह मौलिक डिज़ाइन है, JUICE की वास्तविक उड़ान का पुनर्निर्माण नहीं। स्वतंत्र संख्यात्मक समाकलन केवल सूर्य के गुरुत्व वाले चापों की जाँच करता है; सीमित दूरी के ग्रह फ्लाइबाय और बहु-पिंड गतिकी अलग अध्ययन हैं।",
-                "downloadHint": "C3 और DSM के पाँच विकल्पों की तुलना करें, मुलाकातों की तारीखें देखें और संख्यात्मक प्रारंभिक समाधान या घटना तालिकाएँ डाउनलोड करें।"
+                "downloadHint": "इस मिशन को RoLaMGAS में देखें, प्रक्षेपण ऊर्जा और उड़ान अवधि की तुलना करें तथा CSV / XYZV स्थिति और वेग डेटा डाउनलोड करें।"
             },
             {
                 "title": "शुक्र के दो फ्लाइबाइ से बुध तक",
@@ -466,7 +466,7 @@ export const SOLVER_TRANSLATIONS = {
                 "dates": "2033 → 2041 · 木星",
                 "description": "在首次返回地球的航段中，一次 494 m/s 的深空机动将发射 C3 从 12.68 降至 6.25 km²/s²，同时保持各次交会日期不变。此后，探测器依次飞越地球、金星，再飞越地球两次，最终抵达木星。四次无动力引力辅助均通过了速度和转向检查。",
                 "note": "抵达木星时的 V∞ 为 8.58 km/s，轨道捕获需要另行分配速度增量。这是原创方案，并非 JUICE 的实际飞行轨迹。独立数值积分验证了仅受太阳引力作用的弧段；有限距离的行星飞越及多体动力学仍需分别研究。",
-                "downloadHint": "比较五种 C3 与 DSM 的取舍，查看交会日期，并下载数值初始解或事件表。"
+                "downloadHint": "在 RoLaMGAS 中查看此任务，比较发射能量与飞行时间，并下载 CSV / XYZV 位置和速度数据。"
             },
             {
                 "title": "经两次金星飞越前往水星",
