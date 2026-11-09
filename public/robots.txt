@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://robertbarthellgaray.github.io/RoLaMGAS/sitemap.xml
