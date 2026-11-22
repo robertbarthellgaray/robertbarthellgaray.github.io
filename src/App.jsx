@@ -10,9 +10,9 @@ import HomeContent from "./components/HomeContent";
 import LoadingScreen from "./components/LoadingScreen";
 import Sun from "./components/Sun";
 import TrajectoryWork from "./components/TrajectoryWork";
-import RoLaMGASWork from "./components/RoLaMGASWork";
 import { HOME_CONTENT } from "./homeContent";
-import { getSolverTranslation } from "./rolamgasTranslations";
+import { ROLAMGAS_URL } from "./siteLinks";
+import { TRAJECTORY_CONTENT } from "./trajectoryContent";
 import {
   CUBESAT_MODEL_URL,
   EARTH_ROTATION_SPEED,
@@ -30,7 +30,6 @@ function CameraControls({
   moonRef,
   moonPanelRef,
   trajectoryRef,
-  solverRef,
 }) {
   const controlsRef = useRef();
   const homePositionRef = useRef(new Vector3());
@@ -52,7 +51,7 @@ function CameraControls({
     let targetReady = false;
     if (modeChanged) transitionTimeRef.current = 0;
 
-    if (["home", "resume", "trajectory", "rolamgas"].includes(mode)) {
+    if (["home", "resume", "trajectory"].includes(mode)) {
       const earthRotation = clock.elapsedTime * EARTH_ROTATION_SPEED;
       homePositionRef.current
         .set(0, 0, size.width < 700 ? 64 : 42)
@@ -65,9 +64,6 @@ function CameraControls({
         targetReady = true;
       } else if (mode === "trajectory" && trajectoryRef.current) {
         trajectoryRef.current.getWorldPosition(desiredTargetRef.current);
-        targetReady = true;
-      } else if (mode === "rolamgas" && solverRef.current) {
-        solverRef.current.getWorldPosition(desiredTargetRef.current);
         targetReady = true;
       } else {
         desiredTargetRef.current.set(0, 0, 0);
@@ -123,7 +119,7 @@ function CameraControls({
       transitionTimeRef.current += delta;
     } else if (
       targetReady &&
-      ["home", "resume", "moon", "trajectory", "rolamgas"].includes(mode)
+      ["home", "resume", "moon", "trajectory"].includes(mode)
     ) {
       camera.position.copy(desiredCameraRef.current);
       controlsRef.current.target.copy(desiredTargetRef.current);
@@ -149,7 +145,7 @@ function CameraControls({
 export default function App() {
   const [cameraMode, setCameraMode] = useState("home");
   const [language, setLanguage] = useState("en");
-  const solverText = getSolverTranslation(language);
+  const trajectoryContent = TRAJECTORY_CONTENT[language] ?? TRAJECTORY_CONTENT.en;
   const [cubeSatTargetVisible, setCubeSatTargetVisible] = useState(false);
   const [showCatchMessage, setShowCatchMessage] = useState(false);
   const cubeSatRef = useRef();
@@ -158,7 +154,6 @@ export default function App() {
   const moonRef = useRef();
   const moonPanelRef = useRef();
   const trajectoryRef = useRef();
-  const solverRef = useRef();
   const targetTimerRef = useRef();
   const messageTimerRef = useRef();
 
@@ -247,8 +242,7 @@ export default function App() {
         </Suspense>
 
         <Suspense fallback={null}>
-          <TrajectoryWork objectRef={trajectoryRef} language={language} active={cameraMode === "trajectory"} onSelectSolver={() => setCameraMode("rolamgas")} />
-          <RoLaMGASWork objectRef={solverRef} active={cameraMode === "rolamgas"} language={language} />
+          <TrajectoryWork objectRef={trajectoryRef} language={language} active={cameraMode === "trajectory"} />
         </Suspense>
 
         {/* CubeSat */}
@@ -278,7 +272,6 @@ export default function App() {
           moonRef={moonRef}
           moonPanelRef={moonPanelRef}
           trajectoryRef={trajectoryRef}
-          solverRef={solverRef}
         />
       </Canvas>
       <label className="global-language-menu">
@@ -295,6 +288,14 @@ export default function App() {
           ))}
         </select>
       </label>
+      {cameraMode === "trajectory" && <nav className="trajectory-mobile-downloads" aria-label={trajectoryContent.reportLabel}>
+        {[["claudius", "CLAUDIUS"], ["remus", "REMUS / ROMULUS"]].map(([key, name]) => <a
+          key={key}
+          href={trajectoryContent[key].reportUrl}
+          download={trajectoryContent[key].reportFilename}
+          aria-label={`${trajectoryContent.reportLabel}: ${trajectoryContent[key].title}`}
+        >{name}<span>{trajectoryContent.reportLabel}</span></a>)}
+      </nav>}
       <nav className="view-mode-controls" aria-label="Destinations">
         {cameraMode === "home" ? (
           <>
@@ -315,24 +316,22 @@ export default function App() {
                 {label}
               </button>
             ))}
-            <button
+            <a
               className="view-mode-button rolamgas-link"
-              type="button"
-              onClick={() => setCameraMode("rolamgas")}
+              href={ROLAMGAS_URL}
             >
-              RoLaMGAS ←
-            </button>
+              RoLaMGAS
+            </a>
           </>
         ) : (
           <>
-          {cameraMode === "rolamgas" && <button className="view-mode-button" type="button" onClick={() => setCameraMode("trajectory")}>{solverText.handmade} →</button>}
-          {cameraMode === "trajectory" && <button className="view-mode-button" type="button" onClick={() => setCameraMode("rolamgas")}>← RoLaMGAS</button>}
+          {cameraMode === "trajectory" && <a className="view-mode-button rolamgas-link" href={ROLAMGAS_URL}>RoLaMGAS</a>}
           <button
             className="view-mode-button"
             type="button"
             onClick={() => setCameraMode("home")}
           >
-            {cameraMode === "rolamgas" ? solverText.home : "Take me home"}
+            Take me home
           </button>
           </>
         )}

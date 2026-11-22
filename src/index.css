@@ -84,6 +84,51 @@ canvas {
     margin: 0 0 8px;
 }
 
+.trajectory-report {
+    display: block;
+    margin: 12px 0;
+    padding: 10px 12px;
+    color: #081018;
+    background: #a8d3ff;
+    border: 1px solid #d7eaff;
+    border-radius: 4px;
+    font: 600 14px/1.4 system-ui, sans-serif;
+    text-align: center;
+    text-decoration: none;
+}
+
+.trajectory-report:hover { background: #d7eaff; }
+.trajectory-report:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.trajectory-mobile-downloads { display: none; }
+@media (max-width: 700px) {
+    .trajectory-mobile-downloads {
+        position: fixed;
+        bottom: 108px;
+        left: 16px;
+        right: 16px;
+        z-index: 20000000;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+    .trajectory-mobile-downloads a {
+        display: grid;
+        align-content: center;
+        min-height: 44px;
+        padding: 8px;
+        color: #081018;
+        background: #a8d3ff;
+        border: 1px solid #d7eaff;
+        border-radius: 4px;
+        font: 600 14px/1.4 system-ui, sans-serif;
+        text-align: center;
+        text-decoration: none;
+    }
+    .trajectory-mobile-downloads a span { font-weight: 400; }
+    .trajectory-mobile-downloads a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+}
+
 .trajectory-gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -407,6 +452,7 @@ canvas {
     width: 650px;
     padding: 24px 0;
     text-align: left;
+    text-decoration: none;
     color: #f4f7fb;
     background: transparent;
     border: 0;

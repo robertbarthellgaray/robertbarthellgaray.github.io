@@ -3,7 +3,7 @@ export const SOLVER_TRANSLATIONS = {
     "en": {
         "eyebrow": "ROBERT’S MISSION DESIGN LAB",
         "subtitle": "Robert’s Lambert Multi Gravity Assist Solver",
-        "portalHint": "Turn left. Explore the possibilities.",
+        "portalHint": "Browse the trajectory gallery and download the solver.",
         "recreation": "MISSION RECREATION",
         "original": "ORIGINAL TRAJECTORY",
         "explore": "Explore this trajectory",
@@ -49,7 +49,7 @@ export const SOLVER_TRANSLATIONS = {
     "es": {
         "eyebrow": "LABORATORIO DE DISEÑO DE MISIONES DE ROBERT",
         "subtitle": "Solucionador Lambert de múltiples asistencias gravitatorias de Robert",
-        "portalHint": "Gira a la izquierda. Explora las posibilidades.",
+        "portalHint": "Explora la galería de trayectorias y descarga el programa.",
         "recreation": "RECREACIÓN DE UNA MISIÓN",
         "original": "TRAYECTORIA ORIGINAL",
         "explore": "Explorar esta trayectoria",
@@ -121,7 +121,7 @@ export const SOLVER_TRANSLATIONS = {
     "fr": {
         "eyebrow": "LABORATOIRE DE CONCEPTION DE MISSIONS DE ROBERT",
         "subtitle": "Solveur Lambert multi-assistances gravitationnelles de Robert",
-        "portalHint": "Tournez à gauche. Explorez les possibilités.",
+        "portalHint": "Explorez la galerie de trajectoires et téléchargez le logiciel.",
         "recreation": "RECONSTITUTION DE MISSION",
         "original": "TRAJECTOIRE ORIGINALE",
         "explore": "Explorer cette trajectoire",
@@ -193,7 +193,7 @@ export const SOLVER_TRANSLATIONS = {
     "de": {
         "eyebrow": "ROBERTS LABOR FÜR MISSIONSENTWURF",
         "subtitle": "Roberts Lambert-Solver für mehrfache Swing-bys",
-        "portalHint": "Nach links drehen. Möglichkeiten entdecken.",
+        "portalHint": "Flugbahngalerie entdecken und den Solver herunterladen.",
         "recreation": "MISSIONSREKONSTRUKTION",
         "original": "EIGENER TRAJEKTORIENENTWURF",
         "explore": "Diese Flugbahn erkunden",
@@ -265,7 +265,7 @@ export const SOLVER_TRANSLATIONS = {
     "ru": {
         "eyebrow": "ЛАБОРАТОРИЯ ПРОЕКТИРОВАНИЯ МИССИЙ РОБЕРТА",
         "subtitle": "Решатель Ламберта Роберта для цепочек гравитационных манёвров",
-        "portalHint": "Поверните налево. Исследуйте возможности.",
+        "portalHint": "Откройте галерею траекторий и скачайте программу.",
         "recreation": "РЕКОНСТРУКЦИЯ МИССИИ",
         "original": "АВТОРСКАЯ ТРАЕКТОРИЯ",
         "explore": "Изучить эту траекторию",
@@ -337,7 +337,7 @@ export const SOLVER_TRANSLATIONS = {
     "hi": {
         "eyebrow": "रॉबर्ट की मिशन डिज़ाइन प्रयोगशाला",
         "subtitle": "रॉबर्ट का लैम्बर्ट बहु-गुरुत्वीय-सहायता सॉल्वर",
-        "portalHint": "बाईं ओर मुड़ें। संभावनाएँ खोजें।",
+        "portalHint": "प्रक्षेपपथ गैलरी देखें और सॉफ़्टवेयर डाउनलोड करें।",
         "recreation": "मिशन का पुनर्निर्माण",
         "original": "मौलिक प्रक्षेपपथ",
         "explore": "इस प्रक्षेपपथ को देखें",
@@ -409,7 +409,7 @@ export const SOLVER_TRANSLATIONS = {
     "zh": {
         "eyebrow": "ROBERT 的任务设计实验室",
         "subtitle": "Robert 的兰伯特多次引力助推求解器",
-        "portalHint": "向左转，探索更多可能。",
+        "portalHint": "浏览轨迹图库并下载求解软件。",
         "recreation": "任务轨迹重建",
         "original": "原创轨迹",
         "explore": "探索这条轨迹",

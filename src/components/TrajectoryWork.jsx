@@ -7,6 +7,7 @@ import remusUrl from "../assets/Remuslowpolywhite.glb?url";
 import { EARTH_ROTATION_SPEED, EARTH_TILT } from "../spaceConstants";
 import { TRAJECTORY_CONTENT } from "../trajectoryContent";
 import { getSolverTranslation } from "../rolamgasTranslations";
+import { ROLAMGAS_URL } from "../siteLinks";
 
 const TRAJECTORY_TRANSFORMS = {
     desktop: {
@@ -59,7 +60,7 @@ export function NormalizedTrajectory({ url, position, size = 2.4, rotation = [Ma
     );
 }
 
-function MissionPanel({ mission }) {
+function MissionPanel({ mission, reportLabel }) {
     return (
         <section className="trajectory-panel">
             <h2>{mission.title}</h2>
@@ -70,6 +71,9 @@ function MissionPanel({ mission }) {
                     </p>
                 ))}
             </div>
+            <a className="trajectory-report" href={mission.reportUrl} download={mission.reportFilename}>
+                {reportLabel}
+            </a>
             <div className="trajectory-gallery">
                 {mission.images.map((image, index) => (
                     <a
@@ -87,7 +91,7 @@ function MissionPanel({ mission }) {
     );
 }
 
-export default function TrajectoryWork({ objectRef, language, onSelectSolver, active }) {
+export default function TrajectoryWork({ objectRef, language, active }) {
     const orbitRef = useRef();
     const { size } = useThree();
     const compact = size.width < 700;
@@ -132,7 +136,7 @@ export default function TrajectoryWork({ objectRef, language, onSelectSolver, ac
                         transform
                         distanceFactor={2.5}
                     >
-                        <MissionPanel mission={content.claudius} />
+                        <MissionPanel mission={content.claudius} reportLabel={content.reportLabel} />
                     </Html>}
                     {active && <Html
                         position={[2.2, -0.5, 0]}
@@ -140,15 +144,15 @@ export default function TrajectoryWork({ objectRef, language, onSelectSolver, ac
                         transform
                         distanceFactor={3.5}
                     >
-                        <MissionPanel mission={content.remus} />
+                        <MissionPanel mission={content.remus} reportLabel={content.reportLabel} />
                     </Html>}
                     {active && <Html position={[-1, -2, 0]} center transform distanceFactor={compact ? 3 : 3.5}>
-                        <button className="solver-portal" type="button" onClick={onSelectSolver} tabIndex={active ? 0 : -1}>
+                        <a className="solver-portal" href={ROLAMGAS_URL} tabIndex={active ? 0 : -1}>
                             <span className="solver-portal__eyebrow">{solverText.portalLead}</span>
-                            <strong>RoLaMGAS <span aria-hidden="true">←</span></strong>
+                            <strong>RoLaMGAS</strong>
                             <span>{solverText.subtitle}</span>
                             <span className="solver-portal__hint">{solverText.portalHint}</span>
-                        </button>
+                        </a>
                     </Html>}
                 </group>
             </group>

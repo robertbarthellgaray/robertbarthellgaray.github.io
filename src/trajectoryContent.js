@@ -3,8 +3,8 @@ const REMUS_IMAGES = ["/textures/remus.jpg", "/textures/remus2036to2048HoriHighR
 
 const withImages = (content) => ({
     ...content,
-    claudius: { ...content.claudius, images: CLAUDIUS_IMAGES },
-    remus: { ...content.remus, images: REMUS_IMAGES },
+    claudius: { ...content.claudius, images: CLAUDIUS_IMAGES, reportUrl: "/reports/claudius-ae502-spring-2026.pdf", reportFilename: "CLAUDIUS-AE502-Spring-2026.pdf" },
+    remus: { ...content.remus, images: REMUS_IMAGES, reportUrl: "/reports/remus-romulus-ae443-spring-2026.pdf", reportFilename: "REMUS-ROMULUS-AE443-Spring-2026.pdf" },
 });
 
 export const TRAJECTORY_CONTENT = {
@@ -20,3 +20,16 @@ export const TRAJECTORY_CONTENT = {
     hi: withImages({ title: "मेरा प्रक्षेपपथ कार्य", claudius: { title: "CLAUDIUS", paragraphs: ["पहला अनुच्छेद यहाँ लिखें।", "दूसरा अनुच्छेद यहाँ लिखें।"] }, remus: { title: "REMUS/ROMULUS", paragraphs: ["पहला अनुच्छेद यहाँ लिखें।", "दूसरा अनुच्छेद यहाँ लिखें।"] } }),
     zh: withImages({ title: "我的轨道设计工作", claudius: { title: "CLAUDIUS", paragraphs: ["在此编辑第一段。", "在此编辑第二段。"] }, remus: { title: "REMUS/ROMULUS", paragraphs: ["在此编辑第一段。", "在此编辑第二段。"] } }),
 };
+
+const REPORT_LABELS = {
+    en: "Download design report (PDF)",
+    es: "Descargar informe de diseño (PDF)",
+    fr: "Télécharger le rapport de conception (PDF)",
+    de: "Entwurfsbericht herunterladen (PDF)",
+    ru: "Скачать проектный отчёт (PDF)",
+    hi: "डिज़ाइन रिपोर्ट डाउनलोड करें (PDF)",
+    zh: "下载设计报告（PDF）",
+};
+for (const [language, content] of Object.entries(TRAJECTORY_CONTENT)) {
+    content.reportLabel = REPORT_LABELS[language];
+}
